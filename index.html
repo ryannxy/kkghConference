@@ -147,7 +147,7 @@
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-8 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
-                    <p class="text-slate-500">These accommodations are near the conference venue.</p>
+                    <p class="text-slate-500">Choose from our recommended accommodations near the conference venue.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
@@ -239,18 +239,6 @@
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
                             <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="+60 12-345 6789">
-                        </div>
-                    </div>
-
-                    <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between">
-                        <div>
-                            <span class="block text-sm font-bold text-slate-700">Group Size (Pax)</span>
-                            <span class="text-xs text-slate-500">Number of people for this booking</span>
-                        </div>
-                        <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden">
-                            <button type="button" onclick="adjustPax(-1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
-                            <input type="number" id="pax-count" value="1" min="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
-                            <button type="button" onclick="adjustPax(1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
                         </div>
                     </div>
                 </div>
@@ -408,7 +396,7 @@
                     assembly: document.getElementById('assembly').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
-                    pax: document.getElementById('pax-count').value,
+                    pax: 1,
                     attendance: attendance
                 }
             };
@@ -422,7 +410,7 @@
 
         // Trigger dynamic saving when form fields change
         document.addEventListener('input', (e) => {
-            if (['fullName', 'assembly', 'email', 'phone', 'pax-count'].includes(e.target.id) || e.target.name === 'attendance_day') {
+            if (['fullName', 'assembly', 'email', 'phone'].includes(e.target.id) || e.target.name === 'attendance_day') {
                 if (window.currentViewId) window.saveState();
             }
         });
@@ -438,6 +426,22 @@
                 return null;
             }
         };
+
+        // --- BACKGROUND PRE-LOADER ---
+        window.hotelDataPromise = null;
+        window.preloadHotelData = function() {
+            if (!MILE_URL.includes("PASTE_") && !window.hotelDataPromise) {
+                // We use Promise.all to fetch all three at the EXACT same time
+                window.hotelDataPromise = Promise.all([
+                    fetchHotelData(MILE_URL, "Mi Le"),
+                    fetchHotelData(PADI_URL, "Padi Sentral"),
+                    fetchHotelData(VILLA_URL, "Villa Chee")
+                ]);
+            }
+        };
+        // Start preloading quietly after a short delay (so it doesn't block the initial page render)
+        setTimeout(window.preloadHotelData, 1000); 
+        // -----------------------------
 
         window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
             if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
@@ -495,16 +499,30 @@
 
                 if (!isRestore) renderHotelCards();
 
+                // Show loader just in case they clicked before the background pre-loader finished
                 document.getElementById('global-loader').classList.remove('hidden');
                 document.getElementById('global-loader').classList.add('flex');
                 
-                const mileData = await fetchHotelData(MILE_URL, "Mi Le");
-                const padiData = await fetchHotelData(PADI_URL, "Padi Sentral");
-                const villaData = await fetchHotelData(VILLA_URL, "Villa Chee");
+                // If it hasn't started preloading yet, start it now
+                if (!window.hotelDataPromise) window.preloadHotelData();
+                
+                let mileData = {}, padiData = {}, villaData = {};
+                
+                // Wait for all 3 simultaneous promises to finish
+                if (window.hotelDataPromise) {
+                    try {
+                        const [m, p, v] = await window.hotelDataPromise;
+                        mileData = m || {};
+                        padiData = p || {};
+                        villaData = v || {};
+                    } catch (e) {
+                        console.error("Error fetching hotel data", e);
+                    }
+                }
 
-                window.fullAvailability.mile = mileData || {};
-                window.fullAvailability.padi = padiData || {};
-                window.fullAvailability.villa = villaData || {};
+                window.fullAvailability.mile = mileData;
+                window.fullAvailability.padi = padiData;
+                window.fullAvailability.villa = villaData;
 
                 document.getElementById('global-loader').classList.add('hidden');
                 document.getElementById('global-loader').classList.remove('flex');
@@ -630,11 +648,17 @@
                 toggleRoomBooking(window.bookingState.roomId);
                 
                 const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`);
-                if (ciSelect) ciSelect.value = window.bookingState.checkIn;
+                if (ciSelect) {
+                    const opt = ciSelect.querySelector(`option[value="${window.bookingState.checkIn}"]`);
+                    if (opt && !opt.disabled) ciSelect.value = window.bookingState.checkIn;
+                }
                 updateDateValidation(window.bookingState.roomId);
                 
                 const coSelect = document.getElementById(`co-${window.bookingState.roomId}`);
-                if (coSelect) coSelect.value = window.bookingState.checkOut;
+                if (coSelect) {
+                    const opt = coSelect.querySelector(`option[value="${window.bookingState.checkOut}"]`);
+                    if (opt && !opt.disabled) coSelect.value = window.bookingState.checkOut;
+                }
                 updateDateValidation(window.bookingState.roomId);
 
                 const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
@@ -651,9 +675,54 @@
             container.innerHTML = '';
 
             data.roomTypes.forEach(rt => {
+                // Check if this specific room is fully booked across all dates
+                let isFullyBooked = false;
+                const matrixRoomData = window.getRoomDataFromMatrix(hotelId, rt.id, rt.name);
+                
+                if (Object.keys(window.fullAvailability[hotelId] || {}).length > 0) {
+                    isFullyBooked = true; // Assume true until we find at least 1 available night
+                    if (matrixRoomData) {
+                        for (let key in matrixRoomData) {
+                            if (matrixRoomData[key] > 0) {
+                                isFullyBooked = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Dynamically build Check-in options to auto-skip sold out days
+                let ciHtml = '';
+                const checkInDays = [
+                    { val: 'Dec 16', label: 'Wed, Dec 16' },
+                    { val: 'Dec 17', label: 'Thu, Dec 17' },
+                    { val: 'Dec 18', label: 'Fri, Dec 18' }
+                ];
+
+                let isFirstValidCi = false;
+                checkInDays.forEach(day => {
+                    let avail = 0;
+                    if (matrixRoomData && matrixRoomData[day.val] !== undefined) {
+                        avail = matrixRoomData[day.val];
+                    }
+                    if (avail === 0) {
+                        ciHtml += `<option value="${day.val}" disabled class="text-slate-300">${day.label} (Fully Booked)</option>`;
+                    } else {
+                        ciHtml += `<option value="${day.val}" ${!isFirstValidCi ? 'selected' : ''}>${day.label}</option>`;
+                        isFirstValidCi = true;
+                    }
+                });
+
                 container.innerHTML += `
-                    <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all" id="card-${rt.id}">
-                        <div class="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50" onclick="toggleRoomBooking('${rt.id}')">
+                    <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
+                        ${isFullyBooked ? `
+                        <div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed">
+                            <div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2">
+                                <i class="fas fa-ban"></i> Fully Booked
+                            </div>
+                        </div>
+                        ` : ''}
+                        <div class="p-5 flex justify-between items-center ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-lg">${rt.name}</h4>
                                 <p class="text-xs text-slate-500 mt-1">${rt.desc}</p>
@@ -668,9 +737,7 @@
                                 <div>
                                     <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-in</label>
                                     <select id="ci-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">
-                                        <option value="Dec 16">Wed, Dec 16</option>
-                                        <option value="Dec 17">Thu, Dec 17</option>
-                                        <option value="Dec 18">Fri, Dec 18</option>
+                                        ${ciHtml}
                                     </select>
                                 </div>
                                 <div>
@@ -750,7 +817,7 @@
                 }
 
                 if (avail === 0) {
-                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Sold Out)</option>`;
+                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Fully Booked)</option>`;
                 } else {
                     coHtml += `<option value="${targetCo}">${targetCo}</option>`;
                     if (!firstValidCo) firstValidCo = targetCo;
@@ -789,7 +856,7 @@
             const bookBtn = document.getElementById(`btn-book-${roomId}`);
             
             if (maxForCurrentDates === 0) {
-                statusDiv.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> Sold Out for these dates</span>';
+                statusDiv.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> Fully Booked for these dates</span>';
                 bookBtn.disabled = true;
                 bookBtn.classList.add('opacity-50', 'cursor-not-allowed');
             } else if (maxForCurrentDates <= 3) {
@@ -842,15 +909,6 @@
             showView('view-shared-details', 2);
         }
 
-        window.adjustPax = function(delta) {
-            const el = document.getElementById('pax-count');
-            let val = parseInt(el.value) || 1;
-            val += delta;
-            if (val < 1) val = 1;
-            el.value = val;
-            window.saveState();
-        }
-
         window.submitDetails = function() {
             const name = document.getElementById('fullName').value;
             const email = document.getElementById('email').value.trim();
@@ -886,7 +944,7 @@
                 dailyRate += parseInt(cb.value);
             });
 
-            const pax = parseInt(document.getElementById('pax-count').value) || 1;
+            const pax = 1;
             
             const payload = {
                 fullName: document.getElementById('fullName').value,
@@ -920,7 +978,7 @@
                     assembly: document.getElementById('assembly').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
-                    pax: parseInt(document.getElementById('pax-count').value) || 1,
+                    pax: 1,
                     booking_type: 'accommodation',
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
@@ -998,7 +1056,6 @@
                             document.getElementById('assembly').value = state.form.assembly || '';
                             document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
-                            document.getElementById('pax-count').value = state.form.pax || 1;
                             if (state.form.attendance) {
                                 document.querySelectorAll('input[name="attendance_day"]').forEach(cb => {
                                     if (state.form.attendance.includes(cb.getAttribute('data-label'))) {
