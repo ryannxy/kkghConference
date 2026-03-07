@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | KKGH Annual Bible Conference 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .transition-all-300 { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-slide-in { animation: slideInRight 0.4s ease-out forwards; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-in forwards; }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #f97316;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        .loader-large { width: 48px; height: 48px; border-width: 4px; border-top-width: 4px; }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- CUSTOM NOTIFICATION MODAL -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/80 hidden flex-col items-center justify-center z-[100] px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in">
+            <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
+                <i id="modal-icon" class="fas fa-exclamation-triangle text-orange-500 text-3xl"></i>
+                <h3 id="modal-title" class="text-2xl font-bold text-slate-800 font-serif">Notice</h3>
+            </div>
+            <div id="modal-message" class="text-slate-600 mb-8 whitespace-pre-wrap max-h-64 overflow-y-auto font-mono text-sm bg-slate-50 p-4 rounded border border-slate-200 shadow-inner"></div>
+            <div class="flex justify-end">
+                <button type="button" onclick="closeCustomModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg">Understood</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL FULL SCREEN LOADER -->
+    <div id="global-loader" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex-col items-center justify-center z-50">
+        <div class="loader loader-large mb-4 border-slate-300 border-t-blue-500"></div>
+        <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading</h3>
+        <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a moment...</p>
+    </div>
+
+    <!-- TEST MODE BANNER -->
+    <div id="test-mode-banner" class="hidden bg-yellow-100 border-b border-yellow-200 text-yellow-800 px-4 py-2 text-center text-xs font-bold">
+        <i class="fas fa-flask"></i> LOCAL MODE: Data is saving to your browser memory.
+    </div>
+
+    <!-- LANDING PAGE VIEW -->
+    <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+            <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-orange-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div class="z-10 max-w-5xl animate-fade-in-up w-full py-12">
+            <span class="inline-block py-2 px-5 rounded-full bg-slate-800 text-blue-200 text-sm font-semibold mb-8 border border-slate-700 tracking-wider uppercase shadow-sm">December 16-19, 2026</span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">KKGH 2026<br>Annual Bible Conference</h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-12 font-light italic">"Theme: TBC"</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow('conference')">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar-check text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-6">Register for Conference</h3>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">
+                        Start Registration
+                    </button>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow('accommodation')">
+                    <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bed text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-6">Book Accommodation</h3>
+                    <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">
+                        Browse Hotels
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app-container" class="hidden flex-grow flex flex-col">
+        
+        <!-- Navbar -->
+        <header class="bg-white shadow-sm sticky top-0 z-30">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div onclick="window.location.reload()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
+                    KKGH Conference <span id="flow-badge" class="text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
+                </div>
+                
+                <div class="flex items-center gap-2 md:gap-4">
+                    <div id="nav-step-1" class="flex items-center gap-2 text-sm font-medium text-gray-400">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
+                        <span class="hidden md:inline" id="nav-step-1-text">Selection</span>
+                    </div>
+                    <div class="w-4 md:w-8 h-0.5 bg-gray-200" id="nav-line-2"></div>
+                    <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
+                        <span class="hidden md:inline">Details</span>
+                    </div>
+                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 hidden accom-only-nav" id="nav-line-3"></div>
+                    <div id="nav-step-3" class="flex items-center gap-2 text-sm font-medium text-gray-400 hidden accom-only-nav">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
+                        <span class="hidden md:inline">Payment</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <form id="registrationForm" onsubmit="return false;" class="flex-grow flex flex-col">
+            
+            <!-- VIEW: ACCOMMODATION HOTEL LIST -->
+            <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
+                <div class="mb-8 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
+                    <p class="text-slate-500">Choose from our partner accommodations near the conference venue.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                    <!-- Hotel Cards Injected Here via JS -->
+                    <div id="hotel-grid-container" class="contents"></div>
+                </div>
+            </div>
+
+            <!-- VIEW: ACCOMMODATION ROOM DETAILS & DATES -->
+            <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
+                <div class="mb-6 flex justify-between items-center">
+                    <button type="button" onclick="showView('view-accom-hotels', 1)" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                        <i class="fas fa-arrow-left"></i> Back to Hotels
+                    </button>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8 h-full">
+                    <!-- LEFT COLUMN: Hotel Info -->
+                    <div class="w-full lg:w-1/2 flex flex-col">
+                        <div id="detail-main-image" class="w-full h-64 md:h-80 rounded-2xl overflow-hidden relative shadow-md mb-6 transition-all duration-300 bg-slate-100 block"></div>
+                        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div id="detail-icon-box" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"></div>
+                                <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-800">Hotel Name</h2>
+                            </div>
+                            <p id="detail-desc" class="text-slate-600 leading-relaxed mb-6">Description</p>
+                            <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <i class="fas fa-concierge-bell text-slate-400"></i> Property Amenities
+                            </h3>
+                            <ul id="detail-amenities" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-sm text-slate-600"></ul>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Room Type Selection Accordions -->
+                    <div class="w-full lg:w-1/2 flex flex-col h-full">
+                        <h3 class="text-2xl font-bold text-slate-800 font-serif mb-2">Available Rooms</h3>
+                        <p class="text-sm text-slate-500 mb-6">Click a room type below to select your dates and check availability.</p>
+                        
+                        <div id="detail-room-list" class="space-y-4">
+                            <!-- Accordions injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: SHARED PERSONAL DETAILS -->
+            <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
+                <div class="mb-6 flex justify-between items-center" id="details-back-btn">
+                    <button type="button" onclick="goBackFromDetails()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Your Details</h2>
+                <p class="text-slate-500 mb-8">Who is making this booking?</p>
+                
+                <div id="accom-booking-summary" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+                    <h4 class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Room Booking Summary</h4>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-blue-600 text-xl" id="summary-icon"></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-lg" id="summary-room-name"></h3>
+                            <p class="text-sm text-slate-600" id="summary-hotel-dates"></p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="block text-xs text-slate-500">Total</span>
+                            <span class="font-bold text-lg text-slate-800" id="summary-price"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                        <i class="far fa-id-card text-blue-500"></i> Contact Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
+                            <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. Joshua Lee">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Assembly / Church</label>
+                            <input type="text" required id="assembly" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. Kota Kemuning">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                            <input type="email" required id="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. joshua@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
+                            <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="+60 12-345 6789">
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="block text-sm font-bold text-slate-700">Group Size (Pax)</span>
+                            <span class="text-xs text-slate-500">Number of people for this booking</span>
+                        </div>
+                        <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden">
+                            <button type="button" onclick="adjustPax(-1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
+                            <input type="number" id="pax-count" value="1" min="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
+                            <button type="button" onclick="adjustPax(1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-attendance" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6 hidden">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="far fa-calendar-check text-blue-500"></i> Attendance
+                    </h3>
+                    <p class="text-slate-500 text-sm mb-6">Fee: RM50 per person / day</p>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <input type="checkbox" name="attendance_day" value="50" data-label="Wednesday" class="w-5 h-5 mt-1 text-blue-600 rounded">
+                            <div class="ml-4"><span class="block font-bold text-slate-800">Wednesday, Dec 16</span></div>
+                        </label>
+                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <input type="checkbox" name="attendance_day" value="50" data-label="Thursday" class="w-5 h-5 mt-1 text-blue-600 rounded">
+                            <div class="ml-4"><span class="block font-bold text-slate-800">Thursday, Dec 17</span></div>
+                        </label>
+                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <input type="checkbox" name="attendance_day" value="50" data-label="Friday" class="w-5 h-5 mt-1 text-blue-600 rounded">
+                            <div class="ml-4"><span class="block font-bold text-slate-800">Friday, Dec 18</span></div>
+                        </label>
+                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
+                            <input type="checkbox" name="attendance_day" value="50" data-label="Saturday" class="w-5 h-5 mt-1 text-blue-600 rounded">
+                            <div class="ml-4"><span class="block font-bold text-slate-800">Saturday, Dec 19</span></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
+                        Next Step <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW: ACCOMMODATION PAYMENT -->
+            <div id="view-payment" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
+                <div class="mb-6 border-b border-gray-200 pb-4">
+                    <button type="button" onclick="showView('view-shared-details', 2)" class="text-slate-500 hover:text-blue-600 text-sm font-semibold mb-2 flex items-center gap-1">
+                        <i class="fas fa-arrow-left"></i> Back to Details
+                    </button>
+                    <h2 class="text-3xl font-bold text-slate-800 font-serif">Payment & Confirmation</h2>
+                    <p class="text-slate-500">Please make the payment and upload your receipt to secure your booking.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800">Total Amount</h3>
+                        <div class="text-3xl font-bold text-orange-600" id="payment-total-amount">RM 0</div>
+                    </div>
+                    
+                    <div id="payment-bank-details" class="mb-8"></div>
+
+                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-file-upload text-blue-500"></i> Upload Payment Receipt
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-4">Attach a screenshot of your bank transfer to finalize the booking.</p>
+                        <input type="file" id="payment-receipt" accept="image/*,.pdf" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors">
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-10 rounded-xl shadow-xl transform transition hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <i class="fas fa-check-circle"></i> Complete Booking
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+            <div class="container mx-auto px-4 flex justify-between items-center text-sm text-slate-500">
+                <p>&copy; 2026 KKGH Committee.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-blue-600"><i class="fas fa-envelope"></i> info@kkbc2026.org</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900 bg-opacity-75 hidden flex items-center justify-center z-50 px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl animate-fade-in-up">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-green-600 text-4xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2 font-serif">Registration Successful!</h3>
+            <p class="text-slate-500 mb-8">We have received your details. An email confirmation has been sent.</p>
+            <button onclick="window.location.reload()" class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition-colors">
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // ⚠️ PASTE YOUR 4 SEPARATE GOOGLE SCRIPT WEB APP URLS BELOW:
+        // =====================================================================
+        
+        // 1. The script attached to your Main Registration Sheet (For writing data)
+        const MAIN_SUBMIT_URL = "https://script.google.com/macros/s/AKfycby2XPWiQHSi2onnh6nxozAFRnnsW5ECdtxem_3Er6HAPLTDl7HoHI3b22kmFwWjlBzm2Q/exec"; 
+
+        // 2. The script attached directly to the Mi Le Gardens spreadsheet
+        const MILE_URL = "https://script.google.com/macros/s/AKfycbyos6Q3_jBl4WGPqAxpd6GqsgTyNLyGjpr16Lga68E12-UsNOdnVAJAN6Ne36TrjyHs/exec";      
+
+        // 3. The script attached directly to the Padi Sentral spreadsheet
+        const PADI_URL = "https://script.google.com/macros/s/AKfycbypjEvQNFVo93buDwyWZ6-8_nKJUKSXTp05dKASDMZEki_5zkPkkiV2DSMern3FKUwj3g/exec";      
+
+        // 4. The script attached directly to the Villa Chee spreadsheet
+        const VILLA_URL = "https://script.google.com/macros/s/AKfycbxzUP4tLSF06sCobU-Jdoo28rkk5mIkI-kZ8_VdDSWqsmzl_WcSKJZJuTh6BdSEyjFwtQ/exec";    
+
+        // =====================================================================
+
+        // Custom Modal Logic
+        window.showCustomModal = function(title, msg, iconClass = "fas fa-exclamation-circle text-red-500") {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = msg;
+            document.getElementById('modal-icon').className = iconClass + " text-3xl";
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
+        }
+        window.closeCustomModal = function() {
+            document.getElementById('custom-modal').classList.add('hidden');
+            document.getElementById('custom-modal').classList.remove('flex');
+        }
+
+        window.currentFlow = 'conference'; 
+        window.fullAvailability = { mile: {}, padi: {}, villa: {} }; 
+        
+        window.bookingState = {
+            hotelId: null,
+            roomId: null,
+            checkIn: 'Dec 16',
+            checkOut: 'Dec 19',
+            quantity: 1,
+            cost: 0
+        };
+        
+        const conferenceDates = ["Dec 16", "Dec 17", "Dec 18", "Dec 19"];
+
+        window.hotelData = {
+            'mile': {
+                name: 'Mi Le Gardens', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
+                desc: 'Mi Le Gardens offers a serene escape from the hustle of the city. Located just 10 minutes from the conference venue.',
+                amenities: ['Queen/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Hot Shower', 'Free Parking', 'Garden Walkways'],
+                bankDetails: "Bank: Maybank\nAccount No: 1122 3344 5566\nAccount Name: Mi Le Gardens Mgt Sdn Bhd",
+                roomTypes: [
+                    { id: 'standard', name: 'Standard Room', price: 88, desc: 'Comfortable basic room perfect for couples or solo travelers.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 128, desc: 'Spacious room with additional bedding for families.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Family+Room'] }
+                ]
+            },
+            'padi': {
+                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+                desc: 'Highly convenient and surrounded by a variety of local food courts, cafes, and marts.',
+                amenities: ['Smart TV', 'High-Speed Wi-Fi', 'Rain Shower', 'Coffee Maker', 'Work Desk', '24h Reception'],
+                bankDetails: "Bank: CIMB Bank\nAccount No: 8009 8877 6655\nAccount Name: Padi Sentral Hospitality",
+                roomTypes: [
+                    { id: 'standard', name: 'Standard Room', price: 138, desc: 'Modern aesthetics with city views and work amenities.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 168, desc: 'Upgraded corner room with extra space for families.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] }
+                ]
+            },
+            'villa': {
+                name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
+                desc: 'A premium stay experience. Indulge in luxurious amenities, scenic views, and exceptionally spacious rooms.',
+                amenities: ['King/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Swimming Pool', 'Free Breakfast', 'Room Service'],
+                bankDetails: "Bank: Public Bank\nAccount No: 1122 3344 5566\nAccount Name: Villa Chee Resort",
+                roomTypes: [
+                    { id: 'standard', name: 'Standard Room', price: 150, desc: 'Elegant design with balcony access and premium toiletries.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 210, desc: 'A massive suite featuring extra beds and a living lounge.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Family+Room'] }
+                ]
+            }
+        };
+
+        const fetchHotelData = async (url, hotelName) => {
+            if (!url || url.includes("PASTE_")) return null;
+            try {
+                const response = await fetch(url);
+                return await response.json();
+            } catch (e) {
+                console.warn(`Could not connect to ${hotelName} spreadsheet:`, e);
+                return null;
+            }
+        };
+
+        window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
+            if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
+            const matrix = window.fullAvailability[hotelId];
+            
+            // 1. Try exact match (e.g. "standard")
+            if (matrix[roomId]) return matrix[roomId];
+            
+            // 2. Try exact name match (e.g. "Standard Room")
+            if (matrix[rtName]) return matrix[rtName];
+            
+            // 3. Try fuzzy/case-insensitive match
+            const keys = Object.keys(matrix);
+            for (let k of keys) {
+                const kLower = k.toLowerCase().trim();
+                const idLower = roomId.toLowerCase().trim();
+                const nameLower = rtName.toLowerCase().trim();
+                
+                if (kLower === idLower || kLower === nameLower || 
+                    kLower.includes(idLower) || idLower.includes(kLower) ||
+                    kLower.includes(nameLower) || nameLower.includes(kLower)) {
+                    return matrix[k];
+                }
+            }
+            return null;
+        }
+
+        window.startFlow = async function(type) {
+            window.currentFlow = type;
+
+            if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
+                showCustomModal("Code Update Required", "Please make sure to paste your 4 Web App URLs at the top of the Javascript code (around line 550)!");
+                return; 
+            }
+
+            document.getElementById('view-landing').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+
+            if (type === 'conference') {
+                document.getElementById('flow-badge').innerText = 'Conference';
+                document.getElementById('flow-badge').className = 'text-xs bg-blue-100 px-2 py-1 rounded ml-2 text-blue-700 uppercase font-sans font-bold tracking-wider';
+                document.getElementById('nav-step-1-text').innerText = 'Details';
+                document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.add('hidden'));
+                
+                document.getElementById('section-attendance').classList.remove('hidden');
+                document.getElementById('accom-booking-summary').classList.add('hidden');
+                document.getElementById('btn-details-next').innerHTML = 'Complete Registration <i class="fas fa-check-circle ml-2"></i>';
+                
+                showView('view-shared-details', 1);
+            } else {
+                document.getElementById('flow-badge').innerText = 'Accommodation';
+                document.getElementById('flow-badge').className = 'text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider';
+                document.getElementById('nav-step-1-text').innerText = 'Selection';
+                document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.remove('hidden'));
+                
+                document.getElementById('section-attendance').classList.add('hidden');
+                document.getElementById('accom-booking-summary').classList.remove('hidden');
+                document.getElementById('btn-details-next').innerHTML = 'Next: Payment <i class="fas fa-arrow-right ml-2"></i>';
+
+                renderHotelCards();
+
+                // Concurrently fetch all 3 individual hotel spreadsheets
+                document.getElementById('global-loader').classList.remove('hidden');
+                document.getElementById('global-loader').classList.add('flex');
+                
+                const mileData = await fetchHotelData(MILE_URL, "Mi Le");
+                const padiData = await fetchHotelData(PADI_URL, "Padi Sentral");
+                const villaData = await fetchHotelData(VILLA_URL, "Villa Chee");
+
+                window.fullAvailability.mile = mileData || {};
+                window.fullAvailability.padi = padiData || {};
+                window.fullAvailability.villa = villaData || {};
+
+                document.getElementById('global-loader').classList.add('hidden');
+                document.getElementById('global-loader').classList.remove('flex');
+                
+                renderHotelCards();
+                showView('view-accom-hotels', 1);
+            }
+        };
+
+        window.showView = function(viewId, stepNumber) {
+            ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-payment'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+            updateNav(stepNumber);
+            window.scrollTo(0, 0);
+        };
+
+        function updateNav(step) {
+            [1, 2, 3].forEach(num => {
+                const nav = document.getElementById(`nav-step-${num}`);
+                if(nav) {
+                    const badge = nav.querySelector('span');
+                    if(step >= num) {
+                        badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white";
+                        nav.className = "flex items-center gap-2 text-sm font-medium text-blue-600" + (num===3 && window.currentFlow==='conference' ? ' hidden' : '');
+                    } else {
+                        badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400";
+                        nav.className = "flex items-center gap-2 text-sm font-medium text-gray-400" + (num===3 && window.currentFlow==='conference' ? ' hidden' : '');
+                    }
+                }
+            });
+        }
+
+        window.goBackFromDetails = function() {
+            if (window.currentFlow === 'conference') {
+                window.location.reload(); 
+            } else {
+                showView('view-accom-room', 1);
+            }
+        }
+
+        function renderHotelCards() {
+            const container = document.getElementById('hotel-grid-container');
+            container.innerHTML = '';
+            
+            Object.keys(window.hotelData).forEach(id => {
+                const h = window.hotelData[id];
+                
+                // Now checking individual hotel connections
+                const isOffline = Object.keys(window.fullAvailability[id] || {}).length === 0;
+                
+                if (isOffline) {
+                    container.innerHTML += `
+                        <div class="group flex flex-col bg-slate-50 rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative opacity-80 cursor-not-allowed" onclick="showCustomModal('Hotel Unavailable', 'Cannot load rooms for ${h.name}. The specific Google Sheet script is not responding or has no data.')">
+                            <div class="absolute inset-0 z-20 flex items-center justify-center bg-white/40 backdrop-blur-[2px]">
+                                <div class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold shadow-lg flex items-center gap-2">
+                                    <i class="fas fa-plug text-lg"></i> Disconnected
+                                </div>
+                            </div>
+                            <div class="h-48 bg-slate-200 flex items-center justify-center relative overflow-hidden grayscale">
+                                <i class="${h.mainIcon} text-slate-400/20 text-8xl absolute -bottom-4 -right-4"></i>
+                                <i class="${h.mainIcon} text-slate-400 text-4xl mb-2 drop-shadow-sm z-10"></i>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow grayscale">
+                                <h3 class="text-xl font-bold text-slate-500 mb-1">${h.name}</h3>
+                                <p class="text-slate-400 font-bold text-lg mb-3">Connection Error</p>
+                                <p class="text-sm text-slate-400 mb-6 flex-grow">${h.desc.substring(0, 70)}...</p>
+                                <button type="button" disabled class="w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl cursor-not-allowed">
+                                    Currently Unavailable
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML += `
+                        <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-${h.iconColor.split('-')[1]}-300 hover:-translate-y-1 transition-all duration-300">
+                            <div class="h-48 ${h.bgColor} flex items-center justify-center relative overflow-hidden">
+                                <i class="${h.mainIcon} ${h.iconColor}/20 text-8xl absolute -bottom-4 -right-4 group-hover:scale-110 transition-transform duration-500"></i>
+                                <i class="${h.mainIcon} ${h.iconColor} text-4xl mb-2 drop-shadow-sm z-10"></i>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3>
+                                <p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc.substring(0, 70)}...</p>
+                                <button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">
+                                    View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        window.openHotelDetail = function(hotelId) {
+            window.bookingState.hotelId = hotelId;
+            const data = window.hotelData[hotelId];
+            
+            document.getElementById('detail-title').innerText = data.name;
+            document.getElementById('detail-desc').innerText = data.desc;
+            
+            const iconBox = document.getElementById('detail-icon-box');
+            iconBox.className = `w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${data.bgColor} ${data.iconColor}`;
+            iconBox.innerHTML = `<i class="${data.mainIcon}"></i>`;
+
+            const list = document.getElementById('detail-amenities');
+            list.innerHTML = '';
+            data.amenities.forEach(am => {
+                list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> ${am}</li>`;
+            });
+
+            const imgContainer = document.getElementById('detail-main-image');
+            imgContainer.innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${data.roomTypes[0].images[0]}')"></div>`;
+
+            renderRoomAccordions(hotelId);
+            showView('view-accom-room', 1);
+        }
+
+        function renderRoomAccordions(hotelId) {
+            const data = window.hotelData[hotelId];
+            const container = document.getElementById('detail-room-list');
+            container.innerHTML = '';
+
+            data.roomTypes.forEach(rt => {
+                container.innerHTML += `
+                    <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all" id="card-${rt.id}">
+                        <div class="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50" onclick="toggleRoomBooking('${rt.id}')">
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg">${rt.name}</h4>
+                                <p class="text-xs text-slate-500 mt-1">${rt.desc}</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-bold text-slate-800 whitespace-nowrap">RM ${rt.price}</span><span class="block text-[10px] text-slate-400">/ night</span>
+                            </div>
+                        </div>
+
+                        <div id="booking-panel-${rt.id}" class="hidden bg-slate-50 border-t border-slate-200 p-5">
+                            <div class="grid grid-cols-2 gap-4 mb-5">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-in</label>
+                                    <select id="ci-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">
+                                        <option value="Dec 16">Wed, Dec 16</option>
+                                        <option value="Dec 17">Thu, Dec 17</option>
+                                        <option value="Dec 18">Fri, Dec 18</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-out</label>
+                                    <select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">
+                                        <!-- Injected by JS -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1 block">Rooms Needed</label>
+                                    <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden w-28">
+                                        <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200" onclick="adjustRoomQty('${rt.id}', -1)">-</button>
+                                        <input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-10 text-center font-bold text-slate-800 focus:outline-none" readonly>
+                                        <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200" onclick="adjustRoomQty('${rt.id}', 1)">+</button>
+                                    </div>
+                                    <div id="status-${rt.id}" class="text-xs mt-2 font-bold h-4"></div>
+                                </div>
+
+                                <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition-transform active:scale-95">
+                                    Reserve: RM <span id="price-${rt.id}">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.toggleRoomBooking = function(roomId) {
+            const hotelId = window.bookingState.hotelId;
+            const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
+            
+            document.getElementById('detail-main-image').innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${rt.images[0]}')"></div>`;
+
+            window.hotelData[hotelId].roomTypes.forEach(r => {
+                const panel = document.getElementById(`booking-panel-${r.id}`);
+                const card = document.getElementById(`card-${r.id}`);
+                if (r.id === roomId) {
+                    panel.classList.remove('hidden');
+                    card.classList.add('border-blue-400', 'ring-2', 'ring-blue-100');
+                    updateDateValidation(roomId); 
+                } else {
+                    panel.classList.add('hidden');
+                    card.classList.remove('border-blue-400', 'ring-2', 'ring-blue-100');
+                }
+            });
+        }
+
+        window.updateDateValidation = function(roomId) {
+            const hotelId = window.bookingState.hotelId;
+            const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
+            
+            const ciSelect = document.getElementById(`ci-${roomId}`);
+            const coSelect = document.getElementById(`co-${roomId}`);
+            const ciValue = ciSelect.value;
+            const currentCoValue = coSelect.value; 
+            
+            const ciIdx = conferenceDates.indexOf(ciValue);
+            
+            let coHtml = '';
+            let firstValidCo = null;
+            let maxForCurrentDates = 0;
+
+            // Smartly fetch the correct room row from the spreadsheet data
+            const matrixRoomData = window.getRoomDataFromMatrix(hotelId, roomId, rt.name);
+
+            for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
+                const targetCo = conferenceDates[i];
+                const nightsStr = conferenceDates.slice(ciIdx, i).join(","); 
+                
+                let avail = 0; 
+                
+                if (matrixRoomData && matrixRoomData[nightsStr] !== undefined) {
+                    avail = matrixRoomData[nightsStr];
+                }
+
+                if (avail === 0) {
+                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Sold Out)</option>`;
+                } else {
+                    coHtml += `<option value="${targetCo}">${targetCo}</option>`;
+                    if (!firstValidCo) firstValidCo = targetCo;
+                }
+            }
+
+            coSelect.innerHTML = coHtml;
+            
+            if (currentCoValue && coSelect.querySelector(`option[value="${currentCoValue}"]`) && !coSelect.querySelector(`option[value="${currentCoValue}"]`).disabled) {
+                coSelect.value = currentCoValue;
+            } else if (firstValidCo) {
+                coSelect.value = firstValidCo;
+            } else {
+                coSelect.value = '';
+            }
+
+            if (coSelect.value) {
+                const finalNightsStr = conferenceDates.slice(ciIdx, conferenceDates.indexOf(coSelect.value)).join(",");
+                if (matrixRoomData && matrixRoomData[finalNightsStr] !== undefined) {
+                    maxForCurrentDates = matrixRoomData[finalNightsStr];
+                } else {
+                    maxForCurrentDates = 0;
+                }
+            } else {
+                maxForCurrentDates = 0;
+            }
+
+            const qtyInput = document.getElementById(`qty-${roomId}`);
+            qtyInput.dataset.max = maxForCurrentDates;
+            let qty = parseInt(qtyInput.value) || 1;
+            if (qty > maxForCurrentDates) qty = maxForCurrentDates;
+            if (maxForCurrentDates === 0) qty = 0;
+            qtyInput.value = qty;
+
+            const statusDiv = document.getElementById(`status-${roomId}`);
+            const bookBtn = document.getElementById(`btn-book-${roomId}`);
+            
+            if (maxForCurrentDates === 0) {
+                statusDiv.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> Sold Out for these dates</span>';
+                bookBtn.disabled = true;
+                bookBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else if (maxForCurrentDates <= 3) {
+                statusDiv.innerHTML = `<span class="text-orange-500"><i class="fas fa-exclamation-circle"></i> Only ${maxForCurrentDates} available!</span>`;
+                bookBtn.disabled = false;
+                bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                statusDiv.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> Rooms Available</span>';
+                bookBtn.disabled = false;
+                bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            const nightsCount = conferenceDates.indexOf(coSelect.value) - ciIdx;
+            const price = (nightsCount > 0 ? nightsCount : 0) * rt.price * qty;
+            document.getElementById(`price-${roomId}`).innerText = price.toLocaleString();
+        }
+
+        window.adjustRoomQty = function(roomId, delta) {
+            const input = document.getElementById(`qty-${roomId}`);
+            const max = parseInt(input.dataset.max) || 0;
+            let val = parseInt(input.value) || 0;
+            
+            val += delta;
+            if (val < 1 && max > 0) val = 1;
+            if (val > max) val = max;
+            if (max === 0) val = 0;
+            
+            input.value = val;
+            updateDateValidation(roomId); 
+        }
+
+        window.confirmRoomBooking = function(roomId) {
+            const hotelId = window.bookingState.hotelId;
+            window.bookingState.roomId = roomId;
+            window.bookingState.checkIn = document.getElementById(`ci-${roomId}`).value;
+            window.bookingState.checkOut = document.getElementById(`co-${roomId}`).value;
+            window.bookingState.quantity = parseInt(document.getElementById(`qty-${roomId}`).value);
+            
+            const priceText = document.getElementById(`price-${roomId}`).innerText.replace(/,/g, '');
+            window.bookingState.cost = parseInt(priceText);
+
+            const hotel = window.hotelData[hotelId];
+            const room = hotel.roomTypes.find(r => r.id === roomId);
+            
+            document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
+            document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
+            document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
+            document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
+
+            showView('view-shared-details', 2);
+        }
+
+        window.adjustPax = function(delta) {
+            const el = document.getElementById('pax-count');
+            let val = parseInt(el.value) || 1;
+            val += delta;
+            if (val < 1) val = 1;
+            el.value = val;
+        }
+
+        window.submitDetails = function() {
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value.trim();
+            
+            if (!name || !email) { 
+                showCustomModal("Missing Information", "Please enter your name and email address before proceeding."); 
+                return; 
+            }
+
+            if (window.currentFlow === 'conference') {
+                const daysSelected = document.querySelectorAll('input[name="attendance_day"]:checked').length;
+                if (daysSelected === 0) { 
+                    showCustomModal("Attendance Required", "Please select at least one day of attendance."); 
+                    return; 
+                }
+                
+                finalizeConference(); 
+            } else {
+                const hotel = window.hotelData[window.bookingState.hotelId];
+                document.getElementById('payment-total-amount').innerText = `RM ${window.bookingState.cost}`;
+                document.getElementById('payment-bank-details').innerHTML = `
+                    <div class="${hotel.bgColor} p-5 rounded-xl border border-${hotel.iconColor.split('-')[1]}-200">
+                        <h4 class="font-bold text-${hotel.iconColor.split('-')[1]}-800 mb-2 flex items-center gap-2">
+                            <i class="${hotel.mainIcon}"></i> Payment for ${hotel.name}
+                        </h4>
+                        <p class="text-sm text-slate-700 whitespace-pre-line font-mono bg-white/50 p-3 rounded">${hotel.bankDetails}</p>
+                    </div>
+                `;
+                showView('view-payment', 3);
+            }
+        }
+
+        window.finalizeConference = async function() {
+            const btn = document.getElementById('btn-details-next');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            const days = [];
+            let dailyRate = 0;
+            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => {
+                days.push(cb.getAttribute('data-label'));
+                dailyRate += parseInt(cb.value);
+            });
+
+            const pax = parseInt(document.getElementById('pax-count').value) || 1;
+            
+            const payload = {
+                fullName: document.getElementById('fullName').value,
+                assembly: document.getElementById('assembly').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                pax: pax,
+                booking_type: 'conference',
+                days: days,
+                totalCost: `RM ${dailyRate * pax}`,
+                status: 'Registered'
+            };
+
+            await sendToGoogle(payload);
+            btn.innerHTML = orig;
+            btn.disabled = false;
+        }
+
+        window.finalizeAccommodation = async function() {
+            const fileInput = document.getElementById('payment-receipt');
+            if (fileInput.files.length === 0) {
+                showCustomModal("Receipt Required", "Please upload your payment receipt to complete the booking.");
+                return;
+            }
+            if (fileInput.files[0].size > 3 * 1024 * 1024) { 
+                showCustomModal("File Too Large", "Please upload a receipt smaller than 3MB.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-final-submit');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            try {
+                const file = fileInput.files[0];
+                const receiptData = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve({
+                        filename: file.name,
+                        mimeType: file.type,
+                        base64: reader.result.split(',')[1] 
+                    });
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                const roomName = window.hotelData[window.bookingState.hotelId].roomTypes.find(r=>r.id===window.bookingState.roomId).name;
+                const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
+
+                const payload = {
+                    fullName: document.getElementById('fullName').value,
+                    assembly: document.getElementById('assembly').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    pax: parseInt(document.getElementById('pax-count').value) || 1,
+                    booking_type: 'accommodation',
+                    days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
+                    rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
+                    rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
+                    rooms_villa: window.bookingState.hotelId === 'villa' ? bookingStr : "",
+                    totalCost: `RM ${window.bookingState.cost}`,
+                    status: 'Registered',
+                    receiptFilename: receiptData.filename,
+                    receiptMimeType: receiptData.mimeType,
+                    receiptBase64: receiptData.base64
+                };
+
+                await sendToGoogle(payload);
+            } catch(e) {
+                showCustomModal("Error", "Upload failed. Try again.");
+            }
+            btn.innerHTML = orig;
+            btn.disabled = false;
+        }
+
+        async function sendToGoogle(payload) {
+            try {
+                if (MAIN_SUBMIT_URL.includes("script.google.com")) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = MAIN_SUBMIT_URL; // Using the explicit Main Data saving URL
+                    form.target = 'hidden-iframe';
+                    
+                    const payloadInput = document.createElement('input');
+                    payloadInput.type = 'hidden';
+                    payloadInput.name = 'payload'; 
+                    payloadInput.value = JSON.stringify(payload);
+                    form.appendChild(payloadInput);
+                    document.body.appendChild(form);
+                    
+                    let iframe = document.getElementById('hidden-iframe');
+                    if (!iframe) {
+                        iframe = document.createElement('iframe');
+                        iframe.name = 'hidden-iframe';
+                        iframe.id = 'hidden-iframe';
+                        iframe.style.display = 'none';
+                        document.body.appendChild(iframe);
+                    }
+                    
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    form.submit();
+                    document.body.removeChild(form);
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                }
+                
+                const currentData = JSON.parse(localStorage.getItem('kkgh_registrations_test') || '[]');
+                currentData.push(payload);
+                localStorage.setItem('kkgh_registrations_test', JSON.stringify(currentData));
+
+                document.getElementById('successModal').classList.remove('hidden');
+            } catch(e) {
+                console.error("Submission Error: ", e);
+                showCustomModal("Submission Failed", "Failed to submit to server. " + e.message);
+                throw e;
+            }
+        }
+
+    </script>
+</body>
+</html>
