@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration | KKGH Annual Bible Conference 2026</title>
+    <title>Registration | Kota Kemuning Gospel Hall Annual Bible Conference 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -123,7 +123,7 @@
         <!-- Navbar -->
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div onclick="window.location.reload()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
+                <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
                     KKGH Conference <span id="flow-badge" class="text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
                 </div>
                 
@@ -132,15 +132,10 @@
                         <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
                         <span class="hidden md:inline" id="nav-step-1-text">Selection</span>
                     </div>
-                    <div class="w-4 md:w-8 h-0.5 bg-gray-200" id="nav-line-2"></div>
-                    <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400">
+                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
+                    <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
                         <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
                         <span class="hidden md:inline">Details</span>
-                    </div>
-                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 hidden accom-only-nav" id="nav-line-3"></div>
-                    <div id="nav-step-3" class="flex items-center gap-2 text-sm font-medium text-gray-400 hidden accom-only-nav">
-                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
-                        <span class="hidden md:inline">Payment</span>
                     </div>
                 </div>
             </div>
@@ -152,7 +147,7 @@
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-8 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
-                    <p class="text-slate-500">Choose from our partner accommodations near the conference venue.</p>
+                    <p class="text-slate-500">These accommodations are near the conference venue.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
@@ -288,41 +283,7 @@
 
                 <div class="flex justify-end">
                     <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
-                        Next Step <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- VIEW: ACCOMMODATION PAYMENT -->
-            <div id="view-payment" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
-                <div class="mb-6 border-b border-gray-200 pb-4">
-                    <button type="button" onclick="showView('view-shared-details', 2)" class="text-slate-500 hover:text-blue-600 text-sm font-semibold mb-2 flex items-center gap-1">
-                        <i class="fas fa-arrow-left"></i> Back to Details
-                    </button>
-                    <h2 class="text-3xl font-bold text-slate-800 font-serif">Payment & Confirmation</h2>
-                    <p class="text-slate-500">Please make the payment and upload your receipt to secure your booking.</p>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
-                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800">Total Amount</h3>
-                        <div class="text-3xl font-bold text-orange-600" id="payment-total-amount">RM 0</div>
-                    </div>
-                    
-                    <div id="payment-bank-details" class="mb-8"></div>
-
-                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <i class="fas fa-file-upload text-blue-500"></i> Upload Payment Receipt
-                        </h4>
-                        <p class="text-sm text-slate-500 mb-4">Attach a screenshot of your bank transfer to finalize the booking.</p>
-                        <input type="file" id="payment-receipt" accept="image/*,.pdf" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors">
-                    </div>
-                </div>
-
-                <div class="flex justify-end">
-                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-10 rounded-xl shadow-xl transform transition hover:scale-105 active:scale-95 flex items-center gap-2">
-                        <i class="fas fa-check-circle"></i> Complete Booking
+                        Complete Booking <i class="fas fa-check-circle ml-2"></i>
                     </button>
                 </div>
             </div>
@@ -330,7 +291,7 @@
 
         <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
             <div class="container mx-auto px-4 flex justify-between items-center text-sm text-slate-500">
-                <p>&copy; 2026 KKGH Committee.</p>
+                <p>&copy; 2026 Kota Kemuning Gospel Hall.</p>
                 <div class="flex gap-4">
                     <a href="#" class="hover:text-blue-600"><i class="fas fa-envelope"></i> kkghsub@gmail.com</a>
                 </div>
@@ -346,7 +307,7 @@
             </div>
             <h3 class="text-2xl font-bold text-slate-800 mb-2 font-serif">Registration Successful!</h3>
             <p class="text-slate-500 mb-8">We have received your details. An email confirmation has been sent.</p>
-            <button onclick="window.location.reload()" class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition-colors">
+            <button onclick="resetToHome()" class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition-colors">
                 Back to Home
             </button>
         </div>
@@ -385,6 +346,8 @@
         }
 
         window.currentFlow = 'conference'; 
+        window.currentViewId = null;
+        window.currentStepNum = 1;
         window.fullAvailability = { mile: {}, padi: {}, villa: {} }; 
         
         window.bookingState = {
@@ -403,7 +366,6 @@
                 name: 'Mi Le Gardens', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
                 desc: 'Mi Le Gardens offers a serene escape from the hustle of the city. Located just 10 minutes from the conference venue.',
                 amenities: ['Queen/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Hot Shower', 'Free Parking', 'Garden Walkways'],
-                bankDetails: "Bank: Maybank\nAccount No: 1122 3344 5566\nAccount Name: Mi Le Gardens Mgt Sdn Bhd",
                 roomTypes: [
                     { id: 'standard', name: 'Standard Room', price: 88, desc: 'Comfortable basic room perfect for couples or solo travelers.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Room'] },
                     { id: 'family', name: 'Family Room', price: 128, desc: 'Spacious room with additional bedding for families.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Family+Room'] }
@@ -413,7 +375,6 @@
                 name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
                 desc: 'Highly convenient and surrounded by a variety of local food courts, cafes, and marts.',
                 amenities: ['Smart TV', 'High-Speed Wi-Fi', 'Rain Shower', 'Coffee Maker', 'Work Desk', '24h Reception'],
-                bankDetails: "Bank: CIMB Bank\nAccount No: 8009 8877 6655\nAccount Name: Padi Sentral Hospitality",
                 roomTypes: [
                     { id: 'standard', name: 'Standard Room', price: 138, desc: 'Modern aesthetics with city views and work amenities.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Standard+Room'] },
                     { id: 'family', name: 'Family Room', price: 168, desc: 'Upgraded corner room with extra space for families.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] }
@@ -423,13 +384,49 @@
                 name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
                 desc: 'A premium stay experience. Indulge in luxurious amenities, scenic views, and exceptionally spacious rooms.',
                 amenities: ['King/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Swimming Pool', 'Free Breakfast', 'Room Service'],
-                bankDetails: "Bank: Public Bank\nAccount No: 1122 3344 5566\nAccount Name: Villa Chee Resort",
                 roomTypes: [
                     { id: 'standard', name: 'Standard Room', price: 150, desc: 'Elegant design with balcony access and premium toiletries.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Standard+Room'] },
                     { id: 'family', name: 'Family Room', price: 210, desc: 'A massive suite featuring extra beds and a living lounge.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Family+Room'] }
                 ]
             }
         };
+
+        // --- SESSION STORAGE PERSISTENCE ---
+        window.saveState = function() {
+            if (!window.currentViewId) return;
+            
+            const attendance = [];
+            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => attendance.push(cb.getAttribute('data-label')));
+
+            const state = {
+                flow: window.currentFlow,
+                view: window.currentViewId,
+                step: window.currentStepNum,
+                booking: window.bookingState,
+                form: {
+                    name: document.getElementById('fullName').value,
+                    assembly: document.getElementById('assembly').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    pax: document.getElementById('pax-count').value,
+                    attendance: attendance
+                }
+            };
+            sessionStorage.setItem('kkgh_app_state', JSON.stringify(state));
+        }
+
+        window.resetToHome = function() {
+            sessionStorage.removeItem('kkgh_app_state');
+            window.location.reload();
+        }
+
+        // Trigger dynamic saving when form fields change
+        document.addEventListener('input', (e) => {
+            if (['fullName', 'assembly', 'email', 'phone', 'pax-count'].includes(e.target.id) || e.target.name === 'attendance_day') {
+                if (window.currentViewId) window.saveState();
+            }
+        });
+        // -----------------------------------
 
         const fetchHotelData = async (url, hotelName) => {
             if (!url || url.includes("PASTE_")) return null;
@@ -446,13 +443,9 @@
             if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
             const matrix = window.fullAvailability[hotelId];
             
-            // 1. Try exact match (e.g. "standard")
             if (matrix[roomId]) return matrix[roomId];
-            
-            // 2. Try exact name match (e.g. "Standard Room")
             if (matrix[rtName]) return matrix[rtName];
             
-            // 3. Try fuzzy/case-insensitive match
             const keys = Object.keys(matrix);
             for (let k of keys) {
                 const kLower = k.toLowerCase().trim();
@@ -468,7 +461,7 @@
             return null;
         }
 
-        window.startFlow = async function(type) {
+        window.startFlow = async function(type, isRestore = false) {
             window.currentFlow = type;
 
             if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
@@ -489,7 +482,7 @@
                 document.getElementById('accom-booking-summary').classList.add('hidden');
                 document.getElementById('btn-details-next').innerHTML = 'Complete Registration <i class="fas fa-check-circle ml-2"></i>';
                 
-                showView('view-shared-details', 1);
+                if (!isRestore) showView('view-shared-details', 1);
             } else {
                 document.getElementById('flow-badge').innerText = 'Accommodation';
                 document.getElementById('flow-badge').className = 'text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider';
@@ -498,11 +491,10 @@
                 
                 document.getElementById('section-attendance').classList.add('hidden');
                 document.getElementById('accom-booking-summary').classList.remove('hidden');
-                document.getElementById('btn-details-next').innerHTML = 'Next: Payment <i class="fas fa-arrow-right ml-2"></i>';
+                document.getElementById('btn-details-next').innerHTML = 'Complete Booking <i class="fas fa-check-circle ml-2"></i>';
 
-                renderHotelCards();
+                if (!isRestore) renderHotelCards();
 
-                // Concurrently fetch all 3 individual hotel spreadsheets
                 document.getElementById('global-loader').classList.remove('hidden');
                 document.getElementById('global-loader').classList.add('flex');
                 
@@ -518,30 +510,36 @@
                 document.getElementById('global-loader').classList.remove('flex');
                 
                 renderHotelCards();
-                showView('view-accom-hotels', 1);
+                if (!isRestore) showView('view-accom-hotels', 1);
             }
         };
 
         window.showView = function(viewId, stepNumber) {
-            ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-payment'].forEach(id => {
+            window.currentViewId = viewId;
+            window.currentStepNum = stepNumber;
+            
+            ['view-accom-hotels', 'view-accom-room', 'view-shared-details'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             document.getElementById(viewId).classList.remove('hidden');
             updateNav(stepNumber);
             window.scrollTo(0, 0);
+            window.saveState();
         };
 
         function updateNav(step) {
-            [1, 2, 3].forEach(num => {
+            [1, 2].forEach(num => {
                 const nav = document.getElementById(`nav-step-${num}`);
                 if(nav) {
                     const badge = nav.querySelector('span');
                     if(step >= num) {
                         badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white";
-                        nav.className = "flex items-center gap-2 text-sm font-medium text-blue-600" + (num===3 && window.currentFlow==='conference' ? ' hidden' : '');
+                        nav.classList.remove('text-gray-400');
+                        nav.classList.add('text-blue-600');
                     } else {
                         badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400";
-                        nav.className = "flex items-center gap-2 text-sm font-medium text-gray-400" + (num===3 && window.currentFlow==='conference' ? ' hidden' : '');
+                        nav.classList.remove('text-blue-600');
+                        nav.classList.add('text-gray-400');
                     }
                 }
             });
@@ -549,7 +547,7 @@
 
         window.goBackFromDetails = function() {
             if (window.currentFlow === 'conference') {
-                window.location.reload(); 
+                resetToHome(); 
             } else {
                 showView('view-accom-room', 1);
             }
@@ -562,7 +560,6 @@
             Object.keys(window.hotelData).forEach(id => {
                 const h = window.hotelData[id];
                 
-                // Now checking individual hotel connections
                 const isOffline = Object.keys(window.fullAvailability[id] || {}).length === 0;
                 
                 if (isOffline) {
@@ -607,7 +604,7 @@
             });
         }
 
-        window.openHotelDetail = function(hotelId) {
+        window.openHotelDetail = function(hotelId, isRestore = false) {
             window.bookingState.hotelId = hotelId;
             const data = window.hotelData[hotelId];
             
@@ -628,7 +625,24 @@
             imgContainer.innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${data.roomTypes[0].images[0]}')"></div>`;
 
             renderRoomAccordions(hotelId);
-            showView('view-accom-room', 1);
+            
+            if (isRestore && window.bookingState.roomId) {
+                toggleRoomBooking(window.bookingState.roomId);
+                
+                const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`);
+                if (ciSelect) ciSelect.value = window.bookingState.checkIn;
+                updateDateValidation(window.bookingState.roomId);
+                
+                const coSelect = document.getElementById(`co-${window.bookingState.roomId}`);
+                if (coSelect) coSelect.value = window.bookingState.checkOut;
+                updateDateValidation(window.bookingState.roomId);
+
+                const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
+                if (qtyInput) qtyInput.value = window.bookingState.quantity;
+                updateDateValidation(window.bookingState.roomId);
+            }
+
+            if (!isRestore) showView('view-accom-room', 1);
         }
 
         function renderRoomAccordions(hotelId) {
@@ -723,7 +737,6 @@
             let firstValidCo = null;
             let maxForCurrentDates = 0;
 
-            // Smartly fetch the correct room row from the spreadsheet data
             const matrixRoomData = window.getRoomDataFromMatrix(hotelId, roomId, rt.name);
 
             for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
@@ -835,6 +848,7 @@
             val += delta;
             if (val < 1) val = 1;
             el.value = val;
+            window.saveState();
         }
 
         window.submitDetails = function() {
@@ -855,17 +869,7 @@
                 
                 finalizeConference(); 
             } else {
-                const hotel = window.hotelData[window.bookingState.hotelId];
-                document.getElementById('payment-total-amount').innerText = `RM ${window.bookingState.cost}`;
-                document.getElementById('payment-bank-details').innerHTML = `
-                    <div class="${hotel.bgColor} p-5 rounded-xl border border-${hotel.iconColor.split('-')[1]}-200">
-                        <h4 class="font-bold text-${hotel.iconColor.split('-')[1]}-800 mb-2 flex items-center gap-2">
-                            <i class="${hotel.mainIcon}"></i> Payment for ${hotel.name}
-                        </h4>
-                        <p class="text-sm text-slate-700 whitespace-pre-line font-mono bg-white/50 p-3 rounded">${hotel.bankDetails}</p>
-                    </div>
-                `;
-                showView('view-payment', 3);
+                finalizeAccommodation(); 
             }
         }
 
@@ -902,34 +906,12 @@
         }
 
         window.finalizeAccommodation = async function() {
-            const fileInput = document.getElementById('payment-receipt');
-            if (fileInput.files.length === 0) {
-                showCustomModal("Receipt Required", "Please upload your payment receipt to complete the booking.");
-                return;
-            }
-            if (fileInput.files[0].size > 3 * 1024 * 1024) { 
-                showCustomModal("File Too Large", "Please upload a receipt smaller than 3MB.");
-                return;
-            }
-
-            const btn = document.getElementById('btn-final-submit');
+            const btn = document.getElementById('btn-details-next');
             const orig = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             btn.disabled = true;
 
             try {
-                const file = fileInput.files[0];
-                const receiptData = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve({
-                        filename: file.name,
-                        mimeType: file.type,
-                        base64: reader.result.split(',')[1] 
-                    });
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-
                 const roomName = window.hotelData[window.bookingState.hotelId].roomTypes.find(r=>r.id===window.bookingState.roomId).name;
                 const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
 
@@ -946,14 +928,14 @@
                     rooms_villa: window.bookingState.hotelId === 'villa' ? bookingStr : "",
                     totalCost: `RM ${window.bookingState.cost}`,
                     status: 'Registered',
-                    receiptFilename: receiptData.filename,
-                    receiptMimeType: receiptData.mimeType,
-                    receiptBase64: receiptData.base64
+                    receiptFilename: "",
+                    receiptMimeType: "",
+                    receiptBase64: ""
                 };
 
                 await sendToGoogle(payload);
             } catch(e) {
-                showCustomModal("Error", "Upload failed. Try again.");
+                showCustomModal("Error", "Booking failed. Try again.");
             }
             btn.innerHTML = orig;
             btn.disabled = false;
@@ -993,6 +975,7 @@
                 currentData.push(payload);
                 localStorage.setItem('kkgh_registrations_test', JSON.stringify(currentData));
 
+                sessionStorage.removeItem('kkgh_app_state'); // Clear persistence on success
                 document.getElementById('successModal').classList.remove('hidden');
             } catch(e) {
                 console.error("Submission Error: ", e);
@@ -1001,7 +984,65 @@
             }
         }
 
+        // --- LOAD SAVED STATE ON REFRESH ---
+        window.addEventListener('DOMContentLoaded', async () => {
+            const saved = sessionStorage.getItem('kkgh_app_state');
+            if (saved) {
+                try {
+                    const state = JSON.parse(saved);
+                    if (state.flow && state.view && state.view !== 'landing') {
+                        
+                        // 1. Restore form data
+                        if (state.form) {
+                            document.getElementById('fullName').value = state.form.name || '';
+                            document.getElementById('assembly').value = state.form.assembly || '';
+                            document.getElementById('email').value = state.form.email || '';
+                            document.getElementById('phone').value = state.form.phone || '';
+                            document.getElementById('pax-count').value = state.form.pax || 1;
+                            if (state.form.attendance) {
+                                document.querySelectorAll('input[name="attendance_day"]').forEach(cb => {
+                                    if (state.form.attendance.includes(cb.getAttribute('data-label'))) {
+                                        cb.checked = true;
+                                    }
+                                });
+                            }
+                        }
+
+                        // 2. Restore booking state
+                        if (state.booking) {
+                            window.bookingState = state.booking;
+                        }
+
+                        // 3. Start Flow without overriding view
+                        await window.startFlow(state.flow, true);
+
+                        // 4. Reconstruct specific view states
+                        if (state.view === 'view-accom-room' && state.booking.hotelId) {
+                            window.openHotelDetail(state.booking.hotelId, true);
+                            window.showView(state.view, state.step);
+                        } else if (state.view === 'view-shared-details' && state.flow === 'accommodation') {
+                            if (state.booking.roomId && state.booking.hotelId) {
+                                const hotel = window.hotelData[state.booking.hotelId];
+                                const room = hotel.roomTypes.find(r => r.id === state.booking.roomId);
+                                if(hotel && room) {
+                                    document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
+                                    document.getElementById('summary-room-name').innerText = `${state.booking.quantity}x ${room.name}`;
+                                    document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${state.booking.checkIn} to ${state.booking.checkOut}`;
+                                    document.getElementById('summary-price').innerText = `RM ${state.booking.cost}`;
+                                }
+                            }
+                            window.showView(state.view, state.step);
+                        } else {
+                            window.showView(state.view, state.step);
+                        }
+                    }
+                } catch(e) {
+                    console.error("Could not restore state", e);
+                    sessionStorage.removeItem('kkgh_app_state');
+                }
+            }
+        });
+
     </script>
 </body>
-
 </html>
