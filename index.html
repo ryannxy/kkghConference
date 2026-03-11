@@ -89,11 +89,6 @@
         <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a moment...</p>
     </div>
 
-    <!-- TEST MODE BANNER -->
-    <div id="test-mode-banner" class="hidden bg-yellow-100 border-b border-yellow-200 text-yellow-800 px-4 py-2 text-center text-xs font-bold">
-        <i class="fas fa-flask"></i> LOCAL MODE: Data is saving to your browser memory.
-    </div>
-
     <!-- LANDING PAGE VIEW -->
     <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -410,9 +405,12 @@
 
         // Custom Modal Logic
         window.showCustomModal = function(title, msg, iconClass = "fas fa-exclamation-circle text-red-500") {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-message').innerText = msg;
-            document.getElementById('modal-icon').className = iconClass + " text-3xl";
+            const mTitle = document.getElementById('modal-title');
+            const mMsg = document.getElementById('modal-message');
+            const mIcon = document.getElementById('modal-icon');
+            if(mTitle) mTitle.innerText = title;
+            if(mMsg) mMsg.innerText = msg;
+            if(mIcon) mIcon.className = iconClass + " text-3xl";
             document.getElementById('custom-modal').classList.remove('hidden');
             document.getElementById('custom-modal').classList.add('flex');
         }
@@ -492,8 +490,10 @@
         }
 
         window.resetToHome = function() {
+            // FIX: Use a hard reload when returning to home via manual action.
+            // This satisfies the "always reload" requirement and clears the history stack's memory context.
             sessionStorage.removeItem('kkgh_app_state');
-            window.location.reload();
+            window.location.href = window.location.pathname;
         }
 
         // Trigger dynamic saving when form fields change
@@ -507,16 +507,24 @@
         // --- BROWSER HISTORY INTEGRATION (NATIVE BACK BUTTON/SWIPE) ---
         window.addEventListener('popstate', (e) => {
             const state = e.state;
+            const saved = sessionStorage.getItem('kkgh_app_state');
             
+            // FIX: Prevent "bug out" when using forward/back buttons after a reset.
+            // If the history state exists but the session data is gone, force landing.
+            if (state && state.viewId && state.viewId !== 'landing' && !saved) {
+                window.location.href = window.location.pathname;
+                return;
+            }
+
             // If the user navigated backwards/forwards into a valid step
             if (state && state.viewId && state.viewId !== 'landing') {
                 document.getElementById('view-landing').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 
                 window.currentFlow = state.flow;
-                window.setThemeLight(true); // FIX: Ensure light theme is applied on history navigation
+                window.setThemeLight(true); 
                 
-                // Re-render UI just in case it was a restored session
+                // Re-render UI
                 if (state.flow === 'accommodation') {
                     if (state.viewId === 'view-accom-hotels') {
                         renderHotelCards();
@@ -588,8 +596,18 @@
             window.currentFlow = type;
             window.setThemeLight(true);
 
+            // FIX: Always reset the form and data state when starting a flow to ensure it "always reloads"
+            if (!isRestore) {
+                document.getElementById('registrationForm').reset();
+                window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
+                const adultsInput = document.getElementById('pax-adults');
+                if(adultsInput) adultsInput.value = 1;
+                const kidsInput = document.getElementById('pax-kids');
+                if(kidsInput) kidsInput.value = 0;
+            }
+
             if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
-                showCustomModal("Code Update Required", "Please make sure to paste your 4 Web App URLs at the top of the Javascript code (around line 550)!");
+                showCustomModal("Code Update Required", "Please make sure to paste your 4 Web App URLs at the top of the Javascript code!");
                 return; 
             }
 
@@ -656,14 +674,17 @@
             window.currentStepNum = stepNumber;
             
             ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-confirmation'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
             });
-            document.getElementById(viewId).classList.remove('hidden');
+            const activeEl = document.getElementById(viewId);
+            if (activeEl) activeEl.classList.remove('hidden');
+            
             updateNav(stepNumber);
             window.scrollTo(0, 0);
             window.saveState();
 
-            // Push State to browser history so phone back buttons work
+            // Push State to browser history
             if (pushHistory) {
                 history.pushState({ viewId: viewId, stepNum: stepNumber, flow: window.currentFlow }, "", "");
             }
@@ -693,12 +714,11 @@
             
             Object.keys(window.hotelData).forEach(id => {
                 const h = window.hotelData[id];
-                
                 const isOffline = Object.keys(window.fullAvailability[id] || {}).length === 0;
                 
                 if (isOffline) {
                     container.innerHTML += `
-                        <div class="group flex flex-col bg-slate-50 rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative opacity-80 cursor-not-allowed" onclick="showCustomModal('Hotel Unavailable', 'Cannot load rooms for ${h.name}. The specific Google Sheet script is not responding or has no data.')">
+                        <div class="group flex flex-col bg-slate-50 rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative opacity-80 cursor-not-allowed" onclick="showCustomModal('Hotel Unavailable', 'Cannot load rooms for ${h.name}.')">
                             <div class="absolute inset-0 z-20 flex items-center justify-center bg-white/40 backdrop-blur-[2px]">
                                 <div class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold shadow-lg flex items-center gap-2">
                                     <i class="fas fa-plug text-lg"></i> Disconnected
@@ -710,8 +730,7 @@
                             </div>
                             <div class="p-6 flex flex-col flex-grow grayscale">
                                 <h3 class="text-xl font-bold text-slate-500 mb-1">${h.name}</h3>
-                                <p class="text-slate-400 font-bold text-lg mb-3">Connection Error</p>
-                                <p class="text-sm text-slate-400 mb-6 flex-grow">${h.desc.substring(0, 70)}...</p>
+                                <p class="text-sm text-slate-400 mb-6 flex-grow">${h.desc}</p>
                                 <button type="button" disabled class="w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl cursor-not-allowed">
                                     Currently Unavailable
                                 </button>
@@ -720,14 +739,14 @@
                     `;
                 } else {
                     container.innerHTML += `
-                        <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-${h.iconColor.split('-')[1]}-300 hover:-translate-y-1 transition-all duration-300">
+                        <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
                             <div class="h-48 ${h.bgColor} flex items-center justify-center relative overflow-hidden">
                                 <i class="${h.mainIcon} ${h.iconColor}/20 text-8xl absolute -bottom-4 -right-4 group-hover:scale-110 transition-transform duration-500"></i>
                                 <i class="${h.mainIcon} ${h.iconColor} text-4xl mb-2 drop-shadow-sm z-10"></i>
                             </div>
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3>
-                                <p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc.substring(0, 70)}...</p>
+                                <p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p>
                                 <button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">
                                     View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i>
                                 </button>
@@ -762,21 +781,12 @@
             
             if (isRestore && window.bookingState.roomId) {
                 toggleRoomBooking(window.bookingState.roomId);
-                
                 const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`);
-                if (ciSelect) {
-                    const opt = ciSelect.querySelector(`option[value="${window.bookingState.checkIn}"]`);
-                    if (opt && !opt.disabled) ciSelect.value = window.bookingState.checkIn;
-                }
+                if (ciSelect) ciSelect.value = window.bookingState.checkIn;
                 updateDateValidation(window.bookingState.roomId);
-                
                 const coSelect = document.getElementById(`co-${window.bookingState.roomId}`);
-                if (coSelect) {
-                    const opt = coSelect.querySelector(`option[value="${window.bookingState.checkOut}"]`);
-                    if (opt && !opt.disabled) coSelect.value = window.bookingState.checkOut;
-                }
+                if (coSelect) coSelect.value = window.bookingState.checkOut;
                 updateDateValidation(window.bookingState.roomId);
-
                 const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
                 if (qtyInput) qtyInput.value = window.bookingState.quantity;
                 updateDateValidation(window.bookingState.roomId);
@@ -798,10 +808,7 @@
                     isFullyBooked = true; 
                     if (matrixRoomData) {
                         for (let key in matrixRoomData) {
-                            if (matrixRoomData[key] > 0) {
-                                isFullyBooked = false;
-                                break;
-                            }
+                            if (matrixRoomData[key] > 0) { isFullyBooked = false; break; }
                         }
                     }
                 }
@@ -816,9 +823,7 @@
                 let isFirstValidCi = false;
                 checkInDays.forEach(day => {
                     let avail = 0;
-                    if (matrixRoomData && matrixRoomData[day.val] !== undefined) {
-                        avail = matrixRoomData[day.val];
-                    }
+                    if (matrixRoomData && matrixRoomData[day.val] !== undefined) avail = matrixRoomData[day.val];
                     if (avail === 0) {
                         ciHtml += `<option value="${day.val}" disabled class="text-slate-300">${day.label} (Fully Booked)</option>`;
                     } else {
@@ -834,8 +839,7 @@
                             <div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2">
                                 <i class="fas fa-ban"></i> Fully Booked
                             </div>
-                        </div>
-                        ` : ''}
+                        </div>` : ''}
                         <div class="p-5 flex justify-between items-center ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-lg">${rt.name}</h4>
@@ -856,9 +860,7 @@
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-out</label>
-                                    <select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">
-                                        <!-- Injected by JS -->
-                                    </select>
+                                    <select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')"></select>
                                 </div>
                             </div>
 
@@ -873,7 +875,7 @@
                                     <div id="status-${rt.id}" class="text-xs mt-2 font-bold h-4"></div>
                                 </div>
 
-                                <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition-transform active:scale-95">
+                                <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md">
                                     Reserve: RM <span id="price-${rt.id}">0</span>
                                 </button>
                             </div>
@@ -886,7 +888,6 @@
         window.toggleRoomBooking = function(roomId) {
             const hotelId = window.bookingState.hotelId;
             const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
-            
             document.getElementById('detail-main-image').innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${rt.images[0]}')"></div>`;
 
             window.hotelData[hotelId].roomTypes.forEach(r => {
@@ -906,57 +907,39 @@
         window.updateDateValidation = function(roomId) {
             const hotelId = window.bookingState.hotelId;
             const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
-            
             const ciSelect = document.getElementById(`ci-${roomId}`);
             const coSelect = document.getElementById(`co-${roomId}`);
             const ciValue = ciSelect.value;
             const currentCoValue = coSelect.value; 
-            
             const ciIdx = conferenceDates.indexOf(ciValue);
             
             let coHtml = '';
             let firstValidCo = null;
             let maxForCurrentDates = 0;
-
             const matrixRoomData = window.getRoomDataFromMatrix(hotelId, roomId, rt.name);
 
             for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
                 const targetCo = conferenceDates[i];
                 const nightsStr = conferenceDates.slice(ciIdx, i).join(","); 
-                
                 let avail = 0; 
-                
-                if (matrixRoomData && matrixRoomData[nightsStr] !== undefined) {
-                    avail = matrixRoomData[nightsStr];
-                }
-
+                if (matrixRoomData && matrixRoomData[nightsStr] !== undefined) avail = matrixRoomData[nightsStr];
                 if (avail === 0) {
-                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Fully Booked)</option>`;
+                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Full)</option>`;
                 } else {
                     coHtml += `<option value="${targetCo}">${targetCo}</option>`;
                     if (!firstValidCo) firstValidCo = targetCo;
                 }
             }
-
             coSelect.innerHTML = coHtml;
-            
             if (currentCoValue && coSelect.querySelector(`option[value="${currentCoValue}"]`) && !coSelect.querySelector(`option[value="${currentCoValue}"]`).disabled) {
                 coSelect.value = currentCoValue;
             } else if (firstValidCo) {
                 coSelect.value = firstValidCo;
-            } else {
-                coSelect.value = '';
             }
 
             if (coSelect.value) {
                 const finalNightsStr = conferenceDates.slice(ciIdx, conferenceDates.indexOf(coSelect.value)).join(",");
-                if (matrixRoomData && matrixRoomData[finalNightsStr] !== undefined) {
-                    maxForCurrentDates = matrixRoomData[finalNightsStr];
-                } else {
-                    maxForCurrentDates = 0;
-                }
-            } else {
-                maxForCurrentDates = 0;
+                maxForCurrentDates = (matrixRoomData && matrixRoomData[finalNightsStr] !== undefined) ? matrixRoomData[finalNightsStr] : 0;
             }
 
             const qtyInput = document.getElementById(`qty-${roomId}`);
@@ -969,8 +952,9 @@
             const statusDiv = document.getElementById(`status-${roomId}`);
             const bookBtn = document.getElementById(`btn-book-${roomId}`);
             
+            // FIX: Update status text to show actual quantity available
             if (maxForCurrentDates === 0) {
-                statusDiv.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> Fully Booked for these dates</span>';
+                statusDiv.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> Fully Booked</span>';
                 bookBtn.disabled = true;
                 bookBtn.classList.add('opacity-50', 'cursor-not-allowed');
             } else if (maxForCurrentDates <= 3) {
@@ -978,7 +962,7 @@
                 bookBtn.disabled = false;
                 bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             } else {
-                statusDiv.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> Rooms Available</span>';
+                statusDiv.innerHTML = `<span class="text-green-600"><i class="fas fa-check-circle"></i> ${maxForCurrentDates} Rooms Available</span>`;
                 bookBtn.disabled = false;
                 bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
@@ -992,12 +976,9 @@
             const input = document.getElementById(`qty-${roomId}`);
             const max = parseInt(input.dataset.max) || 0;
             let val = parseInt(input.value) || 0;
-            
             val += delta;
             if (val < 1 && max > 0) val = 1;
             if (val > max) val = max;
-            if (max === 0) val = 0;
-            
             input.value = val;
             updateDateValidation(roomId); 
         }
@@ -1008,18 +989,14 @@
             window.bookingState.checkIn = document.getElementById(`ci-${roomId}`).value;
             window.bookingState.checkOut = document.getElementById(`co-${roomId}`).value;
             window.bookingState.quantity = parseInt(document.getElementById(`qty-${roomId}`).value);
-            
             const priceText = document.getElementById(`price-${roomId}`).innerText.replace(/,/g, '');
             window.bookingState.cost = parseInt(priceText);
-
             const hotel = window.hotelData[hotelId];
             const room = hotel.roomTypes.find(r => r.id === roomId);
-            
             document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
             document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
             document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
             document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
-
             showView('view-shared-details', 2);
         }
 
@@ -1037,42 +1014,30 @@
         window.submitDetails = function() {
             const name = document.getElementById('fullName').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            
-            if (!name || !phone) { 
-                showCustomModal("Missing Information", "Please enter your name and phone number before proceeding."); 
-                return; 
-            }
+            if (!name || !phone) { showCustomModal("Missing Information", "Please enter name and phone number."); return; }
 
             if (window.currentFlow === 'conference') {
-                const daysSelected = document.querySelectorAll('input[name="attendance_day"]:checked').length;
-                if (daysSelected === 0) { 
-                    showCustomModal("Attendance Required", "Please select at least one day of attendance."); 
-                    return; 
+                if (document.querySelectorAll('input[name="attendance_day"]:checked').length === 0) { 
+                    showCustomModal("Attendance Required", "Select at least one day."); return; 
                 }
-                
                 finalizeConference(); 
             } else {
-                // Prepare data for Confirmation screen
                 const adultPax = document.getElementById('pax-adults').value || 1;
                 const kidPax = document.getElementById('pax-kids').value || 0;
                 const requests = document.getElementById('specialRequests').value.trim();
-                
                 const hotel = window.hotelData[window.bookingState.hotelId];
                 const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
 
                 let html = `
                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
-                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact No:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
-                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adult(s), ${kidPax} Kid(s)</span></li>
-                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Other Requests:</span> <span class="w-2/3 font-medium">${requests || 'None'}</span></li>
-                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>
-                `;
-                
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${requests || 'None'}</span></li>
+                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
                 document.getElementById('confirmation-list').innerHTML = html;
-                
                 showView('view-confirmation', 3);
             }
         }
@@ -1080,200 +1045,69 @@
         window.finalizeConference = async function() {
             const btn = document.getElementById('btn-details-next');
             const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            btn.disabled = true;
-
-            const days = [];
-            let dailyRate = 0;
-            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => {
-                days.push(cb.getAttribute('data-label'));
-                dailyRate += parseInt(cb.value);
-            });
-
-            const pax = 1;
-            
-            const payload = {
-                fullName: document.getElementById('fullName').value,
-                assembly: document.getElementById('assembly').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                pax: pax,
-                booking_type: 'conference',
-                days: days,
-                totalCost: `RM ${dailyRate * pax}`,
-                status: 'Registered'
-            };
-
+            btn.innerHTML = 'Saving...'; btn.disabled = true;
+            const days = []; let dailyRate = 0;
+            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => { days.push(cb.getAttribute('data-label')); dailyRate += 50; });
+            const payload = { fullName: document.getElementById('fullName').value, phone: document.getElementById('phone').value, booking_type: 'conference', days: days, totalCost: `RM ${dailyRate}`, status: 'Registered' };
             await sendToGoogle(payload);
-            btn.innerHTML = orig;
-            btn.disabled = false;
+            btn.innerHTML = orig; btn.disabled = false;
         }
 
         window.finalizeAccommodation = async function() {
             const btn = document.getElementById('btn-final-submit');
             const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            btn.disabled = true;
-
+            btn.innerHTML = 'Submitting...'; btn.disabled = true;
             try {
                 const roomName = window.hotelData[window.bookingState.hotelId].roomTypes.find(r=>r.id===window.bookingState.roomId).name;
-                const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
-
                 const adultPax = document.getElementById('pax-adults').value || 1;
                 const kidPax = document.getElementById('pax-kids').value || 0;
-                const totalPaxStr = `${adultPax} Adult(s), ${kidPax} Kid(s)`;
-
-                const payload = {
-                    fullName: document.getElementById('fullName').value,
-                    assembly: "",
-                    email: "",
-                    phone: document.getElementById('phone').value,
-                    pax: totalPaxStr,
-                    booking_type: 'accommodation',
-                    days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
-                    rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
-                    rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
-                    rooms_villa: window.bookingState.hotelId === 'villa' ? bookingStr : "",
-                    totalCost: `RM ${window.bookingState.cost}`,
-                    status: 'Registered',
-                    receiptFilename: "",
-                    receiptMimeType: "",
-                    receiptBase64: "",
-                    checkIn: window.bookingState.checkIn,
-                    checkOut: window.bookingState.checkOut,
-                    roomType: roomName,
-                    quantity: window.bookingState.quantity,
-                    adultPax: adultPax,
-                    kidPax: kidPax,
-                    specialRequests: document.getElementById('specialRequests').value.trim()
-                };
-
+                const payload = { fullName: document.getElementById('fullName').value, phone: document.getElementById('phone').value, pax: `${adultPax} A, ${kidPax} K`, booking_type: 'accommodation', totalCost: `RM ${window.bookingState.cost}`, status: 'Registered', checkIn: window.bookingState.checkIn, checkOut: window.bookingState.checkOut, roomType: roomName, quantity: window.bookingState.quantity, specialRequests: document.getElementById('specialRequests').value.trim() };
                 await sendToGoogle(payload);
-            } catch(e) {
-                showCustomModal("Error", "Booking failed. Try again.");
-            }
-            btn.innerHTML = orig;
-            btn.disabled = false;
+            } catch(e) { showCustomModal("Error", "Submission failed."); }
+            btn.innerHTML = orig; btn.disabled = false;
         }
 
         async function sendToGoogle(payload) {
             try {
                 if (MAIN_SUBMIT_URL.includes("script.google.com")) {
                     const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = MAIN_SUBMIT_URL; // Using the explicit Main Data saving URL
-                    form.target = 'hidden-iframe';
-                    
-                    const payloadInput = document.createElement('input');
-                    payloadInput.type = 'hidden';
-                    payloadInput.name = 'payload'; 
-                    payloadInput.value = JSON.stringify(payload);
-                    form.appendChild(payloadInput);
-                    document.body.appendChild(form);
-                    
-                    let iframe = document.getElementById('hidden-iframe');
-                    if (!iframe) {
-                        iframe = document.createElement('iframe');
-                        iframe.name = 'hidden-iframe';
-                        iframe.id = 'hidden-iframe';
-                        iframe.style.display = 'none';
-                        document.body.appendChild(iframe);
-                    }
-                    
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    form.submit();
-                    document.body.removeChild(form);
-                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    form.method = 'POST'; form.action = MAIN_SUBMIT_URL; form.target = 'hidden-iframe';
+                    const input = document.createElement('input'); input.type = 'hidden'; input.name = 'payload'; input.value = JSON.stringify(payload);
+                    form.appendChild(input); document.body.appendChild(form);
+                    let iframe = document.getElementById('hidden-iframe') || document.body.appendChild(Object.assign(document.createElement('iframe'), {name: 'hidden-iframe', id: 'hidden-iframe', style: 'display:none'}));
+                    form.submit(); document.body.removeChild(form);
+                    await new Promise(r => setTimeout(r, 3000));
                 }
-                
-                const currentData = JSON.parse(localStorage.getItem('kkgh_registrations_test') || '[]');
-                currentData.push(payload);
-                localStorage.setItem('kkgh_registrations_test', JSON.stringify(currentData));
-
-                sessionStorage.removeItem('kkgh_app_state'); // Clear persistence on success
+                sessionStorage.removeItem('kkgh_app_state');
                 document.getElementById('successModal').classList.remove('hidden');
-            } catch(e) {
-                console.error("Submission Error: ", e);
-                showCustomModal("Submission Failed", "Failed to submit to server. " + e.message);
-                throw e;
-            }
+            } catch(e) { console.error(e); throw e; }
         }
 
-        // --- LOAD SAVED STATE ON REFRESH ---
         window.addEventListener('DOMContentLoaded', async () => {
-            // Initialize the base history state for the landing page
-            if (!history.state) {
-                history.replaceState({ viewId: 'landing' }, "", "");
-            }
-
+            if (!history.state) history.replaceState({ viewId: 'landing' }, "", "");
             const saved = sessionStorage.getItem('kkgh_app_state');
             if (saved) {
                 try {
                     const state = JSON.parse(saved);
                     if (state.flow && state.view && state.view !== 'landing') {
                         window.setThemeLight(true);
-                        
-                        // 1. Restore form data
                         if (state.form) {
                             document.getElementById('fullName').value = state.form.name || '';
                             document.getElementById('phone').value = state.form.phone || '';
-                            
-                            const adultInput = document.getElementById('pax-adults');
-                            if(adultInput) adultInput.value = state.form.adults || 1;
-                            
-                            const kidsInput = document.getElementById('pax-kids');
-                            if(kidsInput) kidsInput.value = state.form.kids || 0;
-
-                            const requestsInput = document.getElementById('specialRequests');
-                            if(requestsInput) requestsInput.value = state.form.specialRequests || '';
-
-                            if (state.form.attendance) {
-                                document.querySelectorAll('input[name="attendance_day"]').forEach(cb => {
-                                    if (state.form.attendance.includes(cb.getAttribute('data-label'))) {
-                                        cb.checked = true;
-                                    }
-                                });
-                            }
+                            const paxAdults = document.getElementById('pax-adults');
+                            if(paxAdults) paxAdults.value = state.form.adults || 1;
+                            const paxKids = document.getElementById('pax-kids');
+                            if(paxKids) paxKids.value = state.form.kids || 0;
+                            const specialRequests = document.getElementById('specialRequests');
+                            if(specialRequests) specialRequests.value = state.form.specialRequests || '';
                         }
-
-                        // 2. Restore booking state
-                        if (state.booking) {
-                            window.bookingState = state.booking;
-                        }
-
-                        // 3. Start Flow without overriding view
+                        if (state.booking) window.bookingState = state.booking;
                         await window.startFlow(state.flow, true);
-
-                        // 4. Reconstruct specific view states
-                        if (state.view === 'view-accom-room' && state.booking.hotelId) {
-                            window.openHotelDetail(state.booking.hotelId, true);
-                            window.showView(state.view, state.step, false); // DO NOT PUSH to history on restore
-                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
-                        } else if (state.view === 'view-shared-details' && state.flow === 'accommodation') {
-                            if (state.booking.roomId && state.booking.hotelId) {
-                                const hotel = window.hotelData[state.booking.hotelId];
-                                const room = hotel.roomTypes.find(r => r.id === state.booking.roomId);
-                                if(hotel && room) {
-                                    document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
-                                    document.getElementById('summary-room-name').innerText = `${state.booking.quantity}x ${room.name}`;
-                                    document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${state.booking.checkIn} to ${state.booking.checkOut}`;
-                                    document.getElementById('summary-price').innerText = `RM ${state.booking.cost}`;
-                                }
-                            }
-                            window.showView(state.view, state.step, false);
-                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
-                        } else {
-                            window.showView(state.view, state.step, false);
-                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
-                        }
+                        window.showView(state.view, state.step, false);
                     }
-                } catch(e) {
-                    console.error("Could not restore state", e);
-                    sessionStorage.removeItem('kkgh_app_state');
-                }
+                } catch(e) { sessionStorage.removeItem('kkgh_app_state'); }
             }
         });
-
     </script>
 </body>
 </html>
