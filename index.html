@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a" id="meta-theme-color">
     <title>Registration | Kota Kemuning Assembly Annual Bible Conference 2026</title>
     
     <!-- Website Icon (Favicon) -->
@@ -13,9 +14,17 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
         
+        html, body {
+            background-color: #0f172a; /* Dark slate for landing page bounce area */
+            transition: background-color 0.4s ease;
+        }
+
+        html.theme-light, body.theme-light {
+            background-color: #f8fafc; /* Light gray for app bounce area */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
         }
         
         h1, h2, h3 {
@@ -127,23 +136,23 @@
         <!-- Navbar -->
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
-                    2026 Annual Bible Conference <span id="flow-badge" class="text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
+                <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-sm md:text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
+                    2026 Annual Bible Conference <span id="flow-badge" class="text-[10px] md:text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
                 </div>
                 
-                <div class="flex items-center gap-1 md:gap-4">
+                <div class="flex items-center gap-2 md:gap-4 shrink-0">
                     <div id="nav-step-1" class="flex items-center gap-2 text-sm font-medium text-gray-400">
-                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
+                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
                         <span class="hidden md:inline" id="nav-step-1-text">Selection</span>
                     </div>
-                    <div class="w-3 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
+                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
                     <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
-                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
+                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
                         <span class="hidden md:inline">Details</span>
                     </div>
-                    <div class="w-3 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-3"></div>
+                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-3"></div>
                     <div id="nav-step-3" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
-                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
+                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
                         <span class="hidden md:inline">Confirm</span>
                     </div>
                 </div>
@@ -156,7 +165,6 @@
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-8 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
-                    <p class="text-slate-500">Choose from our partner accommodations near the conference venue.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
@@ -387,6 +395,19 @@
 
         // =====================================================================
 
+        window.setThemeLight = function(isLight) {
+            const metaTheme = document.getElementById('meta-theme-color');
+            if (isLight) {
+                document.documentElement.classList.add('theme-light');
+                document.body.classList.add('theme-light');
+                if (metaTheme) metaTheme.setAttribute('content', '#ffffff'); // Matches white navbar
+            } else {
+                document.documentElement.classList.remove('theme-light');
+                document.body.classList.remove('theme-light');
+                if (metaTheme) metaTheme.setAttribute('content', '#0f172a'); // Matches dark landing
+            }
+        };
+
         // Custom Modal Logic
         window.showCustomModal = function(title, msg, iconClass = "fas fa-exclamation-circle text-red-500") {
             document.getElementById('modal-title').innerText = title;
@@ -510,6 +531,7 @@
                 document.getElementById('app-container').classList.add('hidden');
                 document.getElementById('view-landing').classList.remove('hidden');
                 window.currentViewId = null;
+                window.setThemeLight(false);
             }
         });
         // -------------------------------------------------------------
@@ -563,6 +585,7 @@
 
         window.startFlow = async function(type, isRestore = false) {
             window.currentFlow = type;
+            window.setThemeLight(true);
 
             if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
                 showCustomModal("Code Update Required", "Please make sure to paste your 4 Web App URLs at the top of the Javascript code (around line 550)!");
@@ -651,11 +674,11 @@
                 if(nav) {
                     const badge = nav.querySelector('span');
                     if(step >= num) {
-                        badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white";
+                        badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white transition-colors";
                         nav.classList.remove('text-gray-400');
                         nav.classList.add('text-blue-600');
                     } else {
-                        badge.className = "w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400";
+                        badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400 transition-colors";
                         nav.classList.remove('text-blue-600');
                         nav.classList.add('text-gray-400');
                     }
@@ -1187,6 +1210,7 @@
                 try {
                     const state = JSON.parse(saved);
                     if (state.flow && state.view && state.view !== 'landing') {
+                        window.setThemeLight(true);
                         
                         // 1. Restore form data
                         if (state.form) {
