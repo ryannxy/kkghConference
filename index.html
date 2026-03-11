@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kota Kemuning Gospel Hall Annual Bible Conference 2026</title>
+    <title>Registration | Kota Kemuning Assembly Annual Bible Conference 2026</title>
+    
+    <!-- Website Icon (Favicon) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232563eb%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2230%22 font-family=%22Arial, sans-serif%22 font-weight=%22bold%22 fill=%22white%22>KKGH</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -91,11 +94,11 @@
 
         <div class="z-10 max-w-5xl animate-fade-in-up w-full py-12">
             <span class="inline-block py-2 px-5 rounded-full bg-slate-800 text-blue-200 text-sm font-semibold mb-8 border border-slate-700 tracking-wider uppercase shadow-sm">December 16-19, 2026</span>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">Kota Kemuning Gospel Hall 2026<br>Annual Bible Conference</h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-12 font-light italic">"Subject: TBC"</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">Kota Kemuning Assembly<br>Annual Bible Conference 2026</h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-12 font-light italic">"Theme: TBC"</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow('conference')">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSey0d0h4KdOOrA-ZRfrbzWGH1QdT_rwuyL9IzxyHlxkcCG-Iw/viewform', '_blank')">
                     <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
                         <i class="fas fa-calendar-check text-2xl text-white"></i>
                     </div>
@@ -125,18 +128,23 @@
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
-                    KKGH Conference <span id="flow-badge" class="text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
+                    2026 Annual Bible Conference <span id="flow-badge" class="text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
                 </div>
                 
-                <div class="flex items-center gap-2 md:gap-4">
+                <div class="flex items-center gap-1 md:gap-4">
                     <div id="nav-step-1" class="flex items-center gap-2 text-sm font-medium text-gray-400">
                         <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
                         <span class="hidden md:inline" id="nav-step-1-text">Selection</span>
                     </div>
-                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
+                    <div class="w-3 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
                     <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
                         <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
                         <span class="hidden md:inline">Details</span>
+                    </div>
+                    <div class="w-3 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-3"></div>
+                    <div id="nav-step-3" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
+                        <span class="hidden md:inline">Confirm</span>
                     </div>
                 </div>
             </div>
@@ -148,7 +156,7 @@
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-8 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
-                    <p class="text-slate-500">Choose from our recommended accommodations near the conference venue.</p>
+                    <p class="text-slate-500">Choose from our partner accommodations near the conference venue.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
@@ -160,7 +168,8 @@
             <!-- VIEW: ACCOMMODATION ROOM DETAILS & DATES -->
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="showView('view-accom-hotels', 1)" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <!-- NATIVE BACK INTEGRATION -->
+                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back to Hotels
                     </button>
                 </div>
@@ -197,7 +206,8 @@
             <!-- VIEW: SHARED PERSONAL DETAILS -->
             <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center" id="details-back-btn">
-                    <button type="button" onclick="goBackFromDetails()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <!-- NATIVE BACK INTEGRATION -->
+                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
                 </div>
@@ -227,21 +237,53 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                            <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. Joshua Lee">
+                            <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Assembly</label>
-                            <input type="text" required id="assembly" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. Kota Kemuning">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                            <input type="email" required id="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g. joshua@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
-                            <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="+60 12-345 6789">
+                            <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
+                                Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Please indicate your country code)</span>
+                            </label>
+                            <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
                         </div>
                     </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-users text-blue-500"></i> Pax
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div>
+                                    <span class="block text-sm font-bold text-slate-700">Adults</span>
+                                    <span class="text-xs text-slate-500">Age 10 and above</span>
+                                </div>
+                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
+                                    <button type="button" onclick="adjustPax('adults', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
+                                    <input type="number" id="pax-adults" value="1" min="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('adults', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div>
+                                    <span class="block text-sm font-bold text-slate-700">Kids</span>
+                                    <span class="text-xs text-slate-500">Ages 3-9</span>
+                                </div>
+                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
+                                    <button type="button" onclick="adjustPax('kids', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
+                                    <input type="number" id="pax-kids" value="0" min="0" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('kids', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="accom-special-requests" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6 hidden">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="far fa-comment-dots text-blue-500"></i> Other Requests
+                    </h3>
+                    <p class="text-slate-500 text-sm mb-4">Any further requests for the hotel? (Subject to availability)</p>
+                    <textarea id="specialRequests" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g., Extra bed, extra pillow..."></textarea>
                 </div>
 
                 <div id="section-attendance" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6 hidden">
@@ -272,17 +314,41 @@
 
                 <div class="flex justify-end">
                     <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
-                        Complete Booking <i class="fas fa-check-circle ml-2"></i>
+                        Review Details <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
             </div>
+
+            <!-- VIEW: CONFIRMATION STEP -->
+            <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
+                <div class="mb-6 flex justify-between items-center">
+                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                        <i class="fas fa-arrow-left"></i> Back to Details
+                    </button>
+                </div>
+
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Review Your Booking</h2>
+                <p class="text-slate-500 mb-8">Please confirm your details before submitting.</p>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+                    <ul id="confirmation-list" class="space-y-1 text-slate-700">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
+                        Confirm & Submit Booking <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
         </form>
 
         <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
-            <div class="container mx-auto px-4 flex justify-between items-center text-sm text-slate-500">
-                <p>&copy; 2026 Kota Kemuning Gospel Hall.</p>
+            <div class="container mx-auto px-4 flex justify-center items-center text-sm text-slate-500">
                 <div class="flex gap-4">
-                    <a href="#" class="hover:text-blue-600"><i class="fas fa-envelope"></i> kkghsub@gmail.com</a>
+                    <a href="mailto:kotakemuning.gh@gmail.com" class="hover:text-blue-600"><i class="fas fa-envelope"></i> kotakemuning.gh@gmail.com</a>
                 </div>
             </div>
         </footer>
@@ -294,8 +360,8 @@
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="fas fa-check text-green-600 text-4xl"></i>
             </div>
-            <h3 class="text-2xl font-bold text-slate-800 mb-2 font-serif">Registration Successful!</h3>
-            <p class="text-slate-500 mb-8">We have received your details. An email confirmation has been sent.</p>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2 font-serif">Booking Successful!</h3>
+            <p class="text-slate-500 mb-8">An email has been sent to the hotel regarding your booking. The hotel will contact you for the payment.</p>
             <button onclick="resetToHome()" class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition-colors">
                 Back to Home
             </button>
@@ -353,29 +419,29 @@
         window.hotelData = {
             'mile': {
                 name: 'Mi Le Gardens', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-                desc: 'Mi Le Gardens offers a serene escape from the hustle of the city. Located just 10 minutes from the conference venue.',
-                amenities: ['Queen/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Hot Shower', 'Free Parking', 'Garden Walkways'],
+                desc: '[Details needed]',
+                amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 88, desc: 'Comfortable basic room perfect for couples or solo travelers.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 128, desc: 'Spacious room with additional bedding for families.', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Family+Room'] }
+                    { id: 'standard', name: 'Standard Room', price: 88, desc: '[Details needed]', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 128, desc: '[Details needed]', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Family+Room'] }
                 ]
             },
             'padi': {
                 name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-                desc: 'Highly convenient and surrounded by a variety of local food courts, cafes, and marts.',
-                amenities: ['Smart TV', 'High-Speed Wi-Fi', 'Rain Shower', 'Coffee Maker', 'Work Desk', '24h Reception'],
+                desc: '[Details needed]',
+                amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 138, desc: 'Modern aesthetics with city views and work amenities.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 168, desc: 'Upgraded corner room with extra space for families.', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] }
+                    { id: 'standard', name: 'Standard Room', price: 138, desc: '[Details needed]', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 168, desc: '[Details needed]', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] }
                 ]
             },
             'villa': {
                 name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-                desc: 'A premium stay experience. Indulge in luxurious amenities, scenic views, and exceptionally spacious rooms.',
-                amenities: ['King/Twin Beds', 'Free Wi-Fi', 'Air Conditioning', 'Swimming Pool', 'Free Breakfast', 'Room Service'],
+                desc: '[Details needed]',
+                amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 150, desc: 'Elegant design with balcony access and premium toiletries.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 210, desc: 'A massive suite featuring extra beds and a living lounge.', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Family+Room'] }
+                    { id: 'standard', name: 'Standard Room', price: 150, desc: '[Details needed]', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Standard+Room'] },
+                    { id: 'family', name: 'Family Room', price: 210, desc: '[Details needed]', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Family+Room'] }
                 ]
             }
         };
@@ -394,10 +460,10 @@
                 booking: window.bookingState,
                 form: {
                     name: document.getElementById('fullName').value,
-                    assembly: document.getElementById('assembly').value,
-                    email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
-                    pax: 1,
+                    adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
+                    kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
+                    specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : '',
                     attendance: attendance
                 }
             };
@@ -411,11 +477,42 @@
 
         // Trigger dynamic saving when form fields change
         document.addEventListener('input', (e) => {
-            if (['fullName', 'assembly', 'email', 'phone'].includes(e.target.id) || e.target.name === 'attendance_day') {
+            if (['fullName', 'phone', 'specialRequests'].includes(e.target.id) || e.target.name === 'attendance_day') {
                 if (window.currentViewId) window.saveState();
             }
         });
         // -----------------------------------
+
+        // --- BROWSER HISTORY INTEGRATION (NATIVE BACK BUTTON/SWIPE) ---
+        window.addEventListener('popstate', (e) => {
+            const state = e.state;
+            
+            // If the user navigated backwards into a valid step
+            if (state && state.viewId && state.viewId !== 'landing') {
+                document.getElementById('view-landing').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+                
+                window.currentFlow = state.flow;
+                
+                // Re-render UI just in case it was a restored session
+                if (state.flow === 'accommodation') {
+                    if (state.viewId === 'view-accom-hotels') {
+                        renderHotelCards();
+                    } else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
+                        window.openHotelDetail(window.bookingState.hotelId, true);
+                    }
+                }
+
+                // Show the view WITHOUT pushing another state to history
+                window.showView(state.viewId, state.stepNum, false); 
+            } else {
+                // Otherwise, they went all the way back to the start
+                document.getElementById('app-container').classList.add('hidden');
+                document.getElementById('view-landing').classList.remove('hidden');
+                window.currentViewId = null;
+            }
+        });
+        // -------------------------------------------------------------
 
         const fetchHotelData = async (url, hotelName) => {
             if (!url || url.includes("PASTE_")) return null;
@@ -432,7 +529,6 @@
         window.hotelDataPromise = null;
         window.preloadHotelData = function() {
             if (!MILE_URL.includes("PASTE_") && !window.hotelDataPromise) {
-                // We use Promise.all to fetch all three at the EXACT same time
                 window.hotelDataPromise = Promise.all([
                     fetchHotelData(MILE_URL, "Mi Le"),
                     fetchHotelData(PADI_URL, "Padi Sentral"),
@@ -440,7 +536,6 @@
                 ]);
             }
         };
-        // Start preloading quietly after a short delay (so it doesn't block the initial page render)
         setTimeout(window.preloadHotelData, 1000); 
         // -----------------------------
 
@@ -485,6 +580,7 @@
                 
                 document.getElementById('section-attendance').classList.remove('hidden');
                 document.getElementById('accom-booking-summary').classList.add('hidden');
+                document.getElementById('accom-special-requests').classList.add('hidden');
                 document.getElementById('btn-details-next').innerHTML = 'Complete Registration <i class="fas fa-check-circle ml-2"></i>';
                 
                 if (!isRestore) showView('view-shared-details', 1);
@@ -496,20 +592,18 @@
                 
                 document.getElementById('section-attendance').classList.add('hidden');
                 document.getElementById('accom-booking-summary').classList.remove('hidden');
+                document.getElementById('accom-special-requests').classList.remove('hidden');
                 document.getElementById('btn-details-next').innerHTML = 'Complete Booking <i class="fas fa-check-circle ml-2"></i>';
 
                 if (!isRestore) renderHotelCards();
 
-                // Show loader just in case they clicked before the background pre-loader finished
                 document.getElementById('global-loader').classList.remove('hidden');
                 document.getElementById('global-loader').classList.add('flex');
                 
-                // If it hasn't started preloading yet, start it now
                 if (!window.hotelDataPromise) window.preloadHotelData();
                 
                 let mileData = {}, padiData = {}, villaData = {};
                 
-                // Wait for all 3 simultaneous promises to finish
                 if (window.hotelDataPromise) {
                     try {
                         const [m, p, v] = await window.hotelDataPromise;
@@ -533,21 +627,26 @@
             }
         };
 
-        window.showView = function(viewId, stepNumber) {
+        window.showView = function(viewId, stepNumber, pushHistory = true) {
             window.currentViewId = viewId;
             window.currentStepNum = stepNumber;
             
-            ['view-accom-hotels', 'view-accom-room', 'view-shared-details'].forEach(id => {
+            ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-confirmation'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             document.getElementById(viewId).classList.remove('hidden');
             updateNav(stepNumber);
             window.scrollTo(0, 0);
             window.saveState();
+
+            // Push State to browser history so phone back buttons work
+            if (pushHistory) {
+                history.pushState({ viewId: viewId, stepNum: stepNumber, flow: window.currentFlow }, "", "");
+            }
         };
 
         function updateNav(step) {
-            [1, 2].forEach(num => {
+            [1, 2, 3].forEach(num => {
                 const nav = document.getElementById(`nav-step-${num}`);
                 if(nav) {
                     const badge = nav.querySelector('span');
@@ -562,14 +661,6 @@
                     }
                 }
             });
-        }
-
-        window.goBackFromDetails = function() {
-            if (window.currentFlow === 'conference') {
-                resetToHome(); 
-            } else {
-                showView('view-accom-room', 1);
-            }
         }
 
         function renderHotelCards() {
@@ -676,12 +767,11 @@
             container.innerHTML = '';
 
             data.roomTypes.forEach(rt => {
-                // Check if this specific room is fully booked across all dates
                 let isFullyBooked = false;
                 const matrixRoomData = window.getRoomDataFromMatrix(hotelId, rt.id, rt.name);
                 
                 if (Object.keys(window.fullAvailability[hotelId] || {}).length > 0) {
-                    isFullyBooked = true; // Assume true until we find at least 1 available night
+                    isFullyBooked = true; 
                     if (matrixRoomData) {
                         for (let key in matrixRoomData) {
                             if (matrixRoomData[key] > 0) {
@@ -692,7 +782,6 @@
                     }
                 }
 
-                // Dynamically build Check-in options to auto-skip sold out days
                 let ciHtml = '';
                 const checkInDays = [
                     { val: 'Dec 16', label: 'Wed, Dec 16' },
@@ -910,12 +999,23 @@
             showView('view-shared-details', 2);
         }
 
+        window.adjustPax = function(type, delta) {
+            const el = document.getElementById(type === 'adults' ? 'pax-adults' : 'pax-kids');
+            if(!el) return;
+            let val = parseInt(el.value) || 0;
+            val += delta;
+            const min = type === 'adults' ? 1 : 0;
+            if (val < min) val = min;
+            el.value = val;
+            window.saveState();
+        }
+
         window.submitDetails = function() {
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value.trim();
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
             
-            if (!name || !email) { 
-                showCustomModal("Missing Information", "Please enter your name and email address before proceeding."); 
+            if (!name || !phone) { 
+                showCustomModal("Missing Information", "Please enter your name and phone number before proceeding."); 
                 return; 
             }
 
@@ -928,7 +1028,28 @@
                 
                 finalizeConference(); 
             } else {
-                finalizeAccommodation(); 
+                // Prepare data for Confirmation screen
+                const adultPax = document.getElementById('pax-adults').value || 1;
+                const kidPax = document.getElementById('pax-kids').value || 0;
+                const requests = document.getElementById('specialRequests').value.trim();
+                
+                const hotel = window.hotelData[window.bookingState.hotelId];
+                const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
+
+                let html = `
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact No:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adult(s), ${kidPax} Kid(s)</span></li>
+                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Other Requests:</span> <span class="w-2/3 font-medium">${requests || 'None'}</span></li>
+                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>
+                `;
+                
+                document.getElementById('confirmation-list').innerHTML = html;
+                
+                showView('view-confirmation', 3);
             }
         }
 
@@ -965,21 +1086,25 @@
         }
 
         window.finalizeAccommodation = async function() {
-            const btn = document.getElementById('btn-details-next');
+            const btn = document.getElementById('btn-final-submit');
             const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             btn.disabled = true;
 
             try {
                 const roomName = window.hotelData[window.bookingState.hotelId].roomTypes.find(r=>r.id===window.bookingState.roomId).name;
                 const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
 
+                const adultPax = document.getElementById('pax-adults').value || 1;
+                const kidPax = document.getElementById('pax-kids').value || 0;
+                const totalPaxStr = `${adultPax} Adult(s), ${kidPax} Kid(s)`;
+
                 const payload = {
                     fullName: document.getElementById('fullName').value,
-                    assembly: document.getElementById('assembly').value,
-                    email: document.getElementById('email').value,
+                    assembly: "",
+                    email: "",
                     phone: document.getElementById('phone').value,
-                    pax: 1,
+                    pax: totalPaxStr,
                     booking_type: 'accommodation',
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
@@ -989,7 +1114,14 @@
                     status: 'Registered',
                     receiptFilename: "",
                     receiptMimeType: "",
-                    receiptBase64: ""
+                    receiptBase64: "",
+                    checkIn: window.bookingState.checkIn,
+                    checkOut: window.bookingState.checkOut,
+                    roomType: roomName,
+                    quantity: window.bookingState.quantity,
+                    adultPax: adultPax,
+                    kidPax: kidPax,
+                    specialRequests: document.getElementById('specialRequests').value.trim()
                 };
 
                 await sendToGoogle(payload);
@@ -1045,6 +1177,11 @@
 
         // --- LOAD SAVED STATE ON REFRESH ---
         window.addEventListener('DOMContentLoaded', async () => {
+            // Initialize the base history state for the landing page
+            if (!history.state) {
+                history.replaceState({ viewId: 'landing' }, "", "");
+            }
+
             const saved = sessionStorage.getItem('kkgh_app_state');
             if (saved) {
                 try {
@@ -1054,9 +1191,17 @@
                         // 1. Restore form data
                         if (state.form) {
                             document.getElementById('fullName').value = state.form.name || '';
-                            document.getElementById('assembly').value = state.form.assembly || '';
-                            document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
+                            
+                            const adultInput = document.getElementById('pax-adults');
+                            if(adultInput) adultInput.value = state.form.adults || 1;
+                            
+                            const kidsInput = document.getElementById('pax-kids');
+                            if(kidsInput) kidsInput.value = state.form.kids || 0;
+
+                            const requestsInput = document.getElementById('specialRequests');
+                            if(requestsInput) requestsInput.value = state.form.specialRequests || '';
+
                             if (state.form.attendance) {
                                 document.querySelectorAll('input[name="attendance_day"]').forEach(cb => {
                                     if (state.form.attendance.includes(cb.getAttribute('data-label'))) {
@@ -1077,7 +1222,8 @@
                         // 4. Reconstruct specific view states
                         if (state.view === 'view-accom-room' && state.booking.hotelId) {
                             window.openHotelDetail(state.booking.hotelId, true);
-                            window.showView(state.view, state.step);
+                            window.showView(state.view, state.step, false); // DO NOT PUSH to history on restore
+                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
                         } else if (state.view === 'view-shared-details' && state.flow === 'accommodation') {
                             if (state.booking.roomId && state.booking.hotelId) {
                                 const hotel = window.hotelData[state.booking.hotelId];
@@ -1089,9 +1235,11 @@
                                     document.getElementById('summary-price').innerText = `RM ${state.booking.cost}`;
                                 }
                             }
-                            window.showView(state.view, state.step);
+                            window.showView(state.view, state.step, false);
+                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
                         } else {
-                            window.showView(state.view, state.step);
+                            window.showView(state.view, state.step, false);
+                            history.replaceState({ viewId: state.view, stepNum: state.step, flow: state.flow }, "", "");
                         }
                     }
                 } catch(e) {
@@ -1104,4 +1252,3 @@
     </script>
 </body>
 </html>
-
