@@ -172,7 +172,7 @@
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <!-- NATIVE BACK INTEGRATION -->
-                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back to Hotels
                     </button>
                 </div>
@@ -210,7 +210,7 @@
             <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center" id="details-back-btn">
                     <!-- NATIVE BACK INTEGRATION -->
-                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
                 </div>
@@ -333,7 +333,7 @@
             <!-- VIEW: CONFIRMATION STEP -->
             <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="history.back()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back to Details
                     </button>
                 </div>
@@ -426,6 +426,15 @@
             document.getElementById('custom-modal').classList.add('hidden');
             document.getElementById('custom-modal').classList.remove('flex');
         }
+
+        // ANTI-DOUBLE-TAP BACK BUTTON
+        let isNavigatingBack = false;
+        window.handleUIBack = function() {
+            if (isNavigatingBack) return;
+            isNavigatingBack = true;
+            history.back();
+            setTimeout(() => { isNavigatingBack = false; }, 400); // Prevent accidental double taps
+        };
 
         window.currentFlow = 'conference'; 
         window.currentViewId = null;
@@ -543,6 +552,11 @@
                 document.getElementById('view-landing').classList.remove('hidden');
                 window.currentViewId = null;
                 window.setThemeLight(false);
+                
+                // FORCE CACHE CLEAR ON BACK BUTTON TO LANDING PAGE
+                sessionStorage.removeItem('kkgh_app_state');
+                window.hotelDataPromise = null;
+                window.fullAvailability = { mile: {}, padi: {}, villa: {} };
             }
         });
         // -------------------------------------------------------------
@@ -550,7 +564,9 @@
         const fetchHotelData = async (url, hotelName) => {
             if (!url || url.includes("PASTE_")) return null;
             try {
-                const response = await fetch(url);
+                // Add timestamp to strictly bypass browser HTTP cache
+                const cacheBusterUrl = url.includes('?') ? `${url}&t=${new Date().getTime()}` : `${url}?t=${new Date().getTime()}`;
+                const response = await fetch(cacheBusterUrl);
                 return await response.json();
             } catch (e) {
                 console.warn(`Could not connect to ${hotelName} spreadsheet:`, e);
@@ -1022,6 +1038,7 @@
                     const state = JSON.parse(saved);
                     if (state.flow && state.view && state.view !== 'landing') {
                         window.setThemeLight(true);
+                        
                         if (state.form) {
                             document.getElementById('fullName').value = state.form.name || '';
                             document.getElementById('email').value = state.form.email || '';
@@ -1032,10 +1049,91 @@
                             if(document.getElementById('specialRequests')) document.getElementById('specialRequests').value = state.form.specialRequests || '';
                         }
                         if (state.booking) window.bookingState = state.booking;
+                        
+                        // This fetches the fresh spreadsheet data
                         await window.startFlow(state.flow, true);
-                        window.showView(state.view, state.step, false);
+                        
+                        // RECONSTRUCT DOM AND HISTORY STACK
+                        if (state.flow === 'accommodation') {
+                            history.replaceState({ viewId: 'landing' }, "", "");
+                            
+                            if (state.view === 'view-accom-hotels') {
+                                window.showView('view-accom-hotels', 1, false);
+                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
+                            
+                            } else if (state.view === 'view-accom-room') {
+                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
+                                if (window.bookingState.hotelId) window.openHotelDetail(window.bookingState.hotelId, true);
+                                window.showView('view-accom-room', 1, false);
+                                history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
+                            
+                            } else if (state.view === 'view-shared-details' || state.view === 'view-confirmation') {
+                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
+                                history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
+                                
+                                if (window.bookingState.hotelId) {
+                                    // Rebuild the hotel UI behind the scenes
+                                    window.openHotelDetail(window.bookingState.hotelId, true);
+                                    
+                                    // VERIFICATION: Check if room is STILL available after refresh
+                                    const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
+                                    const currentMax = parseInt(qtyInput ? qtyInput.dataset.max : 0) || 0;
+                                    
+                                    if (window.bookingState.quantity > currentMax) {
+                                        showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
+                                        window.showView('view-accom-room', 1, false);
+                                        history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
+                                        return; // Stop restoring deeper views
+                                    }
+                                }
+
+                                if (state.view === 'view-shared-details') {
+                                    // Re-populate the summary panel
+                                    if (window.bookingState.roomId && window.bookingState.hotelId) {
+                                        const hotel = window.hotelData[window.bookingState.hotelId];
+                                        const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
+                                        if (hotel && room) {
+                                            document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
+                                            document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
+                                            document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
+                                            document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
+                                        }
+                                    }
+                                    window.showView('view-shared-details', 2, false);
+                                    history.pushState({ viewId: 'view-shared-details', stepNum: 2, flow: 'accommodation' }, "", "");
+                                
+                                } else if (state.view === 'view-confirmation') {
+                                    history.pushState({ viewId: 'view-shared-details', stepNum: 2, flow: 'accommodation' }, "", "");
+                                    
+                                    // Re-populate the final confirmation list
+                                    const hotel = window.hotelData[window.bookingState.hotelId];
+                                    const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
+                                    if (hotel && room) {
+                                        const name = document.getElementById('fullName').value.trim();
+                                        const phone = document.getElementById('phone').value.trim();
+                                        const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
+                                        const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
+                                        let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
+                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
+                                        <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
+                                        document.getElementById('confirmation-list').innerHTML = html;
+                                    }
+                                    window.showView('view-confirmation', 3, false);
+                                    history.pushState({ viewId: 'view-confirmation', stepNum: 3, flow: 'accommodation' }, "", "");
+                                }
+                            }
+                        } else if (state.flow === 'conference') {
+                            history.replaceState({ viewId: 'landing' }, "", "");
+                            window.showView('view-shared-details', 1, false);
+                            history.pushState({ viewId: 'view-shared-details', stepNum: 1, flow: 'conference' }, "", "");
+                        }
                     }
-                } catch(e) { sessionStorage.removeItem('kkgh_app_state'); }
+                } catch(e) { console.error("Restore Error: ", e); sessionStorage.removeItem('kkgh_app_state'); }
             }
         });
     </script>
