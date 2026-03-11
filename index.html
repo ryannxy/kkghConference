@@ -508,12 +508,13 @@
         window.addEventListener('popstate', (e) => {
             const state = e.state;
             
-            // If the user navigated backwards into a valid step
+            // If the user navigated backwards/forwards into a valid step
             if (state && state.viewId && state.viewId !== 'landing') {
                 document.getElementById('view-landing').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 
                 window.currentFlow = state.flow;
+                window.setThemeLight(true); // FIX: Ensure light theme is applied on history navigation
                 
                 // Re-render UI just in case it was a restored session
                 if (state.flow === 'accommodation') {
