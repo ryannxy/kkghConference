@@ -458,8 +458,12 @@
                 desc: '[Details needed]',
                 amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 88, desc: '[Details needed]', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 128, desc: '[Details needed]', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Family+Room'] }
+                    { id: 'resort', name: 'Resort (9pax)', price: 0, desc: '9 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Resort'] },
+                    { id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Chalet'] },
+                    { id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 unit total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Small+Chalet'] },
+                    { id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Single'] },
+                    { id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Queen'] },
+                    { id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Triple+Room'] }
                 ]
             },
             'padi': {
@@ -467,8 +471,11 @@
                 desc: '[Details needed]',
                 amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 138, desc: '[Details needed]', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 168, desc: '[Details needed]', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] }
+                    { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 0, desc: '4 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Triple'] },
+                    { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 0, desc: '8 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Family'] },
+                    { id: 'family-room', name: 'Family Room (4pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] },
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '18 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+King'] },
+                    { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Super+Twin'] }
                 ]
             },
             'villa': {
@@ -476,8 +483,9 @@
                 desc: '[Details needed]',
                 amenities: ['[Details needed]'],
                 roomTypes: [
-                    { id: 'standard', name: 'Standard Room', price: 150, desc: '[Details needed]', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Standard+Room'] },
-                    { id: 'family', name: 'Family Room', price: 210, desc: '[Details needed]', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Family+Room'] }
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '11 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
+                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '3 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
+                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '5 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
                 ]
             }
         };
@@ -557,6 +565,7 @@
                 sessionStorage.removeItem('kkgh_app_state');
                 window.hotelDataPromise = null;
                 window.fullAvailability = { mile: {}, padi: {}, villa: {} };
+                window.preloadHotelData(); // Start fresh fetch immediately in the background!
             }
         });
         // -------------------------------------------------------------
@@ -585,28 +594,41 @@
                 ]);
             }
         };
-        setTimeout(window.preloadHotelData, 1000); 
+        window.preloadHotelData(); // Start fetching INSTANTLY, no artificial delays
         // -----------------------------
 
         window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
             if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
             const matrix = window.fullAvailability[hotelId];
             
-            if (matrix[roomId]) return matrix[roomId];
-            if (matrix[rtName]) return matrix[rtName];
+            // 1. Direct exact match
+            if (matrix[roomId] !== undefined) return matrix[roomId];
+            if (matrix[rtName] !== undefined) return matrix[rtName];
             
             const keys = Object.keys(matrix);
+            
+            // Helper to strip out spaces and symbols for a clean exact comparison
+            const normalize = (str) => str.replace(/[^a-z0-9]/gi, '').toLowerCase();
+            const idNorm = normalize(roomId);
+            const nameNorm = normalize(rtName);
+            
+            // 2. Cleaned Exact Match (Safest: Prevents "Chalet" from matching "Small Chalet")
             for (let k of keys) {
-                const kLower = k.toLowerCase().trim();
-                const idLower = roomId.toLowerCase().trim();
-                const nameLower = rtName.toLowerCase().trim();
-                
-                if (kLower === idLower || kLower === nameLower || 
-                    kLower.includes(idLower) || idLower.includes(kLower) ||
-                    kLower.includes(nameLower) || nameLower.includes(kLower)) {
+                const kNorm = normalize(k);
+                if (kNorm === idNorm || kNorm === nameNorm) {
                     return matrix[k];
                 }
             }
+            
+            // 3. Ultra-Forgiving Fallback Match
+            for (let k of keys) {
+                const kNorm = normalize(k);
+                // Checks if the spreadsheet name is a partial match of the website name, or vice versa, OR matches the ID
+                if (kNorm.includes(idNorm) || kNorm.includes(nameNorm) || nameNorm.includes(kNorm)) {
+                    return matrix[k];
+                }
+            }
+            
             return null;
         }
 
@@ -660,28 +682,9 @@
                 document.getElementById('div-assembly').classList.add('hidden');
                 document.getElementById('btn-details-next').innerHTML = 'Review Details <i class="fas fa-arrow-right ml-2"></i>';
 
-                if (!isRestore) renderHotelCards();
-
-                document.getElementById('global-loader').classList.remove('hidden');
-                document.getElementById('global-loader').classList.add('flex');
-                
                 if (!window.hotelDataPromise) window.preloadHotelData();
                 
-                let mileData = {}, padiData = {}, villaData = {};
-                if (window.hotelDataPromise) {
-                    try {
-                        const [m, p, v] = await window.hotelDataPromise;
-                        mileData = m || {}; padiData = p || {}; villaData = v || {};
-                    } catch (e) { console.error(e); }
-                }
-
-                window.fullAvailability.mile = mileData;
-                window.fullAvailability.padi = padiData;
-                window.fullAvailability.villa = villaData;
-
-                document.getElementById('global-loader').classList.add('hidden');
-                document.getElementById('global-loader').classList.remove('flex');
-                
+                // Instantly render cards without awaiting the promise
                 renderHotelCards();
                 if (!isRestore) showView('view-accom-hotels', 1);
             }
@@ -730,16 +733,35 @@
             container.innerHTML = '';
             Object.keys(window.hotelData).forEach(id => {
                 const h = window.hotelData[id];
-                const isOffline = Object.keys(window.fullAvailability[id] || {}).length === 0;
-                if (isOffline) {
-                    container.innerHTML += `<div class="group flex flex-col bg-slate-50 rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative opacity-80 cursor-not-allowed" onclick="showCustomModal('Hotel Unavailable', 'Cannot load rooms for ${h.name}.')"><div class="absolute inset-0 z-20 flex items-center justify-center bg-white/40 backdrop-blur-[2px]"><div class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold shadow-lg flex items-center gap-2"><i class="fas fa-plug text-lg"></i> Disconnected</div></div><div class="h-48 bg-slate-200 flex items-center justify-center relative overflow-hidden grayscale"><i class="${h.mainIcon} text-slate-400/20 text-8xl absolute -bottom-4 -right-4"></i><i class="${h.mainIcon} text-slate-400 text-4xl mb-2 drop-shadow-sm z-10"></i></div><div class="p-6 flex flex-col flex-grow grayscale"><h3 class="text-xl font-bold text-slate-500 mb-1">${h.name}</h3><p class="text-sm text-slate-400 mb-6 flex-grow">${h.desc}</p><button type="button" disabled class="w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl cursor-not-allowed">Currently Unavailable</button></div></div>`;
-                } else {
-                    container.innerHTML += `<div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300"><div class="h-48 ${h.bgColor} flex items-center justify-center relative overflow-hidden"><i class="${h.mainIcon} ${h.iconColor}/20 text-8xl absolute -bottom-4 -right-4 group-hover:scale-110 transition-transform duration-500"></i><i class="${h.mainIcon} ${h.iconColor} text-4xl mb-2 drop-shadow-sm z-10"></i></div><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3><p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p><button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i></button></div></div>`;
-                }
+                container.innerHTML += `<div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300"><div class="h-48 ${h.bgColor} flex items-center justify-center relative overflow-hidden"><i class="${h.mainIcon} ${h.iconColor}/20 text-8xl absolute -bottom-4 -right-4 group-hover:scale-110 transition-transform duration-500"></i><i class="${h.mainIcon} ${h.iconColor} text-4xl mb-2 drop-shadow-sm z-10"></i></div><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3><p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p><button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i></button></div></div>`;
             });
         }
 
-        window.openHotelDetail = function(hotelId, isRestore = false) {
+        window.openHotelDetail = async function(hotelId, isRestore = false) {
+            // If data is not ready yet, show loader and wait for the promise to finish
+            if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
+                document.getElementById('global-loader').classList.remove('hidden');
+                document.getElementById('global-loader').classList.add('flex');
+                
+                try {
+                    if (window.hotelDataPromise) {
+                        const [m, p, v] = await window.hotelDataPromise;
+                        window.fullAvailability.mile = m || {}; 
+                        window.fullAvailability.padi = p || {}; 
+                        window.fullAvailability.villa = v || {};
+                    }
+                } catch(e) { console.error(e); }
+                
+                document.getElementById('global-loader').classList.add('hidden');
+                document.getElementById('global-loader').classList.remove('flex');
+            }
+
+            // Verify if it actually loaded successfully
+            if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
+                showCustomModal('Hotel Unavailable', `Cannot load room availability for ${window.hotelData[hotelId].name}. Please try again.`);
+                return;
+            }
+
             window.bookingState.hotelId = hotelId;
             const data = window.hotelData[hotelId];
             document.getElementById('detail-title').innerText = data.name;
@@ -1050,7 +1072,7 @@
                         }
                         if (state.booking) window.bookingState = state.booking;
                         
-                        // This fetches the fresh spreadsheet data
+                        // This triggers the fetch
                         await window.startFlow(state.flow, true);
                         
                         // RECONSTRUCT DOM AND HISTORY STACK
@@ -1063,7 +1085,7 @@
                             
                             } else if (state.view === 'view-accom-room') {
                                 history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
-                                if (window.bookingState.hotelId) window.openHotelDetail(window.bookingState.hotelId, true);
+                                if (window.bookingState.hotelId) await window.openHotelDetail(window.bookingState.hotelId, true);
                                 window.showView('view-accom-room', 1, false);
                                 history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
                             
@@ -1072,8 +1094,8 @@
                                 history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
                                 
                                 if (window.bookingState.hotelId) {
-                                    // Rebuild the hotel UI behind the scenes
-                                    window.openHotelDetail(window.bookingState.hotelId, true);
+                                    // Await the UI rebuild so the elements exist before checking availability
+                                    await window.openHotelDetail(window.bookingState.hotelId, true);
                                     
                                     // VERIFICATION: Check if room is STILL available after refresh
                                     const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
