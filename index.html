@@ -57,7 +57,7 @@
         <button class="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[120]">&times;</button>
         <button id="viewer-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(-1)"><i class="fas fa-chevron-left"></i></button>
         <button id="viewer-next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(1)"><i class="fas fa-chevron-right"></i></button>
-        <img id="viewer-image" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain transition-opacity duration-200" onclick="event.stopPropagation()">
+        <img id="viewer-image" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain" onclick="event.stopPropagation()">
         <div id="viewer-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm tracking-widest font-mono z-[120]"></div>
     </div>
 
@@ -371,14 +371,11 @@
             document.getElementById('custom-modal').classList.remove('flex');
         }
 
-        // IMAGE VIEWER LOGIC (WITH SWIPE & NAVIGATION)
+        // IMAGE VIEWER LOGIC (WITH NATIVE BACK BUTTON INTEGRATION & PREMIUM SMOOTH GESTURES)
         window.currentGalleryImages = [];
         window.currentGalleryIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
 
         window.openImageViewer = function(images, index = 0) {
-            // Fallback in case a single string is passed
             if (typeof images === 'string') {
                 window.currentGalleryImages = [images];
                 window.currentGalleryIndex = 0;
@@ -387,24 +384,23 @@
                 window.currentGalleryIndex = index;
             }
             
-            updateViewerUI();
+            const img = document.getElementById('viewer-image');
+            img.style.transition = 'none';
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.8)';
+            
+            window.updateViewerUI(0, true);
             
             const modal = document.getElementById('image-viewer-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            document.addEventListener('keydown', viewerKeyListener);
+            document.addEventListener('keydown', window.viewerKeyListener);
+            history.pushState({ modalOpen: true, type: 'imageViewer' }, "", "");
         }
 
-        window.updateViewerUI = function() {
+        window.updateViewerUI = function(direction = 0, isInitial = false) {
             const img = document.getElementById('viewer-image');
-            img.style.opacity = '0.4'; // Quick fade effect
-            
-            setTimeout(() => {
-                img.src = window.currentGalleryImages[window.currentGalleryIndex];
-                img.style.opacity = '1';
-            }, 50);
-            
             const prevBtn = document.getElementById('viewer-prev');
             const nextBtn = document.getElementById('viewer-next');
             const counter = document.getElementById('viewer-counter');
@@ -418,46 +414,129 @@
                 nextBtn.classList.add('hidden');
                 counter.innerText = '';
             }
+
+            if (isInitial) {
+                setTimeout(() => {
+                    img.src = window.currentGalleryImages[window.currentGalleryIndex];
+                    img.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                    img.style.opacity = '1';
+                    img.style.transform = 'scale(1) translateX(0)';
+                }, 50);
+                return;
+            }
+
+            // Animate current image out smoothly
+            img.style.transition = 'all 0.2s ease-out';
+            img.style.opacity = '0';
+            img.style.transform = `translateX(${direction * -40}px) scale(0.98)`;
+            
+            setTimeout(() => {
+                img.src = window.currentGalleryImages[window.currentGalleryIndex];
+                
+                // Pre-position the new image for entry
+                img.style.transition = 'none';
+                img.style.transform = `translateX(${direction * 40}px) scale(0.98)`;
+                
+                // Force browser to register the new position immediately
+                void img.offsetWidth;
+                
+                // Smoothly animate the new image in
+                img.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+                img.style.transform = 'translateX(0) scale(1)';
+                img.style.opacity = '1';
+            }, 200);
         }
 
         window.changeViewerImage = function(step) {
             if (window.currentGalleryImages.length <= 1) return;
             window.currentGalleryIndex += step;
             
-            // Loop around if reaching the end or beginning
+            // Loop array flawlessly
             if (window.currentGalleryIndex >= window.currentGalleryImages.length) window.currentGalleryIndex = 0;
             if (window.currentGalleryIndex < 0) window.currentGalleryIndex = window.currentGalleryImages.length - 1;
             
-            updateViewerUI();
+            window.updateViewerUI(step);
         }
 
-        window.closeImageViewer = function() {
+        window.isClosingModal = false;
+        window.closeImageViewer = function(fromPopState = false) {
             const modal = document.getElementById('image-viewer-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.removeEventListener('keydown', viewerKeyListener);
-            setTimeout(() => { document.getElementById('viewer-image').src = ''; }, 300); // Clear after fade out
+            if (modal.classList.contains('hidden')) return;
+
+            const img = document.getElementById('viewer-image');
+            img.style.transition = 'all 0.3s ease-out';
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.8)'; // Shrink away effect
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.removeEventListener('keydown', window.viewerKeyListener);
+                img.src = '';
+            }, 300);
+
+            if (!fromPopState && history.state && history.state.modalOpen) {
+                window.isClosingModal = true;
+                history.back(); 
+            }
         }
 
         window.viewerKeyListener = function(e) {
-            if (e.key === 'ArrowRight') changeViewerImage(1);
-            if (e.key === 'ArrowLeft') changeViewerImage(-1);
-            if (e.key === 'Escape') closeImageViewer();
+            if (e.key === 'ArrowRight') window.changeViewerImage(1);
+            if (e.key === 'ArrowLeft') window.changeViewerImage(-1);
+            if (e.key === 'Escape') window.closeImageViewer();
         }
 
-        // SWIPE DETECTION
+        // SMOOTH SWIPE DETECTION WITH REAL-TIME FINGER TRACKING
         const viewerModal = document.getElementById('image-viewer-modal');
-        viewerModal.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-        viewerModal.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+        let touchStartX = 0;
+        let touchMoveX = 0;
+        let isSwiping = false;
+
+        viewerModal.addEventListener('touchstart', e => { 
+            if (e.touches.length > 1) return; // ignore multi-touch zooming for swiping
+            touchStartX = e.touches[0].clientX; 
+            touchMoveX = touchStartX;
+            isSwiping = true;
+            
+            if (window.currentGalleryImages.length > 1) {
+                const img = document.getElementById('viewer-image');
+                img.style.transition = 'none'; // Lock image to finger instantly
+            }
         }, {passive: true});
 
-        function handleSwipe() {
-            const minSwipeDistance = 40;
-            if (touchEndX < touchStartX - minSwipeDistance) changeViewerImage(1); // Swipe left -> next image
-            if (touchEndX > touchStartX + minSwipeDistance) changeViewerImage(-1); // Swipe right -> prev image
-        }
+        viewerModal.addEventListener('touchmove', e => {
+            if (!isSwiping || window.currentGalleryImages.length <= 1) return;
+            touchMoveX = e.touches[0].clientX;
+            const diff = touchMoveX - touchStartX;
+            
+            const img = document.getElementById('viewer-image');
+            // Move image with finger, add slight resistance and push-back scale
+            img.style.transform = `translateX(${diff * 0.7}px) scale(0.98)`;
+            img.style.opacity = 1 - (Math.abs(diff) / (window.innerWidth * 1.5));
+        }, {passive: true});
+
+        viewerModal.addEventListener('touchend', e => {
+            if (!isSwiping) return;
+            isSwiping = false;
+            
+            if (window.currentGalleryImages.length <= 1) return;
+
+            const diff = touchMoveX - touchStartX;
+            const threshold = 50; // Minimum pixels to count as an intentional swipe
+            
+            if (diff < -threshold) {
+                window.changeViewerImage(1); // Swiped Left -> Next Image
+            } else if (diff > threshold) {
+                window.changeViewerImage(-1); // Swiped Right -> Prev Image
+            } else {
+                // User didn't swipe far enough, snap back to center elastically
+                const img = document.getElementById('viewer-image');
+                img.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                img.style.transform = 'translateX(0) scale(1)';
+                img.style.opacity = '1';
+            }
+        }, {passive: true});
 
         let isNavigatingBack = false;
         window.handleUIBack = function() {
@@ -553,8 +632,31 @@
         });
 
         window.addEventListener('popstate', (e) => {
+            // MAGIC FIX: Catch the hardware back button when the image viewer is open
+            if (window.isClosingModal) {
+                window.isClosingModal = false;
+                return; // Ignore this, we just silently popped the modal state
+            }
+            
+            const imageModal = document.getElementById('image-viewer-modal');
+            if (imageModal && imageModal.classList.contains('flex')) {
+                window.closeImageViewer(true);
+                return; // Stop executing, stay on the current page!
+            }
+
             const state = e.state;
+
+            // PREVENT FORWARD BUTTON GLITCH
+            if (state && state.modalOpen) {
+                // The user clicked the "Forward" button into the image viewer state.
+                // We instantly undo the forward action to keep them on the current page safely.
+                window.isClosingModal = true;
+                history.back();
+                return;
+            }
+
             const saved = sessionStorage.getItem('kkgh_app_state');
+            
             if (state && state.viewId && state.viewId !== 'landing' && !saved) {
                 window.location.href = window.location.pathname; return;
             }
