@@ -6,7 +6,6 @@
     <meta name="theme-color" content="#0f172a" id="meta-theme-color">
     <title>Registration | Kota Kemuning Assembly Annual Bible Conference 2026</title>
     
-    <!-- Website Icon (Favicon) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232563eb%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2230%22 font-family=%22Arial, sans-serif%22 font-weight=%22bold%22 fill=%22white%22>KKGH</text></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,61 +13,32 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
         
-        html, body {
-            background-color: #0f172a; /* Dark slate for landing page bounce area */
-            transition: background-color 0.4s ease;
-        }
-
-        html.theme-light, body.theme-light {
-            background-color: #f8fafc; /* Light gray for app bounce area */
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
+        html, body { background-color: #0f172a; transition: background-color 0.4s ease; font-family: 'Inter', sans-serif; }
+        html.theme-light, body.theme-light { background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
         .transition-all-300 { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
         .animate-slide-in { animation: slideInRight 0.4s ease-out forwards; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .animate-fade-in { animation: fadeIn 0.3s ease-in forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeUp 0.5s ease-out forwards; }
 
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 3px solid #f97316;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
+        .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #f97316; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         .loader-large { width: 48px; height: 48px; border-width: 4px; border-top-width: 4px; }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="text-gray-800 antialiased flex flex-col min-h-screen">
 
-    <!-- CUSTOM NOTIFICATION MODAL -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/80 hidden flex-col items-center justify-center z-[100] px-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in">
             <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
@@ -82,14 +52,21 @@
         </div>
     </div>
 
-    <!-- GLOBAL FULL SCREEN LOADER -->
+    <!-- NEW FULLSCREEN IMAGE VIEWER MODAL -->
+    <div id="image-viewer-modal" class="fixed inset-0 bg-black/95 hidden flex-col items-center justify-center z-[110] px-4 backdrop-blur-md cursor-pointer" onclick="closeImageViewer()">
+        <button class="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[120]">&times;</button>
+        <button id="viewer-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button id="viewer-next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(1)"><i class="fas fa-chevron-right"></i></button>
+        <img id="viewer-image" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain transition-opacity duration-200" onclick="event.stopPropagation()">
+        <div id="viewer-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm tracking-widest font-mono z-[120]"></div>
+    </div>
+
     <div id="global-loader" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex-col items-center justify-center z-50">
         <div class="loader loader-large mb-4 border-slate-300 border-t-blue-500"></div>
         <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading</h3>
         <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a moment...</p>
     </div>
 
-    <!-- LANDING PAGE VIEW -->
     <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -107,9 +84,7 @@
                         <i class="fas fa-calendar-check text-2xl text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-6">Register for Conference</h3>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">
-                        Start Registration
-                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">Start Registration</button>
                 </div>
 
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow('accommodation')">
@@ -117,18 +92,13 @@
                         <i class="fas fa-bed text-2xl text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-6">Book Accommodation</h3>
-                    <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">
-                        Browse Hotels
-                    </button>
+                    <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">Browse Hotels</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
     <div id="app-container" class="hidden flex-grow flex flex-col">
-        
-        <!-- Navbar -->
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-sm md:text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
@@ -155,32 +125,32 @@
         </header>
 
         <form id="registrationForm" onsubmit="return false;" class="flex-grow flex flex-col">
-            
-            <!-- VIEW: ACCOMMODATION HOTEL LIST -->
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-8 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
-                    <!-- Hotel Cards Injected Here via JS -->
                     <div id="hotel-grid-container" class="contents"></div>
                 </div>
             </div>
 
-            <!-- VIEW: ACCOMMODATION ROOM DETAILS & DATES -->
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <!-- NATIVE BACK INTEGRATION -->
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back to Hotels
                     </button>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8 h-full">
-                    <!-- LEFT COLUMN: Hotel Info -->
                     <div class="w-full lg:w-1/2 flex flex-col">
-                        <div id="detail-main-image" class="w-full h-64 md:h-80 rounded-2xl overflow-hidden relative shadow-md mb-6 transition-all duration-300 bg-slate-100 block"></div>
+                        
+                        <!-- NEW GALLERY CONTAINER -->
+                        <div id="detail-gallery-container" class="mb-6">
+                            <div id="gallery-main" class="w-full h-64 md:h-80 rounded-2xl relative shadow-md mb-3 transition-all duration-300 bg-slate-100 bg-cover bg-center"></div>
+                            <!-- Thumbnails will be injected here automatically -->
+                            <div id="gallery-thumbs" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1"></div>
+                        </div>
+
                         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
                             <div class="flex items-center gap-3 mb-4">
                                 <div id="detail-icon-box" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"></div>
@@ -194,22 +164,16 @@
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN: Room Type Selection Accordions -->
                     <div class="w-full lg:w-1/2 flex flex-col h-full">
                         <h3 class="text-2xl font-bold text-slate-800 font-serif mb-2">Available Rooms</h3>
                         <p class="text-sm text-slate-500 mb-6">Click a room type below to select your dates and check availability.</p>
-                        
-                        <div id="detail-room-list" class="space-y-4">
-                            <!-- Accordions injected via JS -->
-                        </div>
+                        <div id="detail-room-list" class="space-y-4"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW: SHARED PERSONAL DETAILS -->
             <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center" id="details-back-btn">
-                    <!-- NATIVE BACK INTEGRATION -->
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
@@ -302,7 +266,6 @@
                         <i class="far fa-calendar-check text-blue-500"></i> Attendance
                     </h3>
                     <p class="text-slate-500 text-sm mb-6">Fee: RM50 per person / day</p>
-                    
                     <div class="space-y-3">
                         <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
                             <input type="checkbox" name="attendance_day" value="50" data-label="Wednesday" class="w-5 h-5 mt-1 text-blue-600 rounded">
@@ -330,7 +293,6 @@
                 </div>
             </div>
 
-            <!-- VIEW: CONFIRMATION STEP -->
             <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
@@ -342,9 +304,7 @@
                 <p class="text-slate-500 mb-8">Please confirm your details before submitting.</p>
                 
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
-                    <ul id="confirmation-list" class="space-y-1 text-slate-700">
-                        <!-- Populated by JS -->
-                    </ul>
+                    <ul id="confirmation-list" class="space-y-1 text-slate-700"></ul>
                 </div>
 
                 <div class="flex justify-end">
@@ -353,7 +313,6 @@
                     </button>
                 </div>
             </div>
-
         </form>
 
         <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
@@ -365,7 +324,6 @@
         </footer>
     </div>
 
-    <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 bg-slate-900 bg-opacity-75 hidden flex items-center justify-center z-50 px-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl animate-fade-in-up">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -380,38 +338,24 @@
     </div>
 
     <script>
-        // =====================================================================
-        // ⚠️ PASTE YOUR 4 SEPARATE GOOGLE SCRIPT WEB APP URLS BELOW:
-        // =====================================================================
-        
-        // 1. The script attached to your Main Registration Sheet (For writing data)
         const MAIN_SUBMIT_URL = "https://script.google.com/macros/s/AKfycby2XPWiQHSi2onnh6nxozAFRnnsW5ECdtxem_3Er6HAPLTDl7HoHI3b22kmFwWjlBzm2Q/exec"; 
-
-        // 2. The script attached directly to the Mi Le Gardens spreadsheet
         const MILE_URL = "https://script.google.com/macros/s/AKfycbyos6Q3_jBl4WGPqAxpd6GqsgTyNLyGjpr16Lga68E12-UsNOdnVAJAN6Ne36TrjyHs/exec";      
-
-        // 3. The script attached directly to the Padi Sentral spreadsheet
         const PADI_URL = "https://script.google.com/macros/s/AKfycbypjEvQNFVo93buDwyWZ6-8_nKJUKSXTp05dKASDMZEki_5zkPkkiV2DSMern3FKUwj3g/exec";      
-
-        // 4. The script attached directly to the Villa Chee spreadsheet
         const VILLA_URL = "https://script.google.com/macros/s/AKfycbxzUP4tLSF06sCobU-Jdoo28rkk5mIkI-kZ8_VdDSWqsmzl_WcSKJZJuTh6BdSEyjFwtQ/exec";    
-
-        // =====================================================================
 
         window.setThemeLight = function(isLight) {
             const metaTheme = document.getElementById('meta-theme-color');
             if (isLight) {
                 document.documentElement.classList.add('theme-light');
                 document.body.classList.add('theme-light');
-                if (metaTheme) metaTheme.setAttribute('content', '#ffffff'); // Matches white navbar
+                if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
             } else {
                 document.documentElement.classList.remove('theme-light');
                 document.body.classList.remove('theme-light');
-                if (metaTheme) metaTheme.setAttribute('content', '#0f172a'); // Matches dark landing
+                if (metaTheme) metaTheme.setAttribute('content', '#0f172a');
             }
         };
 
-        // Custom Modal Logic
         window.showCustomModal = function(title, msg, iconClass = "fas fa-exclamation-circle text-red-500") {
             const mTitle = document.getElementById('modal-title');
             const mMsg = document.getElementById('modal-message');
@@ -427,13 +371,100 @@
             document.getElementById('custom-modal').classList.remove('flex');
         }
 
-        // ANTI-DOUBLE-TAP BACK BUTTON
+        // IMAGE VIEWER LOGIC (WITH SWIPE & NAVIGATION)
+        window.currentGalleryImages = [];
+        window.currentGalleryIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.openImageViewer = function(images, index = 0) {
+            // Fallback in case a single string is passed
+            if (typeof images === 'string') {
+                window.currentGalleryImages = [images];
+                window.currentGalleryIndex = 0;
+            } else {
+                window.currentGalleryImages = images;
+                window.currentGalleryIndex = index;
+            }
+            
+            updateViewerUI();
+            
+            const modal = document.getElementById('image-viewer-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            document.addEventListener('keydown', viewerKeyListener);
+        }
+
+        window.updateViewerUI = function() {
+            const img = document.getElementById('viewer-image');
+            img.style.opacity = '0.4'; // Quick fade effect
+            
+            setTimeout(() => {
+                img.src = window.currentGalleryImages[window.currentGalleryIndex];
+                img.style.opacity = '1';
+            }, 50);
+            
+            const prevBtn = document.getElementById('viewer-prev');
+            const nextBtn = document.getElementById('viewer-next');
+            const counter = document.getElementById('viewer-counter');
+            
+            if (window.currentGalleryImages.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                counter.innerText = `${window.currentGalleryIndex + 1} / ${window.currentGalleryImages.length}`;
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                counter.innerText = '';
+            }
+        }
+
+        window.changeViewerImage = function(step) {
+            if (window.currentGalleryImages.length <= 1) return;
+            window.currentGalleryIndex += step;
+            
+            // Loop around if reaching the end or beginning
+            if (window.currentGalleryIndex >= window.currentGalleryImages.length) window.currentGalleryIndex = 0;
+            if (window.currentGalleryIndex < 0) window.currentGalleryIndex = window.currentGalleryImages.length - 1;
+            
+            updateViewerUI();
+        }
+
+        window.closeImageViewer = function() {
+            const modal = document.getElementById('image-viewer-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.removeEventListener('keydown', viewerKeyListener);
+            setTimeout(() => { document.getElementById('viewer-image').src = ''; }, 300); // Clear after fade out
+        }
+
+        window.viewerKeyListener = function(e) {
+            if (e.key === 'ArrowRight') changeViewerImage(1);
+            if (e.key === 'ArrowLeft') changeViewerImage(-1);
+            if (e.key === 'Escape') closeImageViewer();
+        }
+
+        // SWIPE DETECTION
+        const viewerModal = document.getElementById('image-viewer-modal');
+        viewerModal.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+        viewerModal.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const minSwipeDistance = 40;
+            if (touchEndX < touchStartX - minSwipeDistance) changeViewerImage(1); // Swipe left -> next image
+            if (touchEndX > touchStartX + minSwipeDistance) changeViewerImage(-1); // Swipe right -> prev image
+        }
+
         let isNavigatingBack = false;
         window.handleUIBack = function() {
             if (isNavigatingBack) return;
             isNavigatingBack = true;
             history.back();
-            setTimeout(() => { isNavigatingBack = false; }, 400); // Prevent accidental double taps
+            setTimeout(() => { isNavigatingBack = false; }, 400); 
         };
 
         window.currentFlow = 'conference'; 
@@ -441,25 +472,21 @@
         window.currentStepNum = 1;
         window.fullAvailability = { mile: {}, padi: {}, villa: {} }; 
         
-        window.bookingState = {
-            hotelId: null,
-            roomId: null,
-            checkIn: 'Dec 16',
-            checkOut: 'Dec 19',
-            quantity: 1,
-            cost: 0
-        };
-        
+        window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
         const conferenceDates = ["Dec 16", "Dec 17", "Dec 18", "Dec 19"];
 
         window.hotelData = {
             'mile': {
                 name: 'Mi Le Gardens', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-                desc: '[Details needed]',
-                amenities: ['[Details needed]'],
+                desc: '[Details needed]', amenities: ['[Details needed]'],
+                hotelImages: [
+                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Exterior',
+                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Lobby',
+                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Garden'
+                ],
                 roomTypes: [
-                    { id: 'resort', name: 'Resort (9pax)', price: 0, desc: '9 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Resort'] },
-                    { id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Chalet'] },
+                    { id: 'resort', name: 'Resort (9pax)', price: 0, desc: '9 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Resort+1', 'https://placehold.co/800x600/e2e8f0/475569?text=Resort+2'] },
+                    { id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Chalet+1', 'https://placehold.co/800x600/e2e8f0/475569?text=Chalet+2'] },
                     { id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 unit total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Small+Chalet'] },
                     { id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Single'] },
                     { id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Queen'] },
@@ -468,8 +495,11 @@
             },
             'padi': {
                 name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-                desc: '[Details needed]',
-                amenities: ['[Details needed]'],
+                desc: '[Details needed]', amenities: ['[Details needed]'],
+                hotelImages: [
+                    'https://placehold.co/800x600/fef08a/854d0e?text=Padi+Exterior',
+                    'https://placehold.co/800x600/fef08a/854d0e?text=Padi+Scenery'
+                ],
                 roomTypes: [
                     { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 0, desc: '4 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Triple'] },
                     { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 0, desc: '8 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Family'] },
@@ -480,8 +510,11 @@
             },
             'villa': {
                 name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-                desc: '[Details needed]',
-                amenities: ['[Details needed]'],
+                desc: '[Details needed]', amenities: ['[Details needed]'],
+                hotelImages: [
+                    'https://placehold.co/800x600/e9d5ff/7e22ce?text=Villa+Exterior',
+                    'https://placehold.co/800x600/e9d5ff/7e22ce?text=Villa+Lobby'
+                ],
                 roomTypes: [
                     { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '11 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
                     { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '3 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
@@ -490,23 +523,15 @@
             }
         };
 
-        // --- SESSION STORAGE PERSISTENCE ---
         window.saveState = function() {
             if (!window.currentViewId) return;
-            
             const attendance = [];
             document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => attendance.push(cb.getAttribute('data-label')));
-
             const state = {
-                flow: window.currentFlow,
-                view: window.currentViewId,
-                step: window.currentStepNum,
-                booking: window.bookingState,
+                flow: window.currentFlow, view: window.currentViewId, step: window.currentStepNum, booking: window.bookingState,
                 form: {
-                    name: document.getElementById('fullName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    assembly: document.getElementById('assembly').value,
+                    name: document.getElementById('fullName').value, email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value, assembly: document.getElementById('assembly').value,
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
                     specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : '',
@@ -521,59 +546,43 @@
             window.location.href = window.location.pathname;
         }
 
-        // Trigger dynamic saving when form fields change
         document.addEventListener('input', (e) => {
             if (['fullName', 'email', 'phone', 'assembly', 'specialRequests'].includes(e.target.id) || e.target.name === 'attendance_day') {
                 if (window.currentViewId) window.saveState();
             }
         });
-        // -----------------------------------
 
-        // --- BROWSER HISTORY INTEGRATION (NATIVE BACK BUTTON/SWIPE) ---
         window.addEventListener('popstate', (e) => {
             const state = e.state;
             const saved = sessionStorage.getItem('kkgh_app_state');
-            
             if (state && state.viewId && state.viewId !== 'landing' && !saved) {
-                window.location.href = window.location.pathname;
-                return;
+                window.location.href = window.location.pathname; return;
             }
-
             if (state && state.viewId && state.viewId !== 'landing') {
                 document.getElementById('view-landing').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
-                
                 window.currentFlow = state.flow;
                 window.setThemeLight(true); 
-                
                 if (state.flow === 'accommodation') {
-                    if (state.viewId === 'view-accom-hotels') {
-                        renderHotelCards();
-                    } else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
-                        window.openHotelDetail(window.bookingState.hotelId, true);
-                    }
+                    if (state.viewId === 'view-accom-hotels') renderHotelCards();
+                    else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) window.openHotelDetail(window.bookingState.hotelId, true);
                 }
-
                 window.showView(state.viewId, state.stepNum, false); 
             } else {
                 document.getElementById('app-container').classList.add('hidden');
                 document.getElementById('view-landing').classList.remove('hidden');
                 window.currentViewId = null;
                 window.setThemeLight(false);
-                
-                // FORCE CACHE CLEAR ON BACK BUTTON TO LANDING PAGE
                 sessionStorage.removeItem('kkgh_app_state');
                 window.hotelDataPromise = null;
                 window.fullAvailability = { mile: {}, padi: {}, villa: {} };
-                window.preloadHotelData(); // Start fresh fetch immediately in the background!
+                window.preloadHotelData(); 
             }
         });
-        // -------------------------------------------------------------
 
         const fetchHotelData = async (url, hotelName) => {
             if (!url || url.includes("PASTE_")) return null;
             try {
-                // Add timestamp to strictly bypass browser HTTP cache
                 const cacheBusterUrl = url.includes('?') ? `${url}&t=${new Date().getTime()}` : `${url}?t=${new Date().getTime()}`;
                 const response = await fetch(cacheBusterUrl);
                 return await response.json();
@@ -583,71 +592,49 @@
             }
         };
 
-        // --- BACKGROUND PRE-LOADER ---
         window.hotelDataPromise = null;
         window.preloadHotelData = function() {
             if (!MILE_URL.includes("PASTE_") && !window.hotelDataPromise) {
                 window.hotelDataPromise = Promise.all([
-                    fetchHotelData(MILE_URL, "Mi Le"),
-                    fetchHotelData(PADI_URL, "Padi Sentral"),
-                    fetchHotelData(VILLA_URL, "Villa Chee")
+                    fetchHotelData(MILE_URL, "Mi Le"), fetchHotelData(PADI_URL, "Padi Sentral"), fetchHotelData(VILLA_URL, "Villa Chee")
                 ]);
             }
         };
-        window.preloadHotelData(); // Start fetching INSTANTLY, no artificial delays
-        // -----------------------------
+        window.preloadHotelData(); 
 
         window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
             if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
             const matrix = window.fullAvailability[hotelId];
-            
-            // 1. Direct exact match
             if (matrix[roomId] !== undefined) return matrix[roomId];
             if (matrix[rtName] !== undefined) return matrix[rtName];
             
             const keys = Object.keys(matrix);
-            
-            // Helper to strip out spaces and symbols for a clean exact comparison
             const normalize = (str) => str.replace(/[^a-z0-9]/gi, '').toLowerCase();
-            const idNorm = normalize(roomId);
-            const nameNorm = normalize(rtName);
+            const idNorm = normalize(roomId); const nameNorm = normalize(rtName);
             
-            // 2. Cleaned Exact Match (Safest: Prevents "Chalet" from matching "Small Chalet")
             for (let k of keys) {
                 const kNorm = normalize(k);
-                if (kNorm === idNorm || kNorm === nameNorm) {
-                    return matrix[k];
-                }
+                if (kNorm === idNorm || kNorm === nameNorm) return matrix[k];
             }
             
-            // 3. Ultra-Forgiving Fallback Match
             for (let k of keys) {
                 const kNorm = normalize(k);
-                // Checks if the spreadsheet name is a partial match of the website name, or vice versa, OR matches the ID
-                if (kNorm.includes(idNorm) || kNorm.includes(nameNorm) || nameNorm.includes(kNorm)) {
-                    return matrix[k];
-                }
+                if (kNorm.includes(idNorm) || kNorm.includes(nameNorm) || nameNorm.includes(kNorm)) return matrix[k];
             }
-            
             return null;
         }
 
         window.startFlow = async function(type, isRestore = false) {
-            window.currentFlow = type;
-            window.setThemeLight(true);
-
+            window.currentFlow = type; window.setThemeLight(true);
             if (!isRestore) {
                 document.getElementById('registrationForm').reset();
                 window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
-                const adultsInput = document.getElementById('pax-adults');
-                if(adultsInput) adultsInput.value = 1;
-                const kidsInput = document.getElementById('pax-kids');
-                if(kidsInput) kidsInput.value = 0;
+                const adultsInput = document.getElementById('pax-adults'); if(adultsInput) adultsInput.value = 1;
+                const kidsInput = document.getElementById('pax-kids'); if(kidsInput) kidsInput.value = 0;
             }
 
             if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
-                showCustomModal("Code Update Required", "Please update your Web App URL!");
-                return; 
+                showCustomModal("Code Update Required", "Please update your Web App URL!"); return; 
             }
 
             document.getElementById('view-landing').classList.add('hidden');
@@ -683,31 +670,19 @@
                 document.getElementById('btn-details-next').innerHTML = 'Review Details <i class="fas fa-arrow-right ml-2"></i>';
 
                 if (!window.hotelDataPromise) window.preloadHotelData();
-                
-                // Instantly render cards without awaiting the promise
                 renderHotelCards();
                 if (!isRestore) showView('view-accom-hotels', 1);
             }
         };
 
         window.showView = function(viewId, stepNumber, pushHistory = true) {
-            window.currentViewId = viewId;
-            window.currentStepNum = stepNumber;
-            
+            window.currentViewId = viewId; window.currentStepNum = stepNumber;
             ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-confirmation'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('hidden');
+                const el = document.getElementById(id); if (el) el.classList.add('hidden');
             });
-            const activeEl = document.getElementById(viewId);
-            if (activeEl) activeEl.classList.remove('hidden');
-            
-            updateNav(stepNumber);
-            window.scrollTo(0, 0);
-            window.saveState();
-
-            if (pushHistory) {
-                history.pushState({ viewId: viewId, stepNum: stepNumber, flow: window.currentFlow }, "", "");
-            }
+            const activeEl = document.getElementById(viewId); if (activeEl) activeEl.classList.remove('hidden');
+            updateNav(stepNumber); window.scrollTo(0, 0); window.saveState();
+            if (pushHistory) history.pushState({ viewId: viewId, stepNum: stepNumber, flow: window.currentFlow }, "", "");
         };
 
         function updateNav(step) {
@@ -717,46 +692,70 @@
                     const badge = nav.querySelector('span');
                     if(step >= num) {
                         badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white transition-colors";
-                        nav.classList.remove('text-gray-400');
-                        nav.classList.add('text-blue-600');
+                        nav.classList.remove('text-gray-400'); nav.classList.add('text-blue-600');
                     } else {
                         badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400 transition-colors";
-                        nav.classList.remove('text-blue-600');
-                        nav.classList.add('text-gray-400');
+                        nav.classList.remove('text-blue-600'); nav.classList.add('text-gray-400');
                     }
                 }
             });
         }
 
         function renderHotelCards() {
-            const container = document.getElementById('hotel-grid-container');
-            container.innerHTML = '';
+            const container = document.getElementById('hotel-grid-container'); container.innerHTML = '';
             Object.keys(window.hotelData).forEach(id => {
                 const h = window.hotelData[id];
                 container.innerHTML += `<div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300"><div class="h-48 ${h.bgColor} flex items-center justify-center relative overflow-hidden"><i class="${h.mainIcon} ${h.iconColor}/20 text-8xl absolute -bottom-4 -right-4 group-hover:scale-110 transition-transform duration-500"></i><i class="${h.mainIcon} ${h.iconColor} text-4xl mb-2 drop-shadow-sm z-10"></i></div><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3><p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p><button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i></button></div></div>`;
             });
         }
 
+        // NEW GALLERY RENDER FUNCTION (WITH CLICK TO EXPAND)
+        window.renderGallery = function(images) {
+            const mainImg = document.getElementById('gallery-main');
+            const thumbsContainer = document.getElementById('gallery-thumbs');
+            
+            if (!images || images.length === 0) return;
+            
+            let currentMainIndex = 0;
+            mainImg.style.backgroundImage = `url('${images[0]}')`;
+            mainImg.style.cursor = 'zoom-in';
+            mainImg.onclick = () => window.openImageViewer(images, currentMainIndex);
+            
+            thumbsContainer.innerHTML = '';
+            
+            if (images.length > 1) {
+                images.forEach((imgUrl, index) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = `w-20 h-16 sm:w-24 sm:h-20 shrink-0 rounded-lg bg-cover bg-center cursor-pointer border-2 transition-all ${index === 0 ? 'border-blue-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`;
+                    thumb.style.backgroundImage = `url('${imgUrl}')`;
+                    
+                    thumb.onclick = () => {
+                        currentMainIndex = index;
+                        mainImg.style.backgroundImage = `url('${imgUrl}')`;
+                        Array.from(thumbsContainer.children).forEach(c => {
+                            c.classList.remove('border-blue-500', 'opacity-100');
+                            c.classList.add('border-transparent', 'opacity-60');
+                        });
+                        thumb.classList.remove('border-transparent', 'opacity-60');
+                        thumb.classList.add('border-blue-500', 'opacity-100');
+                    };
+                    thumbsContainer.appendChild(thumb);
+                });
+            }
+        };
+
         window.openHotelDetail = async function(hotelId, isRestore = false) {
-            // If data is not ready yet, show loader and wait for the promise to finish
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
-                document.getElementById('global-loader').classList.remove('hidden');
-                document.getElementById('global-loader').classList.add('flex');
-                
+                document.getElementById('global-loader').classList.remove('hidden'); document.getElementById('global-loader').classList.add('flex');
                 try {
                     if (window.hotelDataPromise) {
                         const [m, p, v] = await window.hotelDataPromise;
-                        window.fullAvailability.mile = m || {}; 
-                        window.fullAvailability.padi = p || {}; 
-                        window.fullAvailability.villa = v || {};
+                        window.fullAvailability.mile = m || {}; window.fullAvailability.padi = p || {}; window.fullAvailability.villa = v || {};
                     }
                 } catch(e) { console.error(e); }
-                
-                document.getElementById('global-loader').classList.add('hidden');
-                document.getElementById('global-loader').classList.remove('flex');
+                document.getElementById('global-loader').classList.add('hidden'); document.getElementById('global-loader').classList.remove('flex');
             }
 
-            // Verify if it actually loaded successfully
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
                 showCustomModal('Hotel Unavailable', `Cannot load room availability for ${window.hotelData[hotelId].name}. Please try again.`);
                 return;
@@ -769,22 +768,22 @@
             const iconBox = document.getElementById('detail-icon-box');
             iconBox.className = `w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${data.bgColor} ${data.iconColor}`;
             iconBox.innerHTML = `<i class="${data.mainIcon}"></i>`;
-            const list = document.getElementById('detail-amenities');
-            list.innerHTML = '';
+            const list = document.getElementById('detail-amenities'); list.innerHTML = '';
             data.amenities.forEach(am => { list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> ${am}</li>`; });
-            const imgContainer = document.getElementById('detail-main-image');
-            imgContainer.innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${data.roomTypes[0].images[0]}')"></div>`;
+            
+            // SHOW GENERAL HOTEL PHOTOS ON LOAD
+            const initialImages = data.hotelImages && data.hotelImages.length > 0 ? data.hotelImages : data.roomTypes[0].images;
+            window.renderGallery(initialImages);
+            
             renderRoomAccordions(hotelId);
+            
             if (isRestore && window.bookingState.roomId) {
                 toggleRoomBooking(window.bookingState.roomId);
-                const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`);
-                if (ciSelect) ciSelect.value = window.bookingState.checkIn;
+                const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`); if (ciSelect) ciSelect.value = window.bookingState.checkIn;
                 updateDateValidation(window.bookingState.roomId);
-                const coSelect = document.getElementById(`co-${window.bookingState.roomId}`);
-                if (coSelect) coSelect.value = window.bookingState.checkOut;
+                const coSelect = document.getElementById(`co-${window.bookingState.roomId}`); if (coSelect) coSelect.value = window.bookingState.checkOut;
                 updateDateValidation(window.bookingState.roomId);
-                const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
-                if (qtyInput) qtyInput.value = window.bookingState.quantity;
+                const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`); if (qtyInput) qtyInput.value = window.bookingState.quantity;
                 updateDateValidation(window.bookingState.roomId);
             }
             if (!isRestore) showView('view-accom-room', 1);
@@ -811,14 +810,76 @@
                     if (avail === 0) { ciHtml += `<option value="${day.val}" disabled class="text-slate-300">${day.label} (Full)</option>`; } 
                     else { ciHtml += `<option value="${day.val}" ${!isFirstValidCi ? 'selected' : ''}>${day.label}</option>`; isFirstValidCi = true; }
                 });
-                container.innerHTML += `<div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}<div class="p-5 flex justify-between items-center ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}><div><h4 class="font-bold text-slate-800 text-lg">${rt.name}</h4><p class="text-xs text-slate-500 mt-1">${rt.desc}</p></div><div class="text-right"><span class="font-bold text-slate-800 whitespace-nowrap">RM ${rt.price}</span><span class="block text-[10px] text-slate-400">/ night</span></div></div><div id="booking-panel-${rt.id}" class="hidden bg-slate-50 border-t border-slate-200 p-5"><div class="grid grid-cols-2 gap-4 mb-5"><div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-in</label><select id="ci-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">${ciHtml}</select></div><div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-out</label><select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')"></select></div></div><div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4"><div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1 block">Rooms Needed</label><div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden w-28"><button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200" onclick="adjustRoomQty('${rt.id}', -1)">-</button><input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-10 text-center font-bold text-slate-800 focus:outline-none" readonly><button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200" onclick="adjustRoomQty('${rt.id}', 1)">+</button></div><div id="status-${rt.id}" class="text-xs mt-2 font-bold h-4"></div></div><button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md">Reserve: RM <span id="price-${rt.id}">0</span></button></div></div></div>`;
+                
+                // CREATE THE MINI GALLERY (Updated with proper array passing for swiping)
+                let roomImagesHtml = '';
+                if (rt.images && rt.images.length > 0) {
+                    roomImagesHtml = `
+                    <div class="mb-5">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 block">Room Photos</label>
+                        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+                            ${rt.images.map((img, idx) => `<div class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-lg bg-cover bg-center border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" style="background-image: url('${img}')" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})"></div>`).join('')}
+                        </div>
+                    </div>`;
+                }
+
+                container.innerHTML += `
+                <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
+                    ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
+                    
+                    <div class="p-4 sm:p-5 flex items-center gap-4 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg bg-cover bg-center border border-slate-200 shadow-sm" style="background-image: url('${rt.images[0]}')"></div>
+                        
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-800 text-sm sm:text-lg leading-tight">${rt.name}</h4>
+                            <p class="text-[10px] sm:text-xs text-slate-500 mt-1">${rt.desc}</p>
+                        </div>
+                        
+                        <div class="text-right shrink-0">
+                            <span class="font-bold text-slate-800 whitespace-nowrap text-sm sm:text-base">RM ${rt.price}</span>
+                            <span class="block text-[9px] sm:text-[10px] text-slate-400">/ night</span>
+                        </div>
+                    </div>
+                    
+                    <div id="booking-panel-${rt.id}" class="hidden bg-slate-50 border-t border-slate-200 p-5">
+                        
+                        <!-- INJECT ROOM GALLERY HERE -->
+                        ${roomImagesHtml}
+
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-in</label>
+                                <select id="ci-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">${ciHtml}</select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-out</label>
+                                <select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')"></select>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1 block">Rooms Needed</label>
+                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden w-28">
+                                    <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200" onclick="adjustRoomQty('${rt.id}', -1)">-</button>
+                                    <input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-10 text-center font-bold text-slate-800 focus:outline-none" readonly>
+                                    <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200" onclick="adjustRoomQty('${rt.id}', 1)">+</button>
+                                </div>
+                                <div id="status-${rt.id}" class="text-xs mt-2 font-bold h-4"></div>
+                            </div>
+                            <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md">Reserve: RM <span id="price-${rt.id}">0</span></button>
+                        </div>
+                    </div>
+                </div>`;
             });
         }
 
         window.toggleRoomBooking = function(roomId) {
             const hotelId = window.bookingState.hotelId;
             const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
-            document.getElementById('detail-main-image').innerHTML = `<div class="w-full h-full bg-cover bg-center" style="background-image: url('${rt.images[0]}')"></div>`;
+            
+            // Note: We removed the code that updates the top gallery so the top gallery
+            // strictly shows the hotel exterior/lobby, while room photos show inside the panel.
+            
             window.hotelData[hotelId].roomTypes.forEach(r => {
                 const panel = document.getElementById(`booking-panel-${r.id}`);
                 const card = document.getElementById(`card-${r.id}`);
@@ -841,14 +902,11 @@
 
             for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
                 const targetCo = conferenceDates[i];
-                
-                // Get the exact combination of dates (e.g. "Dec 16,Dec 17")
                 const nightsStr = conferenceDates.slice(ciIdx, i).join(","); 
-                const searchKey = nightsStr.replace(/\s/g, '').toLowerCase(); // Remove spaces for fuzzy matching
+                const searchKey = nightsStr.replace(/\s/g, '').toLowerCase();
                 
                 let avail = 0; 
                 if (matrixRoomData) {
-                    // Look for the combined column in the spreadsheet, ignoring spaces/casing
                     for (let key in matrixRoomData) {
                         if (key.replace(/\s/g, '').toLowerCase() === searchKey) {
                             avail = parseInt(matrixRoomData[key]) || 0;
@@ -872,7 +930,6 @@
                 coSelect.value = firstValidCo;
             }
 
-            // Calculate max available rooms for the final selected date range
             if (coSelect.value) {
                 const finalCoIdx = conferenceDates.indexOf(coSelect.value);
                 const finalNightsStr = conferenceDates.slice(ciIdx, finalCoIdx).join(",");
@@ -958,7 +1015,6 @@
                 const hotel = window.hotelData[window.bookingState.hotelId];
                 const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
                 
-                // Do not display email or assembly on confirmation screen for accommodation
                 let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
                 <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
                 <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
@@ -983,12 +1039,7 @@
                 email: document.getElementById('email').value || "N/A", 
                 phone: document.getElementById('phone').value, 
                 assembly: document.getElementById('assembly').value || "N/A", 
-                pax: "1 Adult",
-                booking_type: 'conference', 
-                days: days, 
-                totalCost: `RM ${totalCost}`, 
-                status: 'Registered',
-                specialRequests: "N/A"
+                pax: "1 Adult", booking_type: 'conference', days: days, roomDetails: "Conference Only", totalCost: `RM ${totalCost}`, status: 'Registered', specialRequests: "N/A"
             };
             await sendToGoogle(payload);
             btn.innerHTML = orig; btn.disabled = false;
@@ -1003,33 +1054,17 @@
                 const adultPax = document.getElementById('pax-adults').value || 1;
                 const kidPax = document.getElementById('pax-kids').value || 0;
                 
-                // Format the exact string expected by the old script
                 const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
                 const requests = document.getElementById('specialRequests').value.trim();
 
                 const payload = { 
-                    fullName: document.getElementById('fullName').value, 
-                    email: "N/A", 
-                    phone: document.getElementById('phone').value, 
-                    assembly: "N/A", 
-                    pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, 
-                    booking_type: 'accommodation', 
+                    fullName: document.getElementById('fullName').value, email: "N/A", phone: document.getElementById('phone').value, 
+                    assembly: "N/A", pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, booking_type: 'accommodation', 
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
-                    
-                    // Restore the old variables used for Email Routing & Room Details!
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
                     rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
                     rooms_villa: window.bookingState.hotelId === 'villa' ? bookingStr : "",
-                    
-                    totalCost: `RM ${window.bookingState.cost}`, 
-                    status: 'Registered', 
-                    checkIn: window.bookingState.checkIn, 
-                    checkOut: window.bookingState.checkOut, 
-                    roomType: roomName, 
-                    quantity: window.bookingState.quantity, 
-                    adultPax: adultPax,
-                    kidPax: kidPax,
-                    specialRequests: requests !== "" ? requests : "N/A"
+                    totalCost: `RM ${window.bookingState.cost}`, status: 'Registered', checkIn: window.bookingState.checkIn, checkOut: window.bookingState.checkOut, roomType: roomName, quantity: window.bookingState.quantity, adultPax: adultPax, kidPax: kidPax, specialRequests: requests !== "" ? requests : "N/A"
                 };
                 await sendToGoogle(payload);
             } catch(e) { showCustomModal("Error", "Submission failed."); }
@@ -1072,10 +1107,8 @@
                         }
                         if (state.booking) window.bookingState = state.booking;
                         
-                        // This triggers the fetch
                         await window.startFlow(state.flow, true);
                         
-                        // RECONSTRUCT DOM AND HISTORY STACK
                         if (state.flow === 'accommodation') {
                             history.replaceState({ viewId: 'landing' }, "", "");
                             
@@ -1094,10 +1127,8 @@
                                 history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
                                 
                                 if (window.bookingState.hotelId) {
-                                    // Await the UI rebuild so the elements exist before checking availability
                                     await window.openHotelDetail(window.bookingState.hotelId, true);
                                     
-                                    // VERIFICATION: Check if room is STILL available after refresh
                                     const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
                                     const currentMax = parseInt(qtyInput ? qtyInput.dataset.max : 0) || 0;
                                     
@@ -1105,12 +1136,11 @@
                                         showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
                                         window.showView('view-accom-room', 1, false);
                                         history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
-                                        return; // Stop restoring deeper views
+                                        return; 
                                     }
                                 }
 
                                 if (state.view === 'view-shared-details') {
-                                    // Re-populate the summary panel
                                     if (window.bookingState.roomId && window.bookingState.hotelId) {
                                         const hotel = window.hotelData[window.bookingState.hotelId];
                                         const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
@@ -1127,7 +1157,6 @@
                                 } else if (state.view === 'view-confirmation') {
                                     history.pushState({ viewId: 'view-shared-details', stepNum: 2, flow: 'accommodation' }, "", "");
                                     
-                                    // Re-populate the final confirmation list
                                     const hotel = window.hotelData[window.bookingState.hotelId];
                                     const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
                                     if (hotel && room) {
