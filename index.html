@@ -343,6 +343,11 @@
         const PADI_URL = "https://script.google.com/macros/s/AKfycbypjEvQNFVo93buDwyWZ6-8_nKJUKSXTp05dKASDMZEki_5zkPkkiV2DSMern3FKUwj3g/exec";      
         const VILLA_URL = "https://script.google.com/macros/s/AKfycbxzUP4tLSF06sCobU-Jdoo28rkk5mIkI-kZ8_VdDSWqsmzl_WcSKJZJuTh6BdSEyjFwtQ/exec";    
 
+        // =====================================================================
+        // ⚠️ BOOKING RULES
+        // =====================================================================
+        const REQUIRE_FULL_STAY = true; // Change to false to allow 1 or 2 night stays
+
         window.setThemeLight = function(isLight) {
             const metaTheme = document.getElementById('meta-theme-color');
             if (isLight) {
@@ -908,6 +913,8 @@
                 const checkInDays = [{ val: 'Dec 16', label: 'Wed, Dec 16' }, { val: 'Dec 17', label: 'Thu, Dec 17' }, { val: 'Dec 18', label: 'Fri, Dec 18' }];
                 let isFirstValidCi = false;
                 checkInDays.forEach(day => {
+                    if (REQUIRE_FULL_STAY && day.val !== 'Dec 16') return; // Enforce Full Stay Check-in
+
                     let avail = 0; if (matrixRoomData && matrixRoomData[day.val] !== undefined) avail = matrixRoomData[day.val];
                     if (avail === 0) { ciHtml += `<option value="${day.val}" disabled class="text-slate-300">${day.label} (Full)</option>`; } 
                     else { ciHtml += `<option value="${day.val}" ${!isFirstValidCi ? 'selected' : ''}>${day.label}</option>`; isFirstValidCi = true; }
@@ -947,6 +954,8 @@
                         
                         <!-- INJECT ROOM GALLERY HERE -->
                         ${roomImagesHtml}
+
+                        ${REQUIRE_FULL_STAY ? '<div class="text-xs text-orange-800 font-bold mb-4 bg-orange-100 border border-orange-200 p-3 rounded-lg flex items-center gap-2"><i class="fas fa-lock"></i> Full Conference Stay Required (Dec 16 to Dec 19)</div>' : ''}
 
                         <div class="grid grid-cols-2 gap-4 mb-5">
                             <div>
@@ -1001,9 +1010,16 @@
             
             let coHtml = ''; let firstValidCo = null; let maxForCurrentDates = 0;
             const matrixRoomData = window.getRoomDataFromMatrix(hotelId, roomId, rt.name);
+            
+            // Map the raw dates to their formatted labels with days
+            const dateLabels = { 'Dec 16': 'Wed, Dec 16', 'Dec 17': 'Thu, Dec 17', 'Dec 18': 'Fri, Dec 18', 'Dec 19': 'Sat, Dec 19' };
 
             for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
                 const targetCo = conferenceDates[i];
+                const targetLabel = dateLabels[targetCo];
+
+                if (REQUIRE_FULL_STAY && targetCo !== 'Dec 19') continue; // Enforce Full Stay Check-out
+
                 const nightsStr = conferenceDates.slice(ciIdx, i).join(","); 
                 const searchKey = nightsStr.replace(/\s/g, '').toLowerCase();
                 
@@ -1018,9 +1034,9 @@
                 }
 
                 if (avail === 0) { 
-                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetCo} (Full)</option>`; 
+                    coHtml += `<option value="${targetCo}" disabled class="text-slate-300">${targetLabel} (Full)</option>`; 
                 } else { 
-                    coHtml += `<option value="${targetCo}">${targetCo}</option>`; 
+                    coHtml += `<option value="${targetCo}">${targetLabel}</option>`; 
                     if (!firstValidCo) firstValidCo = targetCo; 
                 }
             }
