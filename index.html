@@ -561,10 +561,16 @@
 
         window.hotelData = {
             'mile': {
-                name: 'Mi Le Gardens', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-                desc: '[Details needed]', amenities: ['[Details needed]'],
+                name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
+                desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
+                amenities: [
+                    'On-site — zero commute', 
+                    'Accommodation for large groups', 
+                    'Smaller room options available', 
+                    'Perfect for families & big groups'
+                ],
                 hotelImages: [
-                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Exterior',
+                    'images/mile_cover_pic.webp', // Updated to use the local path!
                     'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Lobby',
                     'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Garden'
                 ],
@@ -578,8 +584,14 @@
                 ]
             },
             'padi': {
-                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-                desc: '[Details needed]', amenities: ['[Details needed]'],
+                name: 'Padi Central', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+                desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
+                amenities: [
+                    '3-min drive / 15-min walk to venue', 
+                    'Rooms with paddy field views', 
+                    'Quiet & private setting',
+                    'Perfect for individuals, couples, or small families with own transport'
+                ],
                 hotelImages: [
                     'https://placehold.co/800x600/fef08a/854d0e?text=Padi+Exterior',
                     'https://placehold.co/800x600/fef08a/854d0e?text=Padi+Scenery'
@@ -594,7 +606,13 @@
             },
             'villa': {
                 name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-                desc: '[Details needed]', amenities: ['[Details needed]'],
+                desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
+                amenities: [
+                    '7-min drive to venue — own transport required', 
+                    'Scenic paddy field surroundings', 
+                    'Swimming pool with slides & outdoor park',
+                    'Perfect for individuals and small families'
+                ],
                 hotelImages: [
                     'https://placehold.co/800x600/e9d5ff/7e22ce?text=Villa+Exterior',
                     'https://placehold.co/800x600/e9d5ff/7e22ce?text=Villa+Lobby'
@@ -876,7 +894,11 @@
             iconBox.className = `w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${data.bgColor} ${data.iconColor}`;
             iconBox.innerHTML = `<i class="${data.mainIcon}"></i>`;
             const list = document.getElementById('detail-amenities'); list.innerHTML = '';
-            data.amenities.forEach(am => { list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> ${am}</li>`; });
+            
+            // UPDATE: Perfectly aligns the tick icon with multi-line text
+            data.amenities.forEach(am => { 
+                list.innerHTML += `<li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5 shrink-0"></i> <span>${am}</span></li>`; 
+            });
             
             // SHOW GENERAL HOTEL PHOTOS ON LOAD
             const initialImages = data.hotelImages && data.hotelImages.length > 0 ? data.hotelImages : data.roomTypes[0].images;
