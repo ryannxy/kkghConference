@@ -87,7 +87,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">Start Registration</button>
                 </div>
 
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow('accommodation')">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow()">
                     <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
                         <i class="fas fa-bed text-2xl text-white"></i>
                     </div>
@@ -152,8 +152,8 @@
                         </div>
 
                         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div id="detail-icon-box" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"></div>
+                            <!-- Removed the icon box and just kept the title clean -->
+                            <div class="mb-4">
                                 <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-800">Hotel Name</h2>
                             </div>
                             <p id="detail-desc" class="text-slate-600 leading-relaxed mb-6">Description</p>
@@ -182,12 +182,12 @@
                 <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Your Details</h2>
                 <p class="text-slate-500 mb-8">Who is making this booking?</p>
                 
-                <div id="accom-booking-summary" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+                <div id="accom-booking-summary" class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
                     <h4 class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Room Booking Summary</h4>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-blue-600 text-xl" id="summary-icon"></div>
+                        <!-- Removed the icon circle from here as well -->
                         <div>
-                            <h3 class="font-bold text-slate-800 text-lg" id="summary-room-name"></h3>
+                            <h3 class="font-bold text-slate-800 text-xl font-sans" id="summary-room-name"></h3>
                             <p class="text-sm text-slate-600" id="summary-hotel-dates"></p>
                         </div>
                         <div class="ml-auto text-right">
@@ -206,19 +206,11 @@
                             <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
                             <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50">
                         </div>
-                        <div id="div-email">
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="Optional">
-                        </div>
                         <div>
                             <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
                                 Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Please indicate your country code)</span>
                             </label>
                             <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
-                        </div>
-                        <div id="div-assembly">
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Assembly / Church</label>
-                            <input type="text" id="assembly" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="Optional">
                         </div>
                     </div>
 
@@ -253,37 +245,12 @@
                     </div>
                 </div>
 
-                <div id="accom-special-requests" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6 hidden">
+                <div id="accom-special-requests" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
                     <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
                         <i class="far fa-comment-dots text-blue-500"></i> Other Requests
                     </h3>
                     <p class="text-slate-500 text-sm mb-4">Any further requests for the hotel? (Subject to availability)</p>
                     <textarea id="specialRequests" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g., Extra bed, extra pillow..."></textarea>
-                </div>
-
-                <div id="section-attendance" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6 hidden">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="far fa-calendar-check text-blue-500"></i> Attendance
-                    </h3>
-                    <p class="text-slate-500 text-sm mb-6">Fee: RM50 per person / day</p>
-                    <div class="space-y-3">
-                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
-                            <input type="checkbox" name="attendance_day" value="50" data-label="Wednesday" class="w-5 h-5 mt-1 text-blue-600 rounded">
-                            <div class="ml-4"><span class="block font-bold text-slate-800">Wednesday, Dec 16</span></div>
-                        </label>
-                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
-                            <input type="checkbox" name="attendance_day" value="50" data-label="Thursday" class="w-5 h-5 mt-1 text-blue-600 rounded">
-                            <div class="ml-4"><span class="block font-bold text-slate-800">Thursday, Dec 17</span></div>
-                        </label>
-                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
-                            <input type="checkbox" name="attendance_day" value="50" data-label="Friday" class="w-5 h-5 mt-1 text-blue-600 rounded">
-                            <div class="ml-4"><span class="block font-bold text-slate-800">Friday, Dec 18</span></div>
-                        </label>
-                        <label class="flex items-start p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group">
-                            <input type="checkbox" name="attendance_day" value="50" data-label="Saturday" class="w-5 h-5 mt-1 text-blue-600 rounded">
-                            <div class="ml-4"><span class="block font-bold text-slate-800">Saturday, Dec 19</span></div>
-                        </label>
-                    </div>
                 </div>
 
                 <div class="flex justify-end">
@@ -551,7 +518,6 @@
             setTimeout(() => { isNavigatingBack = false; }, 400); 
         };
 
-        window.currentFlow = 'conference'; 
         window.currentViewId = null;
         window.currentStepNum = 1;
         window.fullAvailability = { mile: {}, padi: {}, villa: {} }; 
@@ -570,21 +536,27 @@
                     'Perfect for families & big groups'
                 ],
                 hotelImages: [
-                    'images/mile_cover_pic.webp', // Updated to use the local path!
-                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Lobby',
-                    'https://placehold.co/800x600/e2e8f0/475569?text=Mi+Le+Garden'
+                    'images/mile_cover_pic.webp', 
+                    'images/mile_pic_2.webp',
+                    'images/mile_map.png'
                 ],
                 roomTypes: [
-                    { id: 'resort', name: 'Resort (9pax)', price: 0, desc: '9 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Resort+1', 'https://placehold.co/800x600/e2e8f0/475569?text=Resort+2'] },
-                    { id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Chalet+1', 'https://placehold.co/800x600/e2e8f0/475569?text=Chalet+2'] },
-                    { id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 unit total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Small+Chalet'] },
-                    { id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Single'] },
-                    { id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Standard+Queen'] },
-                    { id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/e2e8f0/475569?text=Triple+Room'] }
+                    // --- NEW CATEGORY: RESORT BUNGALOWS ---
+                    { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1', 'images/mile_resort_2', 'images/mile_resort_3', 'images/mile_resort_4', 'images/mile_resort_5'] },
+                    { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1', 'images/mile_resort_2', 'images/mile_resort_3', 'images/mile_resort_4', 'images/mile_resort_5'] },
+                    { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1', 'images/mile_resort_2', 'images/mile_resort_3', 'images/mile_resort_4', 'images/mile_resort_5'] },
+                    { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1', 'images/mile_resort_2', 'images/mile_resort_3', 'images/mile_resort_4', 'images/mile_resort_5'] },
+                    
+                    // --- NEW CATEGORY: CHALETS & STANDARD ROOMS ---
+                    { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1', 'images/mile_chalet_2', 'images/mile_chalet_3', 'images/mile_chalet_4', 'images/mile_chalet_5', 'images/mile_chalet_6', 'images/mile_chalet_7'] },
+                    { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1', 'images/mile_chalet_2', 'images/mile_chalet_3', 'images/mile_chalet_4', 'images/mile_chalet_5', 'images/mile_chalet_6', 'images/mile_chalet_7'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1', 'images/mile_srs_2', 'images/mile_srs_3', 'images/mile_srs_4', 'images/mile_srs_5'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1', 'images/mile_srs_2', 'images/mile_srq_1', 'images/mile_srq_2', 'images/mile_srq_3', 'images/mile_srs_5'] },
+                    { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1', 'images/mile_srs_2', 'images/mile_tr_1', 'images/mile_tr_2', 'images/mile_tr_3', 'images/mile_srs_5'] }
                 ]
             },
             'padi': {
-                name: 'Padi Central', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
                 desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
                 amenities: [
                     '3-min drive / 15-min walk to venue', 
@@ -593,15 +565,15 @@
                     'Perfect for individuals, couples, or small families with own transport'
                 ],
                 hotelImages: [
-                    'images/padi_sentral_cover.jpg',
-                    'https://placehold.co/800x600/fef08a/854d0e?text=Padi+Scenery'
+                    'padi_sentral_cover.jpg',
+                    'padi_sentral_cover2.jpg'
                 ],
                 roomTypes: [
-                    { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 0, desc: '4 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Triple'] },
-                    { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 0, desc: '8 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Family'] },
-                    { id: 'family-room', name: 'Family Room (4pax)', price: 0, desc: '2 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] },
-                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '18 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+King'] },
-                    { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 0, desc: '7 units total', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Super+Twin'] }
+                    { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Triple'] },
+                    { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Family'] },
+                    { id: 'family-room', name: 'Family Room (4pax)', price: 188, desc: '', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Family+Room'] },
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 158, desc: '', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+King'] },
+                    { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 169, desc: '', images: ['https://placehold.co/800x600/fef08a/854d0e?text=Deluxe+Super+Twin'] }
                 ]
             },
             'villa': {
@@ -614,30 +586,27 @@
                     'Perfect for individuals and small families'
                 ],
                 hotelImages: [
-                    'images/villa_chee_cover.webp',
-                    'https://placehold.co/800x600/e9d5ff/7e22ce?text=Villa+Lobby'
+                    'villa_chee_cover.webp',
+                    'villa_chee_cover2.webp'
                 ],
                 roomTypes: [
-                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '11 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
-                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '3 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
-                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '5 units total', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
+                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
+                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
                 ]
             }
         };
 
         window.saveState = function() {
             if (!window.currentViewId) return;
-            const attendance = [];
-            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => attendance.push(cb.getAttribute('data-label')));
             const state = {
-                flow: window.currentFlow, view: window.currentViewId, step: window.currentStepNum, booking: window.bookingState,
+                view: window.currentViewId, step: window.currentStepNum, booking: window.bookingState,
                 form: {
-                    name: document.getElementById('fullName').value, email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value, assembly: document.getElementById('assembly').value,
+                    name: document.getElementById('fullName').value,
+                    phone: document.getElementById('phone').value,
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
-                    specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : '',
-                    attendance: attendance
+                    specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : ''
                 }
             };
             sessionStorage.setItem('kkgh_app_state', JSON.stringify(state));
@@ -649,12 +618,12 @@
         }
 
         document.addEventListener('input', (e) => {
-            if (['fullName', 'email', 'phone', 'assembly', 'specialRequests'].includes(e.target.id) || e.target.name === 'attendance_day') {
+            if (['fullName', 'phone', 'specialRequests'].includes(e.target.id)) {
                 if (window.currentViewId) window.saveState();
             }
         });
 
-        window.addEventListener('popstate', (e) => {
+        window.addEventListener('popstate', async (e) => {
             // MAGIC FIX: Catch the hardware back button when the image viewer is open
             if (window.isClosingModal) {
                 window.isClosingModal = false;
@@ -686,12 +655,16 @@
             if (state && state.viewId && state.viewId !== 'landing') {
                 document.getElementById('view-landing').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
-                window.currentFlow = state.flow;
                 window.setThemeLight(true); 
-                if (state.flow === 'accommodation') {
-                    if (state.viewId === 'view-accom-hotels') renderHotelCards();
-                    else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) window.openHotelDetail(window.bookingState.hotelId, true);
+                
+                if (state.viewId === 'view-accom-hotels') {
+                    await window.fetchAvailability();
+                    renderHotelCards();
                 }
+                else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
+                    await window.openHotelDetail(window.bookingState.hotelId, true);
+                }
+                
                 window.showView(state.viewId, state.stepNum, false); 
             } else {
                 document.getElementById('app-container').classList.add('hidden');
@@ -699,9 +672,7 @@
                 window.currentViewId = null;
                 window.setThemeLight(false);
                 sessionStorage.removeItem('kkgh_app_state');
-                window.hotelDataPromise = null;
-                window.fullAvailability = { mile: {}, padi: {}, villa: {} };
-                window.preloadHotelData(); 
+                window.preloadAvailability(true); // Force fresh data load silently in background
             }
         });
 
@@ -718,14 +689,58 @@
         };
 
         window.hotelDataPromise = null;
-        window.preloadHotelData = function() {
-            if (!MILE_URL.includes("PASTE_") && !window.hotelDataPromise) {
-                window.hotelDataPromise = Promise.all([
-                    fetchHotelData(MILE_URL, "Mi Le"), fetchHotelData(PADI_URL, "Padi Sentral"), fetchHotelData(VILLA_URL, "Villa Chee")
-                ]);
+
+        // NEW: Preloads data silently in the background as soon as the website opens!
+        window.preloadAvailability = function(forceRefresh = false) {
+            if (MILE_URL.includes("PASTE_")) return null;
+            
+            if (forceRefresh) {
+                window.hotelDataPromise = null;
+                window.fullAvailability = { mile: {}, padi: {}, villa: {} };
             }
+
+            if (!window.hotelDataPromise) {
+                window.hotelDataPromise = Promise.all([
+                    fetchHotelData(MILE_URL, "Mi Le"), 
+                    fetchHotelData(PADI_URL, "Padi Sentral"), 
+                    fetchHotelData(VILLA_URL, "Villa Chee")
+                ]).then(([m, p, v]) => {
+                    window.fullAvailability.mile = m || {}; 
+                    window.fullAvailability.padi = p || {}; 
+                    window.fullAvailability.villa = v || {};
+                }).catch(e => {
+                    console.error("Preload error:", e);
+                    window.hotelDataPromise = null; // Reset so it can try again
+                });
+            }
+            return window.hotelDataPromise;
         };
-        window.preloadHotelData(); 
+
+        // NEW: Only shows the loader if the data hasn't finished preloading yet
+        window.fetchAvailability = async function() {
+            if (MILE_URL.includes("PASTE_")) return;
+            
+            // If data is already fetched, return instantly with NO loading screen!
+            if (Object.keys(window.fullAvailability.mile).length > 0 || Object.keys(window.fullAvailability.padi).length > 0) {
+                return;
+            }
+            
+            // Otherwise, show loader and wait for the preload to finish
+            document.getElementById('global-loader').classList.remove('hidden'); 
+            document.getElementById('global-loader').classList.add('flex');
+            
+            try {
+                await window.preloadAvailability();
+            } catch(e) { 
+                console.error("Availability fetch error:", e); 
+            }
+            
+            document.getElementById('global-loader').classList.add('hidden'); 
+            document.getElementById('global-loader').classList.remove('flex');
+        };
+
+        // Kick off the background fetch immediately!
+        window.preloadAvailability();
 
         window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
             if (!window.fullAvailability || !window.fullAvailability[hotelId]) return null;
@@ -749,8 +764,8 @@
             return null;
         }
 
-        window.startFlow = async function(type, isRestore = false) {
-            window.currentFlow = type; window.setThemeLight(true);
+        window.startFlow = async function(isRestore = false) {
+            window.setThemeLight(true);
             if (!isRestore) {
                 document.getElementById('registrationForm').reset();
                 window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
@@ -758,46 +773,24 @@
                 const kidsInput = document.getElementById('pax-kids'); if(kidsInput) kidsInput.value = 0;
             }
 
-            if (type === 'accommodation' && MAIN_SUBMIT_URL.includes("PASTE_")) {
+            if (MAIN_SUBMIT_URL.includes("PASTE_")) {
                 showCustomModal("Code Update Required", "Please update your Web App URL!"); return; 
             }
+
+            // Fetch live parallel data instantly before opening the hotel list
+            await window.fetchAvailability();
 
             document.getElementById('view-landing').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
 
-            if (type === 'conference') {
-                document.getElementById('flow-badge').innerText = 'Conference';
-                document.getElementById('flow-badge').className = 'text-xs bg-blue-100 px-2 py-1 rounded ml-2 text-blue-700 uppercase font-sans font-bold tracking-wider';
-                document.getElementById('nav-step-1-text').innerText = 'Details';
-                document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.add('hidden'));
-                
-                document.getElementById('section-attendance').classList.remove('hidden');
-                document.getElementById('accom-booking-summary').classList.add('hidden');
-                document.getElementById('accom-special-requests').classList.add('hidden');
-                document.getElementById('pax-section').classList.add('hidden');
-                document.getElementById('div-email').classList.remove('hidden');
-                document.getElementById('div-assembly').classList.remove('hidden');
-                document.getElementById('btn-details-next').innerHTML = 'Complete Registration <i class="fas fa-check-circle ml-2"></i>';
-                
-                if (!isRestore) showView('view-shared-details', 1);
-            } else {
-                document.getElementById('flow-badge').innerText = 'Accommodation';
-                document.getElementById('flow-badge').className = 'text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider';
-                document.getElementById('nav-step-1-text').innerText = 'Selection';
-                document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.remove('hidden'));
-                
-                document.getElementById('section-attendance').classList.add('hidden');
-                document.getElementById('accom-booking-summary').classList.remove('hidden');
-                document.getElementById('accom-special-requests').classList.remove('hidden');
-                document.getElementById('pax-section').classList.remove('hidden');
-                document.getElementById('div-email').classList.add('hidden');
-                document.getElementById('div-assembly').classList.add('hidden');
-                document.getElementById('btn-details-next').innerHTML = 'Review Details <i class="fas fa-arrow-right ml-2"></i>';
+            document.getElementById('flow-badge').innerText = 'Accommodation';
+            document.getElementById('flow-badge').className = 'text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider';
+            document.getElementById('nav-step-1-text').innerText = 'Selection';
+            document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.remove('hidden'));
+            document.getElementById('btn-details-next').innerHTML = 'Review Details <i class="fas fa-arrow-right ml-2"></i>';
 
-                if (!window.hotelDataPromise) window.preloadHotelData();
-                renderHotelCards();
-                if (!isRestore) showView('view-accom-hotels', 1);
-            }
+            renderHotelCards();
+            if (!isRestore) showView('view-accom-hotels', 1);
         };
 
         window.showView = function(viewId, stepNumber, pushHistory = true) {
@@ -807,7 +800,7 @@
             });
             const activeEl = document.getElementById(viewId); if (activeEl) activeEl.classList.remove('hidden');
             updateNav(stepNumber); window.scrollTo(0, 0); window.saveState();
-            if (pushHistory) history.pushState({ viewId: viewId, stepNum: stepNumber, flow: window.currentFlow }, "", "");
+            if (pushHistory) history.pushState({ viewId: viewId, stepNum: stepNumber }, "", "");
         };
 
         function updateNav(step) {
@@ -892,15 +885,9 @@
         };
 
         window.openHotelDetail = async function(hotelId, isRestore = false) {
+            // Data is already fetched in startFlow, but acts as a fallback if skipped
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
-                document.getElementById('global-loader').classList.remove('hidden'); document.getElementById('global-loader').classList.add('flex');
-                try {
-                    if (window.hotelDataPromise) {
-                        const [m, p, v] = await window.hotelDataPromise;
-                        window.fullAvailability.mile = m || {}; window.fullAvailability.padi = p || {}; window.fullAvailability.villa = v || {};
-                    }
-                } catch(e) { console.error(e); }
-                document.getElementById('global-loader').classList.add('hidden'); document.getElementById('global-loader').classList.remove('flex');
+                await window.fetchAvailability();
             }
 
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
@@ -912,9 +899,6 @@
             const data = window.hotelData[hotelId];
             document.getElementById('detail-title').innerText = data.name;
             document.getElementById('detail-desc').innerText = data.desc;
-            const iconBox = document.getElementById('detail-icon-box');
-            iconBox.className = `w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${data.bgColor} ${data.iconColor}`;
-            iconBox.innerHTML = `<i class="${data.mainIcon}"></i>`;
             const list = document.getElementById('detail-amenities'); list.innerHTML = '';
             
             // UPDATE: Perfectly aligns the tick icon with multi-line text
@@ -944,6 +928,9 @@
             const data = window.hotelData[hotelId];
             const container = document.getElementById('detail-room-list');
             container.innerHTML = '';
+            
+            let currentCategory = null; // Tracks category changes
+
             data.roomTypes.forEach(rt => {
                 let isFullyBooked = false;
                 const matrixRoomData = window.getRoomDataFromMatrix(hotelId, rt.id, rt.name);
@@ -976,6 +963,16 @@
                     </div>`;
                 }
 
+                // Render Category Divider if a new category is detected
+                if (rt.category && rt.category !== currentCategory) {
+                    container.innerHTML += `
+                    <div class="mt-8 mb-4 flex items-center gap-4">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">${rt.category}</h4>
+                        <div class="h-px bg-slate-200 flex-grow"></div>
+                    </div>`;
+                    currentCategory = rt.category;
+                }
+
                 container.innerHTML += `
                 <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
                     ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
@@ -985,7 +982,7 @@
                         
                         <div class="flex-grow">
                             <h4 class="font-bold text-slate-800 text-sm sm:text-lg leading-tight">${rt.name}</h4>
-                            <p class="text-[10px] sm:text-xs text-slate-500 mt-1">${rt.desc}</p>
+                            ${rt.desc ? `<p class="text-[10px] sm:text-xs text-slate-500 mt-1">${rt.desc}</p>` : ''}
                         </div>
                         
                         <div class="text-right shrink-0">
@@ -1149,7 +1146,6 @@
             window.bookingState.cost = parseInt(priceText);
             const hotel = window.hotelData[hotelId];
             const room = hotel.roomTypes.find(r => r.id === roomId);
-            document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
             document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
             document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
             document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
@@ -1168,43 +1164,23 @@
             const name = document.getElementById('fullName').value.trim();
             const phone = document.getElementById('phone').value.trim();
             if (!name || !phone) { showCustomModal("Missing Information", "Please enter name and phone number."); return; }
-            if (window.currentFlow === 'conference') {
-                if (document.querySelectorAll('input[name="attendance_day"]:checked').length === 0) { showCustomModal("Attendance Required", "Select at least one day."); return; }
-                finalizeConference(); 
-            } else {
-                const adultPax = document.getElementById('pax-adults').value || 1;
-                const kidPax = document.getElementById('pax-kids').value || 0;
-                const hotel = window.hotelData[window.bookingState.hotelId];
-                const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
-                
-                let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
-                <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-                <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
-                
-                document.getElementById('confirmation-list').innerHTML = html;
-                showView('view-confirmation', 3);
-            }
-        }
-
-        window.finalizeConference = async function() {
-            const btn = document.getElementById('btn-details-next');
-            const orig = btn.innerHTML; btn.innerHTML = 'Saving...'; btn.disabled = true;
-            const days = []; let totalCost = 0;
-            document.querySelectorAll('input[name="attendance_day"]:checked').forEach(cb => { days.push(cb.getAttribute('data-label')); totalCost += 50; });
-            const payload = { 
-                fullName: document.getElementById('fullName').value, 
-                email: document.getElementById('email').value || "N/A", 
-                phone: document.getElementById('phone').value, 
-                assembly: document.getElementById('assembly').value || "N/A", 
-                pax: "1 Adult", booking_type: 'conference', days: days, roomDetails: "Conference Only", totalCost: `RM ${totalCost}`, status: 'Registered', specialRequests: "N/A"
-            };
-            await sendToGoogle(payload);
-            btn.innerHTML = orig; btn.disabled = false;
+            
+            const adultPax = document.getElementById('pax-adults').value || 1;
+            const kidPax = document.getElementById('pax-kids').value || 0;
+            const hotel = window.hotelData[window.bookingState.hotelId];
+            const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
+            
+            let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
+            <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
+            
+            document.getElementById('confirmation-list').innerHTML = html;
+            showView('view-confirmation', 3);
         }
 
         window.finalizeAccommodation = async function() {
@@ -1255,95 +1231,86 @@
             if (saved) {
                 try {
                     const state = JSON.parse(saved);
-                    if (state.flow && state.view && state.view !== 'landing') {
+                    if (state.view && state.view !== 'landing') {
                         window.setThemeLight(true);
                         
                         if (state.form) {
                             document.getElementById('fullName').value = state.form.name || '';
-                            document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
-                            document.getElementById('assembly').value = state.form.assembly || '';
                             if(document.getElementById('pax-adults')) document.getElementById('pax-adults').value = state.form.adults || 1;
                             if(document.getElementById('pax-kids')) document.getElementById('pax-kids').value = state.form.kids || 0;
                             if(document.getElementById('specialRequests')) document.getElementById('specialRequests').value = state.form.specialRequests || '';
                         }
                         if (state.booking) window.bookingState = state.booking;
                         
-                        await window.startFlow(state.flow, true);
+                        await window.startFlow(true);
                         
-                        if (state.flow === 'accommodation') {
-                            history.replaceState({ viewId: 'landing' }, "", "");
+                        history.replaceState({ viewId: 'landing' }, "", "");
+                        
+                        if (state.view === 'view-accom-hotels') {
+                            window.showView('view-accom-hotels', 1, false);
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
+                        
+                        } else if (state.view === 'view-accom-room') {
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
+                            if (window.bookingState.hotelId) await window.openHotelDetail(window.bookingState.hotelId, true);
+                            window.showView('view-accom-room', 1, false);
+                            history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
+                        
+                        } else if (state.view === 'view-shared-details' || state.view === 'view-confirmation') {
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
+                            history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
                             
-                            if (state.view === 'view-accom-hotels') {
-                                window.showView('view-accom-hotels', 1, false);
-                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
-                            
-                            } else if (state.view === 'view-accom-room') {
-                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
-                                if (window.bookingState.hotelId) await window.openHotelDetail(window.bookingState.hotelId, true);
-                                window.showView('view-accom-room', 1, false);
-                                history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
-                            
-                            } else if (state.view === 'view-shared-details' || state.view === 'view-confirmation') {
-                                history.pushState({ viewId: 'view-accom-hotels', stepNum: 1, flow: 'accommodation' }, "", "");
-                                history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
+                            if (window.bookingState.hotelId) {
+                                await window.openHotelDetail(window.bookingState.hotelId, true);
                                 
-                                if (window.bookingState.hotelId) {
-                                    await window.openHotelDetail(window.bookingState.hotelId, true);
-                                    
-                                    const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
-                                    const currentMax = parseInt(qtyInput ? qtyInput.dataset.max : 0) || 0;
-                                    
-                                    if (window.bookingState.quantity > currentMax) {
-                                        showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
-                                        window.showView('view-accom-room', 1, false);
-                                        history.pushState({ viewId: 'view-accom-room', stepNum: 1, flow: 'accommodation' }, "", "");
-                                        return; 
-                                    }
-                                }
-
-                                if (state.view === 'view-shared-details') {
-                                    if (window.bookingState.roomId && window.bookingState.hotelId) {
-                                        const hotel = window.hotelData[window.bookingState.hotelId];
-                                        const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
-                                        if (hotel && room) {
-                                            document.getElementById('summary-icon').innerHTML = `<i class="${hotel.mainIcon}"></i>`;
-                                            document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
-                                            document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
-                                            document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
-                                        }
-                                    }
-                                    window.showView('view-shared-details', 2, false);
-                                    history.pushState({ viewId: 'view-shared-details', stepNum: 2, flow: 'accommodation' }, "", "");
+                                const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`);
+                                const currentMax = parseInt(qtyInput ? qtyInput.dataset.max : 0) || 0;
                                 
-                                } else if (state.view === 'view-confirmation') {
-                                    history.pushState({ viewId: 'view-shared-details', stepNum: 2, flow: 'accommodation' }, "", "");
-                                    
-                                    const hotel = window.hotelData[window.bookingState.hotelId];
-                                    const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
-                                    if (hotel && room) {
-                                        const name = document.getElementById('fullName').value.trim();
-                                        const phone = document.getElementById('phone').value.trim();
-                                        const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
-                                        const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
-                                        let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
-                                        <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-                                        <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
-                                        document.getElementById('confirmation-list').innerHTML = html;
-                                    }
-                                    window.showView('view-confirmation', 3, false);
-                                    history.pushState({ viewId: 'view-confirmation', stepNum: 3, flow: 'accommodation' }, "", "");
+                                if (window.bookingState.quantity > currentMax) {
+                                    showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
+                                    window.showView('view-accom-room', 1, false);
+                                    history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
+                                    return; 
                                 }
                             }
-                        } else if (state.flow === 'conference') {
-                            history.replaceState({ viewId: 'landing' }, "", "");
-                            window.showView('view-shared-details', 1, false);
-                            history.pushState({ viewId: 'view-shared-details', stepNum: 1, flow: 'conference' }, "", "");
+
+                            if (state.view === 'view-shared-details') {
+                                if (window.bookingState.roomId && window.bookingState.hotelId) {
+                                    const hotel = window.hotelData[window.bookingState.hotelId];
+                                    const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
+                                    if (hotel && room) {
+                                        document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
+                                        document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
+                                        document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
+                                    }
+                                }
+                                window.showView('view-shared-details', 2, false);
+                                history.pushState({ viewId: 'view-shared-details', stepNum: 2 }, "", "");
+                            
+                            } else if (state.view === 'view-confirmation') {
+                                history.pushState({ viewId: 'view-shared-details', stepNum: 2 }, "", "");
+                                
+                                const hotel = window.hotelData[window.bookingState.hotelId];
+                                const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
+                                if (hotel && room) {
+                                    const name = document.getElementById('fullName').value.trim();
+                                    const phone = document.getElementById('phone').value.trim();
+                                    const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
+                                    const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
+                                    let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
+                                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
+                                    document.getElementById('confirmation-list').innerHTML = html;
+                                }
+                                window.showView('view-confirmation', 3, false);
+                                history.pushState({ viewId: 'view-confirmation', stepNum: 3 }, "", "");
+                            }
                         }
                     }
                 } catch(e) { console.error("Restore Error: ", e); sessionStorage.removeItem('kkgh_app_state'); }
