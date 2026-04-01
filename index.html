@@ -63,8 +63,8 @@
 
     <div id="global-loader" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex-col items-center justify-center z-50">
         <div class="loader loader-large mb-4 border-slate-300 border-t-blue-500"></div>
-        <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading</h3>
-        <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a moment...</p>
+        <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading Data</h3>
+        <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Connecting to hotel servers...</p>
     </div>
 
     <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
@@ -609,9 +609,24 @@
             sessionStorage.setItem('kkgh_app_state', JSON.stringify(state));
         }
 
+        // FIXED: Instantly reset the UI without a full page reload to prevent "Ghost" history stack bugs
         window.resetToHome = function() {
             sessionStorage.removeItem('kkgh_app_state');
-            window.location.href = window.location.pathname;
+            
+            const successModal = document.getElementById('successModal');
+            if (successModal) {
+                successModal.classList.add('hidden');
+                successModal.classList.remove('flex');
+            }
+            
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('view-landing').classList.remove('hidden');
+            
+            window.currentViewId = null;
+            window.setThemeLight(false);
+            
+            // Overwrite the current history state to completely neutralize the confirmation screen
+            history.replaceState({ viewId: 'landing' }, "", "");
         }
 
         document.addEventListener('input', (e) => {
@@ -642,16 +657,24 @@
 
             const saved = sessionStorage.getItem('kkgh_app_state');
             
-            if (state && state.viewId && state.viewId !== 'landing' && !saved) {
-                window.location.href = window.location.pathname; return;
+            // NEW BUG FIX: If the user forcefully mashes the back button into a stale/old booking,
+            // intercept it and instantly convert that old screen into the Landing Page.
+            if (!state || (state.viewId && state.viewId !== 'landing' && !saved)) {
+                history.replaceState({ viewId: 'landing' }, "", "");
+                document.getElementById('app-container').classList.add('hidden');
+                document.getElementById('view-landing').classList.remove('hidden');
+                window.currentViewId = null;
+                window.setThemeLight(false);
+                return;
             }
+
             if (state && state.viewId && state.viewId !== 'landing') {
                 document.getElementById('view-landing').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 window.setThemeLight(true); 
                 
                 if (state.viewId === 'view-accom-hotels') {
-                    await window.fetchAvailability();
+                    if (!window.hotelDataPromise) window.preloadAvailability();
                     renderHotelCards();
                 }
                 else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
@@ -1179,20 +1202,27 @@
             btn.innerHTML = orig; btn.disabled = false;
         }
 
+        // UPDATED: Now uses modern fetch requests instead of hidden iframes to prevent history bloat
         async function sendToGoogle(payload) {
             try {
                 if (MAIN_SUBMIT_URL.includes("script.google.com")) {
-                    const form = document.createElement('form');
-                    form.method = 'POST'; form.action = MAIN_SUBMIT_URL; form.target = 'hidden-iframe';
-                    const input = document.createElement('input'); input.type = 'hidden'; input.name = 'payload'; input.value = JSON.stringify(payload);
-                    form.appendChild(input); document.body.appendChild(form);
-                    let iframe = document.getElementById('hidden-iframe') || document.body.appendChild(Object.assign(document.createElement('iframe'), {name: 'hidden-iframe', id: 'hidden-iframe', style: 'display:none'}));
-                    form.submit(); document.body.removeChild(form);
-                    await new Promise(r => setTimeout(r, 3000));
+                    await fetch(MAIN_SUBMIT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ payload: JSON.stringify(payload) })
+                    });
                 }
                 sessionStorage.removeItem('kkgh_app_state');
-                document.getElementById('successModal').classList.remove('hidden');
-            } catch(e) { console.error(e); throw e; }
+                const modal = document.getElementById('successModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } catch(e) { 
+                console.error(e); 
+                throw e; 
+            }
         }
 
         window.preloadAllImages = function() {
@@ -1309,3 +1339,5 @@
             }
         });
     </script>
+</body>
+</html>
