@@ -525,77 +525,74 @@
         window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
         const conferenceDates = ["Dec 16", "Dec 17", "Dec 18", "Dec 19"];
 
-window.hotelData = {
-    'mile': {
-        name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-        desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
-        amenities: [
-            'On-site — zero commute', 
-            'Accommodation for large groups', 
-            'Smaller room options available', 
-            'Perfect for families & big groups'
-        ],
-        hotelImages: [
-            'images/mile_cover_pic.webp', 
-            'images/mile_pic_2.webp',
-            'images/mile_map.webp'
-        ],
-        roomTypes: [
-            // --- NEW CATEGORY: RESORT BUNGALOWS ---
-            { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-            { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-            { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-            { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-            
-            // --- NEW CATEGORY: CHALETS & STANDARD ROOMS ---
-            { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
-            { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
-            { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srs_3.webp', 'images/mile_srs_4.webp', 'images/mile_srs_5.webp'] },
-            { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srq_1.webp', 'images/mile_srq_2.webp', 'images/mile_srq_3.webp', 'images/mile_srs_5.webp'] },
-            { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_tr_1.webp', 'images/mile_tr_2.webp', 'images/mile_tr_3.webp', 'images/mile_srs_5.webp'] }
-        ]
-    },
-    'padi': {
-        name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-        desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
-        amenities: [
-            '3-min drive / 15-min walk to venue', 
-            'Rooms with paddy field views', 
-            'Quiet & private setting',
-            'Perfect for individuals, couples, or small families with own transport'
-        ],
-        hotelImages: [
-            'images/padi_sentral_cover.webp',
-            'images/padi_sentral_cover2.webp'
-        ],
-        roomTypes: [
-            { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['images/padi_dtr.webp'] },
-            { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['images/padi_dfr.webp'] },
-            { id: 'family-room', name: 'Family Room (4pax)', price: 188, desc: '', images: ['images/padi_frGF.webp'] },
-            { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 158, desc: '', images: ['images/padi_dkr.webp'] },
-            { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 169, desc: '', images: ['images/padi_str.webp'] }
-        ]
-    },
-    'villa': {
-        name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-        desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
-        amenities: [
-            '7-min drive to venue — own transport required', 
-            'Scenic paddy field surroundings', 
-            'Swimming pool with slides & outdoor park',
-            'Perfect for individuals and small families'
-        ],
-        hotelImages: [
-            'images/villa_chee_cover.webp',
-            'images/villa_chee_cover2.webp'
-        ],
-        roomTypes: [
-            { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
-            { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
-            { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
-        ]
-    }
-};
+        window.hotelData = {
+            'mile': {
+                name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
+                desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
+                amenities: [
+                    'On-site — zero commute', 
+                    'Accommodation for large groups', 
+                    'Smaller room options available', 
+                    'Perfect for families & big groups'
+                ],
+                hotelImages: [
+                    'images/mile_cover_pic.webp', 
+                    'images/mile_pic_2.webp',
+                    'images/mile_map.webp'
+                ],
+                roomTypes: [
+                    { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srs_3.webp', 'images/mile_srs_4.webp', 'images/mile_srs_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srq_1.webp', 'images/mile_srq_2.webp', 'images/mile_srq_3.webp', 'images/mile_srs_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_tr_1.webp', 'images/mile_tr_2.webp', 'images/mile_tr_3.webp', 'images/mile_srs_5.webp'] }
+                ]
+            },
+            'padi': {
+                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+                desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
+                amenities: [
+                    '3-min drive / 15-min walk to venue', 
+                    'Rooms with paddy field views', 
+                    'Quiet & private setting',
+                    'Perfect for individuals, couples, or small families with own transport'
+                ],
+                hotelImages: [
+                    'images/padi_sentral_cover.webp',
+                    'images/padi_sentral_cover2.webp'
+                ],
+                roomTypes: [
+                    { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['images/padi_dtr.webp'] },
+                    { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['images/padi_dfr.webp'] },
+                    { id: 'family-room', name: 'Family Room (4pax)', price: 188, desc: '', images: ['images/padi_frGF.webp'] },
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 158, desc: '', images: ['images/padi_dkr.webp'] },
+                    { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 169, desc: '', images: ['images/padi_str.webp'] }
+                ]
+            },
+            'villa': {
+                name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
+                desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
+                amenities: [
+                    '7-min drive to venue — own transport required', 
+                    'Scenic paddy field surroundings', 
+                    'Swimming pool with slides & outdoor park',
+                    'Perfect for individuals and small families'
+                ],
+                hotelImages: [
+                    'images/villa_chee_cover.webp',
+                    'images/villa_chee_cover2.webp'
+                ],
+                roomTypes: [
+                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
+                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
+                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
+                ]
+            }
+        };
 
         window.saveState = function() {
             if (!window.currentViewId) return;
@@ -624,24 +621,20 @@ window.hotelData = {
         });
 
         window.addEventListener('popstate', async (e) => {
-            // MAGIC FIX: Catch the hardware back button when the image viewer is open
             if (window.isClosingModal) {
                 window.isClosingModal = false;
-                return; // Ignore this, we just silently popped the modal state
+                return;
             }
             
             const imageModal = document.getElementById('image-viewer-modal');
             if (imageModal && imageModal.classList.contains('flex')) {
                 window.closeImageViewer(true);
-                return; // Stop executing, stay on the current page!
+                return;
             }
 
             const state = e.state;
 
-            // PREVENT FORWARD BUTTON GLITCH
             if (state && state.modalOpen) {
-                // The user clicked the "Forward" button into the image viewer state.
-                // We instantly undo the forward action to keep them on the current page safely.
                 window.isClosingModal = true;
                 history.back();
                 return;
@@ -672,7 +665,7 @@ window.hotelData = {
                 window.currentViewId = null;
                 window.setThemeLight(false);
                 sessionStorage.removeItem('kkgh_app_state');
-                window.preloadAvailability(true); // Force fresh data load silently in background
+                window.preloadAvailability(true);
             }
         });
 
@@ -690,7 +683,6 @@ window.hotelData = {
 
         window.hotelDataPromise = null;
 
-        // NEW: Preloads data silently in the background as soon as the website opens!
         window.preloadAvailability = function(forceRefresh = false) {
             if (MILE_URL.includes("PASTE_")) return null;
             
@@ -710,22 +702,19 @@ window.hotelData = {
                     window.fullAvailability.villa = v || {};
                 }).catch(e => {
                     console.error("Preload error:", e);
-                    window.hotelDataPromise = null; // Reset so it can try again
+                    window.hotelDataPromise = null;
                 });
             }
             return window.hotelDataPromise;
         };
 
-        // NEW: Only shows the loader if the data hasn't finished preloading yet
         window.fetchAvailability = async function() {
             if (MILE_URL.includes("PASTE_")) return;
             
-            // If data is already fetched, return instantly with NO loading screen!
             if (Object.keys(window.fullAvailability.mile).length > 0 || Object.keys(window.fullAvailability.padi).length > 0) {
                 return;
             }
             
-            // Otherwise, show loader and wait for the preload to finish
             document.getElementById('global-loader').classList.remove('hidden'); 
             document.getElementById('global-loader').classList.add('flex');
             
@@ -739,7 +728,6 @@ window.hotelData = {
             document.getElementById('global-loader').classList.remove('flex');
         };
 
-        // Kick off the background fetch immediately!
         window.preloadAvailability();
 
         window.getRoomDataFromMatrix = function(hotelId, roomId, rtName) {
@@ -777,7 +765,6 @@ window.hotelData = {
                 showCustomModal("Code Update Required", "Please update your Web App URL!"); return; 
             }
 
-            // Fetch live parallel data instantly before opening the hotel list
             await window.fetchAvailability();
 
             document.getElementById('view-landing').classList.add('hidden');
@@ -819,25 +806,19 @@ window.hotelData = {
             });
         }
 
-        // UPDATED: Now shows the actual hotel image instead of just an icon!
         function renderHotelCards() {
             const container = document.getElementById('hotel-grid-container'); 
             container.innerHTML = '';
             
             Object.keys(window.hotelData).forEach(id => {
                 const h = window.hotelData[id];
-                // Automatically grab the first hotel image (or fallback to the first room image)
                 const coverImg = (h.hotelImages && h.hotelImages.length > 0) ? h.hotelImages[0] : h.roomTypes[0].images[0];
                 
                 container.innerHTML += `
                 <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
-                    
-                    <!-- Premium Image Header -->
                     <div class="h-48 relative overflow-hidden bg-slate-100">
-                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('${coverImg}')"></div>
+                        <img src="${coverImg}" alt="${h.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
-                    
-                    <!-- Text Content -->
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3>
                         <p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p>
@@ -849,7 +830,6 @@ window.hotelData = {
             });
         }
 
-        // NEW GALLERY RENDER FUNCTION (WITH CLICK TO EXPAND)
         window.renderGallery = function(images) {
             const mainImg = document.getElementById('gallery-main');
             const thumbsContainer = document.getElementById('gallery-thumbs');
@@ -885,7 +865,6 @@ window.hotelData = {
         };
 
         window.openHotelDetail = async function(hotelId, isRestore = false) {
-            // Data is already fetched in startFlow, but acts as a fallback if skipped
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
                 await window.fetchAvailability();
             }
@@ -901,12 +880,10 @@ window.hotelData = {
             document.getElementById('detail-desc').innerText = data.desc;
             const list = document.getElementById('detail-amenities'); list.innerHTML = '';
             
-            // UPDATE: Perfectly aligns the tick icon with multi-line text
             data.amenities.forEach(am => { 
                 list.innerHTML += `<li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5 shrink-0"></i> <span>${am}</span></li>`; 
             });
             
-            // SHOW GENERAL HOTEL PHOTOS ON LOAD
             const initialImages = data.hotelImages && data.hotelImages.length > 0 ? data.hotelImages : data.roomTypes[0].images;
             window.renderGallery(initialImages);
             
@@ -929,7 +906,7 @@ window.hotelData = {
             const container = document.getElementById('detail-room-list');
             container.innerHTML = '';
             
-            let currentCategory = null; // Tracks category changes
+            let currentCategory = null; 
 
             data.roomTypes.forEach(rt => {
                 let isFullyBooked = false;
@@ -944,26 +921,24 @@ window.hotelData = {
                 const checkInDays = [{ val: 'Dec 16', label: 'Wed, Dec 16' }, { val: 'Dec 17', label: 'Thu, Dec 17' }, { val: 'Dec 18', label: 'Fri, Dec 18' }];
                 let isFirstValidCi = false;
                 checkInDays.forEach(day => {
-                    if (REQUIRE_FULL_STAY && day.val !== 'Dec 16') return; // Enforce Full Stay Check-in
+                    if (REQUIRE_FULL_STAY && day.val !== 'Dec 16') return; 
 
                     let avail = 0; if (matrixRoomData && matrixRoomData[day.val] !== undefined) avail = matrixRoomData[day.val];
                     if (avail === 0) { ciHtml += `<option value="${day.val}" disabled class="text-slate-300">${day.label} (Full)</option>`; } 
                     else { ciHtml += `<option value="${day.val}" ${!isFirstValidCi ? 'selected' : ''}>${day.label}</option>`; isFirstValidCi = true; }
                 });
                 
-                // CREATE THE MINI GALLERY (Updated with proper array passing for swiping)
                 let roomImagesHtml = '';
                 if (rt.images && rt.images.length > 0) {
                     roomImagesHtml = `
                     <div class="mb-5">
                         <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 block">Room Photos</label>
                         <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-                            ${rt.images.map((img, idx) => `<div class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-lg bg-cover bg-center border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" style="background-image: url('${img}')" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})"></div>`).join('')}
+                            ${rt.images.map((img, idx) => `<img src="${img}" alt="Room thumbnail" class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-lg object-cover border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})">`).join('')}
                         </div>
                     </div>`;
                 }
 
-                // Render Category Divider if a new category is detected
                 if (rt.category && rt.category !== currentCategory) {
                     container.innerHTML += `
                     <div class="mt-8 mb-4 flex items-center gap-4">
@@ -978,7 +953,7 @@ window.hotelData = {
                     ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
                     
                     <div class="p-4 sm:p-5 flex items-center gap-4 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg bg-cover bg-center border border-slate-200 shadow-sm" style="background-image: url('${rt.images[0]}')"></div>
+                        <img src="${rt.images[0]}" alt="${rt.name}" class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg object-cover border border-slate-200 shadow-sm">
                         
                         <div class="flex-grow">
                             <h4 class="font-bold text-slate-800 text-sm sm:text-lg leading-tight">${rt.name}</h4>
@@ -993,7 +968,6 @@ window.hotelData = {
                     
                     <div id="booking-panel-${rt.id}" class="hidden bg-slate-50 border-t border-slate-200 p-5">
                         
-                        <!-- INJECT ROOM GALLERY HERE -->
                         ${roomImagesHtml}
 
                         ${REQUIRE_FULL_STAY ? '<div class="text-xs text-orange-800 font-bold mb-4 bg-orange-100 border border-orange-200 p-3 rounded-lg flex items-center gap-2"><i class="fas fa-lock"></i> Full Conference Stay Required (Dec 16 to Dec 19)</div>' : ''}
@@ -1029,9 +1003,6 @@ window.hotelData = {
             const hotelId = window.bookingState.hotelId;
             const rt = window.hotelData[hotelId].roomTypes.find(r => r.id === roomId);
             
-            // Note: We removed the code that updates the top gallery so the top gallery
-            // strictly shows the hotel exterior/lobby, while room photos show inside the panel.
-            
             window.hotelData[hotelId].roomTypes.forEach(r => {
                 const panel = document.getElementById(`booking-panel-${r.id}`);
                 const card = document.getElementById(`card-${r.id}`);
@@ -1052,14 +1023,13 @@ window.hotelData = {
             let coHtml = ''; let firstValidCo = null; let maxForCurrentDates = 0;
             const matrixRoomData = window.getRoomDataFromMatrix(hotelId, roomId, rt.name);
             
-            // Map the raw dates to their formatted labels with days
             const dateLabels = { 'Dec 16': 'Wed, Dec 16', 'Dec 17': 'Thu, Dec 17', 'Dec 18': 'Fri, Dec 18', 'Dec 19': 'Sat, Dec 19' };
 
             for (let i = ciIdx + 1; i < conferenceDates.length; i++) {
                 const targetCo = conferenceDates[i];
                 const targetLabel = dateLabels[targetCo];
 
-                if (REQUIRE_FULL_STAY && targetCo !== 'Dec 19') continue; // Enforce Full Stay Check-out
+                if (REQUIRE_FULL_STAY && targetCo !== 'Dec 19') continue; 
 
                 const nightsStr = conferenceDates.slice(ciIdx, i).join(","); 
                 const searchKey = nightsStr.replace(/\s/g, '').toLowerCase();
@@ -1225,7 +1195,29 @@ window.hotelData = {
             } catch(e) { console.error(e); throw e; }
         }
 
+        window.preloadAllImages = function() {
+            const imageUrls = new Set();
+            Object.values(window.hotelData).forEach(hotel => {
+                if (hotel.hotelImages) hotel.hotelImages.forEach(img => imageUrls.add(img));
+                if (hotel.roomTypes) {
+                    hotel.roomTypes.forEach(rt => {
+                        if (rt.images) rt.images.forEach(img => imageUrls.add(img));
+                    });
+                }
+            });
+
+            imageUrls.forEach(url => {
+                if(url && !url.includes('placehold.co')) {
+                    const img = new Image();
+                    img.src = url;
+                }
+            });
+            console.log("Images preloaded into cache for instant viewing.");
+        };
+
         window.addEventListener('DOMContentLoaded', async () => {
+            setTimeout(window.preloadAllImages, 1500);
+
             if (!history.state) history.replaceState({ viewId: 'landing' }, "", "");
             const saved = sessionStorage.getItem('kkgh_app_state');
             if (saved) {
@@ -1317,5 +1309,3 @@ window.hotelData = {
             }
         });
     </script>
-</body>
-</html>
