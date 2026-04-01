@@ -525,77 +525,77 @@
         window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
         const conferenceDates = ["Dec 16", "Dec 17", "Dec 18", "Dec 19"];
 
-        window.hotelData = {
-            'mile': {
-                name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-                desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
-                amenities: [
-                    'On-site — zero commute', 
-                    'Accommodation for large groups', 
-                    'Smaller room options available', 
-                    'Perfect for families & big groups'
-                ],
-                hotelImages: [
-                    'images/mile_cover_pic.webp', 
-                    'images/mile_pic_2.webp',
-                    'images/mile_map.png'
-                ],
-                roomTypes: [
-                    // --- NEW CATEGORY: RESORT BUNGALOWS ---
-                    { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.png', 'images/mile_resort_2.png', 'images/mile_resort_3.png', 'images/mile_resort_4.png', 'images/mile_resort_5.png'] },
-                    { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.png', 'images/mile_resort_2.png', 'images/mile_resort_3.png', 'images/mile_resort_4.png', 'images/mile_resort_5.png'] },
-                    { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.png', 'images/mile_resort_2.png', 'images/mile_resort_3.png', 'images/mile_resort_4.png', 'images/mile_resort_5.png'] },
-                    { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.png', 'images/mile_resort_2.png', 'images/mile_resort_3.png', 'images/mile_resort_4.png', 'images/mile_resort_5.png'] },
-                    
-                    // --- NEW CATEGORY: CHALETS & STANDARD ROOMS ---
-                    { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.png', 'images/mile_chalet_2.png', 'images/mile_chalet_3.png', 'images/mile_chalet_4.png', 'images/mile_chalet_5.png', 'images/mile_chalet_6.png', 'images/mile_chalet_7.png'] },
-                    { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.png', 'images/mile_chalet_2.png', 'images/mile_chalet_3.png', 'images/mile_chalet_4.png', 'images/mile_chalet_5.png', 'images/mile_chalet_6.png', 'images/mile_chalet_7.png'] },
-                    { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1.png', 'images/mile_srs_2.jpg', 'images/mile_srs_3.png', 'images/mile_srs_4.png', 'images/mile_srs_5.png'] },
-                    { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1.png', 'images/mile_srs_2.png', 'images/mile_srq_1.png', 'images/mile_srq_2.png', 'images/mile_srq_3.png', 'images/mile_srs_5.png'] },
-                    { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.png', 'images/mile_srs_2.png', 'images/mile_tr_1.png', 'images/mile_tr_2.png', 'images/mile_tr_3.png', 'images/mile_srs_5.png'] }
-                ]
-            },
-            'padi': {
-                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-                desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
-                amenities: [
-                    '3-min drive / 15-min walk to venue', 
-                    'Rooms with paddy field views', 
-                    'Quiet & private setting',
-                    'Perfect for individuals, couples, or small families with own transport'
-                ],
-                hotelImages: [
-                    'images/padi_sentral_cover.jpg',
-                    'images/padi_sentral_cover2.jpg'
-                ],
-                roomTypes: [
-                    { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['images/padi_dtr.JPG'] },
-                    { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['images/padi_dfr.JPG'] },
-                    { id: 'family-room', name: 'Family Room (4pax)', price: 188, desc: '', images: ['images/padi_frGF.JPG'] },
-                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 158, desc: '', images: ['images/padi_dkr.JPG'] },
-                    { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 169, desc: '', images: ['images/padi_str.JPG'] }
-                ]
-            },
-            'villa': {
-                name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-                desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
-                amenities: [
-                    '7-min drive to venue — own transport required', 
-                    'Scenic paddy field surroundings', 
-                    'Swimming pool with slides & outdoor park',
-                    'Perfect for individuals and small families'
-                ],
-                hotelImages: [
-                    'images/villa_chee_cover.webp',
-                    'images/villa_chee_cover2.webp'
-                ],
-                roomTypes: [
-                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
-                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
-                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
-                ]
-            }
-        };
+window.hotelData = {
+    'mile': {
+        name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
+        desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
+        amenities: [
+            'On-site — zero commute', 
+            'Accommodation for large groups', 
+            'Smaller room options available', 
+            'Perfect for families & big groups'
+        ],
+        hotelImages: [
+            'images/mile_cover_pic.webp', 
+            'images/mile_pic_2.webp',
+            'images/mile_map.webp'
+        ],
+        roomTypes: [
+            // --- NEW CATEGORY: RESORT BUNGALOWS ---
+            { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+            { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+            { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+            { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+            
+            // --- NEW CATEGORY: CHALETS & STANDARD ROOMS ---
+            { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+            { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+            { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srs_3.webp', 'images/mile_srs_4.webp', 'images/mile_srs_5.webp'] },
+            { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srq_1.webp', 'images/mile_srq_2.webp', 'images/mile_srq_3.webp', 'images/mile_srs_5.webp'] },
+            { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_tr_1.webp', 'images/mile_tr_2.webp', 'images/mile_tr_3.webp', 'images/mile_srs_5.webp'] }
+        ]
+    },
+    'padi': {
+        name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+        desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
+        amenities: [
+            '3-min drive / 15-min walk to venue', 
+            'Rooms with paddy field views', 
+            'Quiet & private setting',
+            'Perfect for individuals, couples, or small families with own transport'
+        ],
+        hotelImages: [
+            'images/padi_sentral_cover.webp',
+            'images/padi_sentral_cover2.webp'
+        ],
+        roomTypes: [
+            { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['images/padi_dtr.webp'] },
+            { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['images/padi_dfr.webp'] },
+            { id: 'family-room', name: 'Family Room (4pax)', price: 188, desc: '', images: ['images/padi_frGF.webp'] },
+            { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 158, desc: '', images: ['images/padi_dkr.webp'] },
+            { id: 'deluxe-super-twin', name: 'Deluxe Super Twin Room (2pax)', price: 169, desc: '', images: ['images/padi_str.webp'] }
+        ]
+    },
+    'villa': {
+        name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
+        desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
+        amenities: [
+            '7-min drive to venue — own transport required', 
+            'Scenic paddy field surroundings', 
+            'Swimming pool with slides & outdoor park',
+            'Perfect for individuals and small families'
+        ],
+        hotelImages: [
+            'images/villa_chee_cover.webp',
+            'images/villa_chee_cover2.webp'
+        ],
+        roomTypes: [
+            { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Deluxe+King'] },
+            { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+GF'] },
+            { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 0, desc: '', images: ['https://placehold.co/800x600/e9d5ff/7e22ce?text=Superior+Queen+UF'] }
+        ]
+    }
+};
 
         window.saveState = function() {
             if (!window.currentViewId) return;
