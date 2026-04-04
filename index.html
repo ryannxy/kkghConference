@@ -152,7 +152,6 @@
                         </div>
 
                         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
-                            <!-- Removed the icon box and just kept the title clean -->
                             <div class="mb-4">
                                 <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-800">Hotel Name</h2>
                             </div>
@@ -185,7 +184,6 @@
                 <div id="accom-booking-summary" class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
                     <h4 class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Room Booking Summary</h4>
                     <div class="flex items-center gap-4">
-                        <!-- Removed the icon circle from here as well -->
                         <div>
                             <h3 class="font-bold text-slate-800 text-xl font-sans" id="summary-room-name"></h3>
                             <p class="text-sm text-slate-600" id="summary-hotel-dates"></p>
@@ -276,8 +274,19 @@
                 <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Review Your Booking</h2>
                 <p class="text-slate-500 mb-8">Please confirm your details before submitting.</p>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
                     <ul id="confirmation-list" class="space-y-1 text-slate-700"></ul>
+                </div>
+
+                <!-- NEW: Clear Payment Process Box -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm">
+                    <div class="bg-amber-100 rounded-full w-10 h-10 flex items-center justify-center shrink-0 mt-0.5">
+                        <i class="fas fa-wallet text-amber-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-amber-900 text-sm mb-1">Payment Process</h4>
+                        <p class="text-xs text-amber-800 leading-relaxed">No payment is collected on this website. By clicking submit, your reservation details will be safely forwarded. <b>The hotel management will contact you directly</b> via email or phone to arrange your payment.</p>
+                    </div>
                 </div>
 
                 <div class="flex justify-end">
@@ -320,6 +329,14 @@
         // ⚠️ BOOKING RULES
         // =====================================================================
         const REQUIRE_FULL_STAY = true; // Change to false to allow 1 or 2 night stays
+
+        // SMART PRICE FORMATTER: Keeps whole numbers clean, adds .00 only for decimals
+        window.formatPrice = function(price) {
+            const num = Number(price);
+            return Number.isInteger(num) 
+                ? num.toLocaleString('en-US') 
+                : num.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        };
 
         window.setThemeLight = function(isLight) {
             const metaTheme = document.getElementById('meta-theme-color');
@@ -616,7 +633,6 @@
             sessionStorage.setItem('kkgh_app_state', JSON.stringify(state));
         }
 
-        // FIXED: Instantly reset the UI without a full page reload to prevent "Ghost" history stack bugs
         window.resetToHome = function() {
             sessionStorage.removeItem('kkgh_app_state');
             
@@ -632,7 +648,6 @@
             window.currentViewId = null;
             window.setThemeLight(false);
             
-            // Overwrite the current history state to completely neutralize the confirmation screen
             history.replaceState({ viewId: 'landing' }, "", "");
         }
 
@@ -664,8 +679,6 @@
 
             const saved = sessionStorage.getItem('kkgh_app_state');
             
-            // NEW BUG FIX: If the user forcefully mashes the back button into a stale/old booking,
-            // intercept it and instantly convert that old screen into the Landing Page.
             if (!state || (state.viewId && state.viewId !== 'landing' && !saved)) {
                 history.replaceState({ viewId: 'landing' }, "", "");
                 document.getElementById('app-container').classList.add('hidden');
@@ -681,7 +694,7 @@
                 window.setThemeLight(true); 
                 
                 if (state.viewId === 'view-accom-hotels') {
-                    if (!window.hotelDataPromise) window.preloadAvailability();
+                    await window.fetchAvailability(); 
                     renderHotelCards();
                 }
                 else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
@@ -789,6 +802,7 @@
                 window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
                 const adultsInput = document.getElementById('pax-adults'); if(adultsInput) adultsInput.value = 1;
                 const kidsInput = document.getElementById('pax-kids'); if(kidsInput) kidsInput.value = 0;
+                const emailInput = document.getElementById('email'); if(emailInput) emailInput.value = '';
             }
 
             if (MAIN_SUBMIT_URL.includes("PASTE_")) {
@@ -991,7 +1005,7 @@
                         </div>
                         
                         <div class="text-right shrink-0">
-                            <span class="font-bold text-slate-800 whitespace-nowrap text-sm sm:text-base">RM ${rt.price}</span>
+                            <span class="font-bold text-slate-800 whitespace-nowrap text-sm sm:text-base">RM ${window.formatPrice(rt.price)}</span>
                             <span class="block text-[9px] sm:text-[10px] text-slate-400">/ night</span>
                         </div>
                     </div>
@@ -1125,7 +1139,9 @@
             }
 
             const nightsCount = conferenceDates.indexOf(coSelect.value) - ciIdx;
-            document.getElementById(`price-${roomId}`).innerText = ((nightsCount > 0 ? nightsCount : 0) * rt.price * qty).toLocaleString();
+            const totalPrice = (nightsCount > 0 ? nightsCount : 0) * rt.price * qty;
+            
+            document.getElementById(`price-${roomId}`).innerText = window.formatPrice(totalPrice);
         }
 
         window.adjustRoomQty = function(roomId, delta) {
@@ -1142,13 +1158,16 @@
             window.bookingState.checkIn = document.getElementById(`ci-${roomId}`).value;
             window.bookingState.checkOut = document.getElementById(`co-${roomId}`).value;
             window.bookingState.quantity = parseInt(document.getElementById(`qty-${roomId}`).value);
+            
             const priceText = document.getElementById(`price-${roomId}`).innerText.replace(/,/g, '');
-            window.bookingState.cost = parseInt(priceText);
+            window.bookingState.cost = parseFloat(priceText);
+            
             const hotel = window.hotelData[hotelId];
             const room = hotel.roomTypes.find(r => r.id === roomId);
             document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
             document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
-            document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
+            
+            document.getElementById('summary-price').innerText = `RM ${window.formatPrice(window.bookingState.cost)}`;
             showView('view-shared-details', 2);
         }
 
@@ -1189,7 +1208,7 @@
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-            <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
+            <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
             
             document.getElementById('confirmation-list').innerHTML = html;
             showView('view-confirmation', 3);
@@ -1214,14 +1233,13 @@
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
                     rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
                     rooms_villa: window.bookingState.hotelId === 'villa' ? bookingStr : "",
-                    totalCost: `RM ${window.bookingState.cost}`, status: 'Registered', checkIn: window.bookingState.checkIn, checkOut: window.bookingState.checkOut, roomType: roomName, quantity: window.bookingState.quantity, adultPax: adultPax, kidPax: kidPax, specialRequests: requests !== "" ? requests : "N/A"
+                    totalCost: `RM ${window.formatPrice(window.bookingState.cost)}`, status: 'Registered', checkIn: window.bookingState.checkIn, checkOut: window.bookingState.checkOut, roomType: roomName, quantity: window.bookingState.quantity, adultPax: adultPax, kidPax: kidPax, specialRequests: requests !== "" ? requests : "N/A"
                 };
                 await sendToGoogle(payload);
             } catch(e) { showCustomModal("Error", "Submission failed."); }
             btn.innerHTML = orig; btn.disabled = false;
         }
 
-        // UPDATED: Now uses modern fetch requests instead of hidden iframes to prevent history bloat
         async function sendToGoogle(payload) {
             try {
                 if (MAIN_SUBMIT_URL.includes("script.google.com")) {
@@ -1324,7 +1342,7 @@
                                     if (hotel && room) {
                                         document.getElementById('summary-room-name').innerText = `${window.bookingState.quantity}x ${room.name}`;
                                         document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
-                                        document.getElementById('summary-price').innerText = `RM ${window.bookingState.cost}`;
+                                        document.getElementById('summary-price').innerText = `RM ${window.formatPrice(window.bookingState.cost)}`;
                                     }
                                 }
                                 window.showView('view-shared-details', 2, false);
@@ -1349,7 +1367,7 @@
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-                                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.bookingState.cost}</span></li>`;
+                                    <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
                                     document.getElementById('confirmation-list').innerHTML = html;
                                 }
                                 window.showView('view-confirmation', 3, false);
