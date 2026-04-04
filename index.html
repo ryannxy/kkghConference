@@ -201,16 +201,22 @@
                     <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                         <i class="far fa-id-card text-blue-500"></i> Contact Information
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
                             <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50">
                         </div>
-                        <div>
-                            <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
-                                Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Please indicate your country code)</span>
-                            </label>
-                            <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                                <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="your@email.com">
+                            </div>
+                            <div>
+                                <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
+                                    Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Please indicate your country code)</span>
+                                </label>
+                                <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
+                            </div>
                         </div>
                     </div>
 
@@ -226,7 +232,7 @@
                                 </div>
                                 <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
                                     <button type="button" onclick="adjustPax('adults', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
-                                    <input type="number" id="pax-adults" value="1" min="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
+                                    <input type="text" id="pax-adults" value="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
                                     <button type="button" onclick="adjustPax('adults', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
                                 </div>
                             </div>
@@ -237,7 +243,7 @@
                                 </div>
                                 <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
                                     <button type="button" onclick="adjustPax('kids', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
-                                    <input type="number" id="pax-kids" value="0" min="0" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
+                                    <input type="text" id="pax-kids" value="0" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
                                     <button type="button" onclick="adjustPax('kids', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
                                 </div>
                             </div>
@@ -541,15 +547,15 @@
                     'images/mile_map.webp'
                 ],
                 roomTypes: [
-                    { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 0, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-                    { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 0, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-                    { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 0, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-                    { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 0, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
-                    { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
-                    { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 0, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
-                    { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 0, desc: '2 Single beds', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srs_3.webp', 'images/mile_srs_4.webp', 'images/mile_srs_5.webp'] },
-                    { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 0, desc: '1 Queen bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srq_1.webp', 'images/mile_srq_2.webp', 'images/mile_srq_3.webp', 'images/mile_srs_5.webp'] },
-                    { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 0, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_tr_1.webp', 'images/mile_tr_2.webp', 'images/mile_tr_3.webp', 'images/mile_srs_5.webp'] }
+                    { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 1620, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 1440, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-14pax', name: 'Resort (14pax)', price: 1260, desc: '7 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Resort Bungalows', id: 'resort-12pax', name: 'Resort (12pax)', price: 1080, desc: '6 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'chalet', name: 'Chalet (4pax)', price: 408, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'small-chalet', name: 'Small Chalet (4pax)', price: 358, desc: '1 Queen & 2 Single beds', images: ['images/mile_chalet_1.webp', 'images/mile_chalet_2.webp', 'images/mile_chalet_3.webp', 'images/mile_chalet_4.webp', 'images/mile_chalet_5.webp', 'images/mile_chalet_6.webp', 'images/mile_chalet_7.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-single', name: 'Standard Single Room (2pax)', price: 138, desc: '2 Single beds', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srs_3.webp', 'images/mile_srs_4.webp', 'images/mile_srs_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'standard-queen', name: 'Standard Queen Room (2pax)', price: 188, desc: '1 Queen bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_srq_1.webp', 'images/mile_srq_2.webp', 'images/mile_srq_3.webp', 'images/mile_srs_5.webp'] },
+                    { category: 'Chalets & Standard Rooms', id: 'triple-room', name: 'Triple Room (3pax)', price: 258, desc: '1 Queen & 1 Single bed', images: ['images/mile_srs_1.webp', 'images/mile_srs_2.webp', 'images/mile_tr_1.webp', 'images/mile_tr_2.webp', 'images/mile_tr_3.webp', 'images/mile_srs_5.webp'] }
                 ]
             },
             'padi': {
@@ -600,6 +606,7 @@
                 view: window.currentViewId, step: window.currentStepNum, booking: window.bookingState,
                 form: {
                     name: document.getElementById('fullName').value,
+                    email: document.getElementById('email') ? document.getElementById('email').value : '',
                     phone: document.getElementById('phone').value,
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
@@ -630,7 +637,7 @@
         }
 
         document.addEventListener('input', (e) => {
-            if (['fullName', 'phone', 'specialRequests'].includes(e.target.id)) {
+            if (['fullName', 'email', 'phone', 'specialRequests'].includes(e.target.id)) {
                 if (window.currentViewId) window.saveState();
             }
         });
@@ -1155,8 +1162,19 @@
 
         window.submitDetails = function() {
             const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            if (!name || !phone) { showCustomModal("Missing Information", "Please enter name and phone number."); return; }
+            
+            if (!name || !email || !phone) { 
+                showCustomModal("Missing Information", "Please enter your name, email, and phone number."); 
+                return; 
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showCustomModal("Invalid Email", "Please enter a valid email address.");
+                return;
+            }
             
             const adultPax = document.getElementById('pax-adults').value || 1;
             const kidPax = document.getElementById('pax-kids').value || 0;
@@ -1164,6 +1182,7 @@
             const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
             
             let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Email:</span> <span class="w-2/3 font-medium">${email}</span></li>
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
             <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
@@ -1189,7 +1208,7 @@
                 const requests = document.getElementById('specialRequests').value.trim();
 
                 const payload = { 
-                    fullName: document.getElementById('fullName').value, email: "N/A", phone: document.getElementById('phone').value, 
+                    fullName: document.getElementById('fullName').value, email: document.getElementById('email').value.trim(), phone: document.getElementById('phone').value, 
                     assembly: "N/A", pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, booking_type: 'accommodation', 
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
@@ -1258,6 +1277,7 @@
                         
                         if (state.form) {
                             document.getElementById('fullName').value = state.form.name || '';
+                            if(document.getElementById('email')) document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
                             if(document.getElementById('pax-adults')) document.getElementById('pax-adults').value = state.form.adults || 1;
                             if(document.getElementById('pax-kids')) document.getElementById('pax-kids').value = state.form.kids || 0;
@@ -1317,10 +1337,12 @@
                                 const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
                                 if (hotel && room) {
                                     const name = document.getElementById('fullName').value.trim();
+                                    const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
                                     const phone = document.getElementById('phone').value.trim();
                                     const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
                                     const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
                                     let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Email:</span> <span class="w-2/3 font-medium">${email}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
