@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f172a" id="meta-theme-color">
+    <meta name="theme-color" content="#f8fafc" id="meta-theme-color">
     <title>Registration | Kota Kemuning Assembly Annual Bible Conference 2026</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232563eb%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2230%22 font-family=%22Arial, sans-serif%22 font-weight=%22bold%22 fill=%22white%22>KKGH</text></svg>">
@@ -11,10 +11,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
         
-        html, body { background-color: #0f172a; transition: background-color 0.4s ease; font-family: 'Inter', sans-serif; }
-        html.theme-light, body.theme-light { background-color: #f8fafc; }
+        html, body { background-color: #f8fafc; font-family: 'Inter', sans-serif; color: #334155; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
         .transition-all-300 { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -35,13 +34,24 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Elegant blob animations */
+        @keyframes subtleBlob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-subtle-blob { animation: subtleBlob 15s infinite alternate; }
+        .animation-delay-2000 { animation-delay: 2s; }
     </style>
 </head>
-<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+<body class="text-slate-800 antialiased flex flex-col min-h-screen selection:bg-blue-100 selection:text-blue-900">
 
-    <div id="custom-modal" class="fixed inset-0 bg-slate-900/80 hidden flex-col items-center justify-center z-[100] px-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in">
-            <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
+    <!-- GLOBAL MODALS -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/40 hidden flex-col items-center justify-center z-[100] px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in border border-slate-100">
+            <div class="flex items-center gap-3 mb-4 border-b border-slate-50 pb-4">
                 <i id="modal-icon" class="fas fa-exclamation-triangle text-orange-500 text-3xl"></i>
                 <h3 id="modal-title" class="text-2xl font-bold text-slate-800 font-serif">Notice</h3>
             </div>
@@ -52,7 +62,7 @@
         </div>
     </div>
 
-    <!-- NEW SKIP CONFIRMATION MODAL -->
+    <!-- SKIP CONFIRMATION MODAL -->
     <div id="skip-confirm-modal" class="fixed inset-0 bg-slate-900/80 hidden flex-col items-center justify-center z-[105] px-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in">
             <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
@@ -67,6 +77,7 @@
         </div>
     </div>
 
+    <!-- IMAGE VIEWER MODAL -->
     <div id="image-viewer-modal" class="fixed inset-0 bg-black/95 hidden flex-col items-center justify-center z-[110] px-4 backdrop-blur-md cursor-pointer" onclick="closeImageViewer()">
         <button class="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[120]">&times;</button>
         <button id="viewer-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(-1)"><i class="fas fa-chevron-left"></i></button>
@@ -75,6 +86,7 @@
         <div id="viewer-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm tracking-widest font-mono z-[120]"></div>
     </div>
 
+    <!-- GLOBAL LOADER -->
     <div id="global-loader" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex-col items-center justify-center z-50">
         <div class="loader loader-large mb-4 border-slate-300 border-t-blue-500"></div>
         <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading Data</h3>
@@ -82,54 +94,58 @@
     </div>
 
     <!-- VIEW 0: WELCOME LANDING PAGE -->
-    <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center px-4 relative overflow-hidden py-12 md:py-20">
+    <div id="view-landing" class="flex-grow flex flex-col items-center justify-center px-4 relative overflow-hidden py-12 md:py-20 bg-slate-900">
+        <!-- Elegant Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-            <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-orange-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-subtle-blob"></div>
+            <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-amber-600 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-subtle-blob animation-delay-2000"></div>
+            <div class="absolute bottom-[-20%] left-[20%] w-[60%] h-[60%] bg-emerald-800 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-subtle-blob"></div>
         </div>
 
-        <div class="z-10 max-w-5xl animate-fade-in-up w-full flex flex-col items-center">
+        <div class="z-10 max-w-4xl animate-fade-in-up w-full flex flex-col items-center">
             <div class="text-center mb-10">
-                <span class="inline-block py-2 px-5 rounded-full bg-slate-800 text-blue-200 text-sm font-semibold mb-6 border border-slate-700 tracking-wider uppercase shadow-sm">16th - 19th Dec 2026 • Wed to Sat</span>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">Kota Kemuning Assembly<br>Annual Bible Conference</h1>
-                <p class="text-xl md:text-2xl text-slate-300 font-light italic">"Theme: TBC"</p>
+                <span class="inline-block py-1.5 px-5 rounded-full bg-slate-800 text-blue-200 text-xs font-bold mb-6 border border-slate-700 tracking-widest uppercase shadow-sm">16th - 19th Dec 2026 • Wed to Sat</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight font-serif text-white tracking-tight">Kota Kemuning Assembly<br>Annual Bible Conference</h1>
+                <p class="text-xl md:text-2xl text-slate-300 font-light italic font-serif">"Theme: TBC"</p>
             </div>
             
-            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 md:p-10 mb-10 text-left shadow-2xl w-full relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
-                <p class="text-lg md:text-xl text-blue-100 mb-8 font-medium border-b border-white/10 pb-6">
-                    Welcome to the Kota Kemuning 2026 Bible Conference Registration Page. The annual conference will be held at <b>Mi Le Garden Resort, Sekinchan</b>, from <b>16th – 19th December 2026</b> (Wednesday to Saturday).<br><br>
-                    <i class="text-slate-300">Please take a moment to read the instructions below.</i>
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] p-6 md:p-10 mb-10 text-left shadow-2xl w-full relative overflow-hidden text-white">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500/80"></div>
+                <p class="text-lg md:text-xl text-blue-50 mb-8 font-medium border-b border-white/10 pb-6 leading-relaxed">
+                    Welcome to the Kota Kemuning 2026 Bible Conference Registration Page. The annual conference will be held at <b class="text-white">Mi Le Garden Resort, Sekinchan</b>, from <b class="text-white">16th – 19th December 2026</b> (Wednesday to Saturday).<br><br>
+                    <i class="text-slate-300 text-base">Please take a moment to read the instructions below.</i>
                 </p>
                 
-                <div class="space-y-8 text-slate-200 text-sm md:text-base leading-relaxed">
+                <div class="space-y-10 text-slate-200 text-sm md:text-base leading-relaxed">
                     
                     <!-- Point 1 -->
                     <div>
-                        <p class="font-bold text-white mb-3 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">1</span> Conference Registration</p>
-                        <div class="ml-4 md:ml-11 space-y-3 text-slate-300">
+                        <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">1</span> Conference Registration</p>
+                        <div class="ml-4 md:ml-11 space-y-3">
                             <p>All attendees are required to complete the Conference Registration form.</p>
                             <p>Conference registration includes meals for the duration of the conference:</p>
-                            <ul class="list-disc ml-5 space-y-1 text-sm">
-                                <li><b>Wednesday:</b> Dinner</li>
-                                <li><b>Thursday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
-                                <li><b>Friday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
-                                <li><b>Saturday:</b> Breakfast, Lunch, Tea Break</li>
+                            <ul class="ml-5 space-y-1.5 text-sm bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Wednesday:</b> Dinner</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Thursday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Friday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Saturday:</b> Breakfast, Lunch, Tea Break</li>
                             </ul>
-                            <p class="mt-3 text-sm italic text-slate-400">All meals will be served at the conference venue, Mi Le Garden Resort, Sekinchan.</p>
+                            <p class="mt-4 text-sm text-slate-300 bg-slate-800/50 inline-block px-3 py-1 rounded border border-slate-700"><i class="fas fa-info-circle text-blue-400 mr-1"></i> All meals will be served at the conference venue, Mi Le Garden Resort, Sekinchan.</p>
                         </div>
                     </div>
 
                     <!-- Point 2 -->
                     <div>
-                        <p class="font-bold text-white mb-3 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">2</span> Hotel Registration</p>
-                        <div class="ml-4 md:ml-11 space-y-3 text-slate-300">
+                        <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">2</span> Hotel Registration</p>
+                        <div class="ml-4 md:ml-11 space-y-3">
                             <p>We have negotiated with three hotel properties at preferential rates for conference attendees who require lodging throughout the event. Please refer to the Hotel Registration page for full details.</p>
-                            <p>Do note that hotel registration is optional. Attendees may choose to arrange their own accommodation outside of the 3 hotel properties. <em>However, all who attend the conference are required to register for the conference.</em></p>
-                            <div class="mt-5 bg-orange-900/30 border border-orange-500/30 p-4 rounded-lg text-orange-100 text-sm flex gap-3 items-start">
-                                <i class="fas fa-exclamation-triangle text-orange-400 text-xl mt-0.5 shrink-0"></i>
+                            <p>Do note that hotel registration is optional. Attendees may choose to arrange their own accommodation outside of the 3 hotel properties. <em class="text-white font-medium border-b border-slate-600 pb-0.5">However, all who attend the conference are required to register for the conference.</em></p>
+                            <div class="mt-6 bg-orange-900/30 border border-orange-500/30 p-5 rounded-xl text-orange-100 text-sm flex gap-4 items-start shadow-sm">
+                                <div class="bg-orange-800/50 p-2 rounded-full shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-orange-400 text-base"></i>
+                                </div>
                                 <div>
-                                    <strong class="block mb-1 text-orange-300">IMPORTANT</strong>
+                                    <strong class="block mb-1.5 text-orange-300 uppercase tracking-wider text-xs">Important Priority Rule</strong>
                                     Hotel bookings will be prioritised for attendees who register for the full conference duration (4 days, 3 nights). Partial conference attendance will only be opened after 30th June. This is to prevent the situation where rooms are taken up only partially, hence the priority is given to those who will occupy the room throughout the whole conference.
                                 </div>
                             </div>
@@ -138,13 +154,22 @@
 
                     <!-- Point 3 -->
                     <div>
-                        <p class="font-bold text-white mb-3 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">3</span> Payment</p>
-                        <div class="ml-4 md:ml-11 space-y-3 text-slate-300">
-                            <p>The conference fee is <strong>RM xxx per night</strong> (Children’s rate: ___), inclusive of meals. There is no option for non-meal registration.</p>
-                            <ul class="list-disc ml-5 space-y-2 text-sm">
-                                <li>Payment for the conference is to be made directly to the KK Assembly.</li>
-                                <li>International attendees may make payment upon arrival at the conference.</li>
-                                <li>Payment for hotel accommodation is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</li>
+                        <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">3</span> Payment</p>
+                        <div class="ml-4 md:ml-11 space-y-3">
+                            <p>The conference fee is <strong class="text-white bg-slate-700 px-2 py-0.5 rounded">RM xxx per night</strong> (Children’s rate: ___), inclusive of meals. There is no option for non-meal registration.</p>
+                            <ul class="space-y-3 text-sm mt-4">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <span>Payment for the conference is to be made directly to the KK Assembly.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <span>International attendees may make payment upon arrival at the conference.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <span>Payment for hotel accommodation is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -152,17 +177,17 @@
                 </div>
             </div>
 
-            <button onclick="startRegistration()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 px-8 md:px-12 rounded-full shadow-[0_0_40px_rgba(37,99,235,0.4)] text-lg transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] w-full sm:w-auto flex justify-center items-center gap-3">
-                I Understand, Begin Step 1: Registration <i class="fas fa-arrow-right"></i>
+            <button onclick="startRegistration()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 md:px-12 rounded-2xl shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] text-lg transition-all hover:-translate-y-1 w-full sm:w-auto flex justify-center items-center gap-3">
+                I Understand, Begin Registration <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
     <!-- MAIN APP CONTAINER (Multi-step forms) -->
-    <div id="app-container" class="hidden flex-grow flex flex-col h-full min-h-screen">
-        <header class="bg-white shadow-sm sticky top-0 z-30">
+    <div id="app-container" class="hidden flex-grow flex flex-col h-full min-h-screen bg-slate-50/50">
+        <header class="bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-30">
             <div class="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
-                <div onclick="resetToHome()" class="flex items-center gap-1 md:gap-2 text-slate-800 font-serif font-bold cursor-pointer hover:text-blue-600 transition-colors select-none shrink pr-2">
+                <div onclick="resetToHome()" class="flex items-center gap-1 md:gap-2 text-slate-800 font-serif font-bold cursor-pointer hover:text-blue-700 transition-colors select-none shrink pr-2">
                     <span class="text-[11px] sm:text-sm md:text-lg leading-tight">2026 Annual Bible Conference</span>
                     <span id="flow-badge" class="text-[9px] md:text-xs px-1.5 py-0.5 md:px-2 md:py-1 rounded ml-1 md:ml-2 uppercase font-sans tracking-wider hidden md:inline-block shrink-0"></span>
                 </div>
@@ -199,33 +224,38 @@
             
             <!-- VIEW 1: CONFERENCE REGISTRATION -->
             <div id="view-registration" class="hidden container mx-auto px-4 py-8 max-w-5xl flex-grow animate-slide-in flex-col h-full">
-                <div class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="mb-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif">Step 1: Registration</h2>
-                        <p class="text-slate-600 mt-2">Fill out the conference registration form below. Once successfully submitted, scroll down to proceed to hotel booking.</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 font-serif">Step 1: Registration</h2>
+                        <p class="text-slate-500 mt-2 text-sm md:text-base">Fill out the conference registration form below. Once successfully submitted, scroll down to proceed to hotel booking.</p>
                     </div>
-                    <button type="button" onclick="promptSkipRegistration()" class="text-slate-400 hover:text-blue-600 font-medium text-sm underline transition-colors">
-                        Already registered? Skip to accommodation
+                    <button type="button" onclick="promptSkipRegistration()" class="bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 font-bold py-2.5 px-5 rounded-full transition-all shadow-sm flex items-center gap-2 text-sm group shrink-0">
+                        Already registered? <span class="text-slate-900">Skip to accommodation <i class="fas fa-arrow-right ml-1 opacity-50 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all"></i></span>
                     </button>
                 </div>
                 
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden relative flex-grow min-h-[600px] mb-6">
+                <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden relative flex-grow min-h-[600px] mb-6">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSey0d0h4KdOOrA-ZRfrbzWGH1QdT_rwuyL9IzxyHlxkcCG-Iw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" class="absolute inset-0">Loading Google Form...</iframe>
                 </div>
 
-                <div id="step-2-proceed" class="flex flex-col bg-orange-50 border border-orange-200 p-6 rounded-2xl gap-4 shadow-sm mt-2">
-                    <div class="w-full">
-                        <h4 class="font-bold text-orange-900 text-lg">Ready to book your accommodation?</h4>
-                        <p class="text-orange-800 text-sm">You must complete and submit the conference registration form above first.</p>
+                <div id="step-2-proceed" class="flex flex-col bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-2">
+                    <div class="w-full border-b border-slate-100 pb-4 mb-2">
+                        <h4 class="font-bold text-slate-900 text-xl font-serif">Accommodation Booking (Optional)</h4>
+                        <p class="text-slate-500 mt-1">If you require a hotel, please confirm you have successfully submitted the registration form above first.</p>
                     </div>
-                    <div class="w-full bg-white p-4 sm:p-5 rounded-xl border border-orange-100 flex flex-col md:flex-row items-center justify-between gap-6 mt-2 shadow-sm">
+                    <div class="w-full flex flex-col md:flex-row items-center justify-between gap-6">
                         <label class="flex items-center gap-3 cursor-pointer group w-full md:w-auto">
-                            <input type="checkbox" id="registration-confirm-checkbox" class="w-6 h-6 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0" onchange="toggleProceedButton()">
-                            <span class="text-slate-700 font-medium group-hover:text-orange-700 transition-colors text-sm sm:text-base">I confirm that I have successfully submitted the registration form.</span>
+                            <input type="checkbox" id="registration-confirm-checkbox" class="w-5 h-5 rounded border-slate-300 text-orange-600 focus:ring-orange-500 accent-orange-600 cursor-pointer shrink-0 transition-colors" onchange="toggleProceedButton()">
+                            <span class="text-slate-600 font-medium group-hover:text-slate-900 transition-colors text-sm sm:text-base">I confirm that I have successfully submitted the registration form.</span>
                         </label>
-                        <button type="button" id="btn-proceed-step-2" onclick="startHotelFlow()" disabled class="w-full md:w-auto bg-slate-300 text-slate-500 font-bold py-3 px-10 rounded-xl cursor-not-allowed transition-all whitespace-nowrap">
-                            Proceed to Step 2 <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
+                        <div class="flex flex-col sm:flex-row w-full md:w-auto gap-3 shrink-0">
+                            <button type="button" id="btn-no-hotel" onclick="finishWithoutAccommodation()" disabled class="w-full sm:w-auto bg-slate-100 text-slate-400 font-bold py-3.5 px-6 rounded-2xl cursor-not-allowed transition-all whitespace-nowrap text-center">
+                                I don't need a hotel
+                            </button>
+                            <button type="button" id="btn-proceed-step-2" onclick="startHotelFlow()" disabled class="w-full sm:w-auto bg-slate-100 text-slate-400 font-bold py-3.5 px-8 rounded-2xl cursor-not-allowed transition-all whitespace-nowrap text-center">
+                                Proceed to Step 2 <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,14 +263,14 @@
             <!-- VIEW 2: HOTEL SELECTION -->
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Registration
                     </button>
                 </div>
 
-                <div class="mb-8 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Step 2: Select a Hotel</h2>
-                    <p class="text-slate-500">Choose from our partnered accommodations.</p>
+                <div class="mb-10 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 font-serif mb-3">Step 2: Select a Hotel</h2>
+                    <p class="text-slate-500 text-lg">Choose from our partnered accommodations.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
                     <div id="hotel-grid-container" class="contents"></div>
@@ -250,7 +280,7 @@
             <!-- VIEW 2.5: ROOM SELECTION -->
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Hotels
                     </button>
                 </div>
@@ -258,28 +288,28 @@
                 <div class="flex flex-col lg:flex-row gap-8 h-full">
                     <div class="w-full lg:w-1/2 flex flex-col">
                         <div id="detail-gallery-container" class="mb-6">
-                            <div id="gallery-main" class="w-full h-64 md:h-80 rounded-2xl relative shadow-md mb-3 transition-all duration-300 bg-slate-100 bg-cover bg-center"></div>
-                            <div id="gallery-thumbs" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1"></div>
+                            <div id="gallery-main" class="w-full h-64 md:h-80 rounded-3xl relative shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 mb-4 transition-all duration-300 bg-slate-100 bg-cover bg-center"></div>
+                            <div id="gallery-thumbs" class="flex gap-3 overflow-x-auto hide-scrollbar pb-2"></div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
                             <div class="mb-4">
-                                <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-800">Hotel Name</h2>
-                                <a id="detail-website" href="#" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-1">
-                                    <i class="fas fa-external-link-alt text-xs"></i> Visit Official Website
+                                <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-900">Hotel Name</h2>
+                                <a id="detail-website" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium mt-3 border border-slate-200">
+                                    <i class="fas fa-external-link-alt text-xs opacity-70"></i> Visit Official Website
                                 </a>
                             </div>
-                            <p id="detail-desc" class="text-slate-600 leading-relaxed mb-6">Description</p>
-                            <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <p id="detail-desc" class="text-slate-600 leading-relaxed mb-8">Description</p>
+                            <h3 class="font-bold text-slate-900 mb-5 flex items-center gap-2 border-b border-slate-100 pb-3">
                                 <i class="fas fa-concierge-bell text-slate-400"></i> Property Amenities
                             </h3>
-                            <ul id="detail-amenities" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-sm text-slate-600"></ul>
+                            <ul id="detail-amenities" class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm text-slate-600"></ul>
                         </div>
                     </div>
 
                     <div class="w-full lg:w-1/2 flex flex-col h-full">
-                        <h3 class="text-2xl font-bold text-slate-800 font-serif mb-2">Available Rooms</h3>
-                        <p class="text-sm text-slate-500 mb-6">Click a room type below to select your dates and check availability.</p>
+                        <h3 class="text-2xl font-bold text-slate-900 font-serif mb-2">Available Rooms</h3>
+                        <p class="text-sm text-slate-500 mb-8">Click a room type below to select your dates and check availability.</p>
                         <div id="detail-room-list" class="space-y-4"></div>
                     </div>
                 </div>
@@ -288,92 +318,92 @@
             <!-- VIEW 3: GUEST DETAILS -->
             <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center" id="details-back-btn">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Rooms
                     </button>
                 </div>
 
-                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Step 3: Your Details</h2>
-                <p class="text-slate-500 mb-8">Who is making this booking?</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3 font-serif">Step 3: Your Details</h2>
+                <p class="text-slate-500 mb-8 text-lg">Who is making this booking?</p>
                 
-                <div id="accom-booking-summary" class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8 shadow-sm">
-                    <h4 class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Room Booking Summary</h4>
+                <div id="accom-booking-summary" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 mb-8 shadow-xl text-white">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Room Booking Summary</h4>
                     <div class="flex items-center gap-4">
                         <div>
-                            <h3 class="font-bold text-slate-800 text-xl font-sans" id="summary-room-name"></h3>
-                            <p class="text-sm text-slate-600" id="summary-hotel-dates"></p>
+                            <h3 class="font-bold text-white text-xl md:text-2xl font-sans" id="summary-room-name"></h3>
+                            <p class="text-sm text-slate-300 mt-1 flex items-center gap-2" id="summary-hotel-dates"></p>
                         </div>
-                        <div class="ml-auto text-right">
-                            <span class="block text-xs text-slate-500">Total</span>
-                            <span class="font-bold text-lg text-slate-800" id="summary-price"></span>
+                        <div class="ml-auto text-right shrink-0">
+                            <span class="block text-xs text-slate-400 uppercase tracking-widest mb-1">Total</span>
+                            <span class="font-bold text-xl md:text-2xl text-white" id="summary-price"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <i class="far fa-id-card text-blue-500"></i> Contact Information
+                <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b border-slate-100 pb-4">
+                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-id-card text-blue-600"></i></div> Contact Information
                     </h3>
                     <div class="grid grid-cols-1 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                            <input type="text" id="fullName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                            <input type="text" id="fullName" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none">
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                                <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="your@email.com">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                                <input type="email" id="email" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="your@email.com">
                             </div>
                             <div>
-                                <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
-                                    Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Include country code)</span>
+                                <label class="flex items-baseline text-sm font-semibold text-slate-700 mb-2">
+                                    Contact No. <span class="text-xs font-normal text-slate-400 ml-2">(Include country code)</span>
                                 </label>
-                                <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
+                                <input type="tel" required id="phone" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="i.e. +60 12 3456789">
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-slate-100" id="pax-section">
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                            <i class="fas fa-users text-blue-500"></i> Pax
+                    <div class="mt-10 pt-8 border-t border-slate-100" id="pax-section">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                            <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-users text-blue-600"></i></div> Pax
                         </h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <div class="flex items-center justify-between bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                                 <div>
-                                    <span class="block text-sm font-bold text-slate-700">Adults</span>
+                                    <span class="block text-sm font-bold text-slate-800">Adults</span>
                                     <span class="text-xs text-slate-500">Age 10 and above</span>
                                 </div>
-                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
-                                    <button type="button" onclick="adjustPax('adults', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
-                                    <input type="text" id="pax-adults" value="1" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
-                                    <button type="button" onclick="adjustPax('adults', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
+                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden p-1">
+                                    <button type="button" onclick="adjustPax('adults', -1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">-</button>
+                                    <input type="text" id="pax-adults" value="1" class="w-10 h-8 text-center font-bold bg-transparent focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('adults', 1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">+</button>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <div class="flex items-center justify-between bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                                 <div>
-                                    <span class="block text-sm font-bold text-slate-700">Kids</span>
+                                    <span class="block text-sm font-bold text-slate-800">Kids</span>
                                     <span class="text-xs text-slate-500">Ages 3-9</span>
                                 </div>
-                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden">
-                                    <button type="button" onclick="adjustPax('kids', -1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-r border-slate-200">-</button>
-                                    <input type="text" id="pax-kids" value="0" class="w-12 h-10 text-center font-bold bg-white focus:outline-none" readonly>
-                                    <button type="button" onclick="adjustPax('kids', 1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center border-l border-slate-200">+</button>
+                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden p-1">
+                                    <button type="button" onclick="adjustPax('kids', -1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">-</button>
+                                    <input type="text" id="pax-kids" value="0" class="w-10 h-8 text-center font-bold bg-transparent focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('kids', 1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">+</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="accom-special-requests" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="far fa-comment-dots text-blue-500"></i> Other Requests
+                <div id="accom-special-requests" class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-3 border-b border-slate-100 pb-4">
+                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-comment-dots text-blue-600"></i></div> Other Requests
                     </h3>
-                    <p class="text-slate-500 text-sm mb-4">Any further requests for the hotel? (Subject to availability)</p>
-                    <textarea id="specialRequests" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="e.g., Extra bed, extra pillow..."></textarea>
+                    <p class="text-slate-500 text-sm mb-5 mt-4">Any further requests for the hotel? (Subject to availability)</p>
+                    <textarea id="specialRequests" rows="3" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none resize-none" placeholder="e.g., Extra bed, ground floor requested..."></textarea>
                 </div>
 
-                <div class="flex justify-end">
-                    <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
+                <div class="flex justify-end mb-12">
+                    <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-12 rounded-2xl shadow-xl transform transition hover:-translate-y-1 text-lg">
                         Review Details <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
@@ -382,37 +412,37 @@
             <!-- VIEW 4: CONFIRMATION -->
             <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Details
                     </button>
                 </div>
 
-                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Step 4: Review Your Booking</h2>
-                <p class="text-slate-500 mb-8">Please confirm your details before submitting.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3 font-serif">Step 4: Review Your Booking</h2>
+                <p class="text-slate-500 mb-8 text-lg">Please confirm your details before submitting.</p>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
-                    <ul id="confirmation-list" class="space-y-1 text-slate-700"></ul>
+                <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
+                    <ul id="confirmation-list" class="space-y-4 text-slate-700 divide-y divide-slate-50"></ul>
                 </div>
 
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm">
-                    <div class="bg-amber-100 rounded-full w-10 h-10 flex items-center justify-center shrink-0 mt-0.5">
-                        <i class="fas fa-wallet text-amber-600"></i>
+                <div class="bg-amber-50 border border-amber-200 rounded-3xl p-6 md:p-8 mb-10 flex flex-col sm:flex-row items-start gap-5 shadow-sm">
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-amber-100 shrink-0">
+                        <i class="fas fa-wallet text-amber-600 text-2xl"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-amber-900 text-sm mb-1">Payment Process</h4>
-                        <p class="text-xs text-amber-800 leading-relaxed">No payment is collected on this website. By clicking submit, your reservation details will be safely forwarded. <b>The hotel management will contact you directly</b> via email or phone to arrange your payment.</p>
+                        <h4 class="font-bold text-amber-900 text-lg mb-2">Payment Process</h4>
+                        <p class="text-sm text-amber-800 leading-relaxed">No payment is collected on this website. By clicking submit, your reservation details will be safely forwarded. <br><br><b>The hotel management will contact you directly</b> via email or phone to arrange your payment.</p>
                     </div>
                 </div>
 
-                <div class="flex justify-end">
-                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5">
+                <div class="flex justify-end mb-12">
+                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-12 rounded-2xl shadow-xl transform transition hover:-translate-y-1 text-lg">
                         Confirm & Submit Booking <i class="fas fa-paper-plane ml-2"></i>
                     </button>
                 </div>
             </div>
         </form>
 
-        <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+        <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200 py-8 mt-auto">
             <div class="container mx-auto px-4 flex justify-center items-center text-sm text-slate-500">
                 <div class="flex gap-4">
                     <a href="mailto:kotakemuning.gh@gmail.com" class="hover:text-blue-600"><i class="fas fa-envelope"></i> kotakemuning.gh@gmail.com</a>
@@ -452,15 +482,7 @@
 
         window.setThemeLight = function(isLight) {
             const metaTheme = document.getElementById('meta-theme-color');
-            if (isLight) {
-                document.documentElement.classList.add('theme-light');
-                document.body.classList.add('theme-light');
-                if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
-            } else {
-                document.documentElement.classList.remove('theme-light');
-                document.body.classList.remove('theme-light');
-                if (metaTheme) metaTheme.setAttribute('content', '#0f172a');
-            }
+            if (metaTheme) metaTheme.setAttribute('content', '#f8fafc');
         };
 
         window.promptSkipRegistration = function() {
@@ -488,6 +510,7 @@
             document.getElementById('custom-modal').classList.remove('hidden');
             document.getElementById('custom-modal').classList.add('flex');
         }
+        
         window.closeCustomModal = function() {
             document.getElementById('custom-modal').classList.add('hidden');
             document.getElementById('custom-modal').classList.remove('flex');
@@ -660,7 +683,7 @@
         window.hotelData = {
             'mile': {
                 name: 'Mi Le Garden', website: 'https://milegarden.com.my/', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
-                desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
+                desc: 'This is the most convenient option as it is where the conference hall is located. Please note that double room options are limited. Room layouts cater for large groups in bungalow houses capable of housing 10 pax and above. If a large group decides to share this option, the cost per person can be quite low.', 
                 amenities: ['On-site — zero commute', 'Accommodation for large groups', 'Smaller room options available', 'Perfect for families & big groups'],
                 hotelImages: ['images/mile_cover_pic.webp', 'images/mile_pic_2.webp', 'images/mile_map.webp'],
                 roomTypes: [
@@ -677,7 +700,7 @@
             },
             'padi': {
                 name: 'Padi Sentral', website: 'https://padisentral.com/', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
-                desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
+                desc: 'This property is about a 10-minute walk from Mi Le Garden (the conference hall site) or a mere 2-minute drive. The plus point of this property is that it has many double rooms, though they are limited to a total of 39 rooms. The room layout includes a huge window panel overlooking the beautiful rice fields.', 
                 amenities: ['3-min drive / 15-min walk to venue', 'Rooms with paddy field views', 'Quiet & private setting', 'Perfect for individuals, couples, or small families with own transport'],
                 hotelImages: ['images/padi_sentral_cover.webp', 'images/padi_sentral_cover2.webp'],
                 roomTypes: [
@@ -690,7 +713,7 @@
             },
             'villa': {
                 name: 'Villa Chee', website: 'https://www.villachee.com.my/', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
-                desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
+                desc: 'This property has mainly double rooms, however, it requires driving a car (~15 mins) to reach the conference site. Guests can enjoy serene paddy field surroundings, a swimming pool with slides, and a lovely outdoor park.', 
                 amenities: ['7-min drive to venue — own transport required', 'Scenic paddy field surroundings', 'Swimming pool with slides & outdoor park', 'Perfect for individuals and small families'],
                 hotelImages: ['images/villa_chee_cover.webp', 'images/villa_chee_cover2.webp'],
                 roomTypes: [
@@ -706,9 +729,9 @@
             const state = {
                 view: window.currentViewId, step: window.currentStepNum, booking: window.bookingState,
                 form: {
-                    name: document.getElementById('fullName').value,
+                    name: document.getElementById('fullName') ? document.getElementById('fullName').value : '',
                     email: document.getElementById('email') ? document.getElementById('email').value : '',
-                    phone: document.getElementById('phone').value,
+                    phone: document.getElementById('phone') ? document.getElementById('phone').value : '',
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
                     specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : ''
@@ -885,22 +908,53 @@
             return null;
         }
 
+        window.finishWithoutAccommodation = function() {
+            // Reset to home page UI
+            sessionStorage.removeItem('kkgh_app_state');
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('view-landing').classList.remove('hidden');
+            window.currentViewId = null;
+            window.setThemeLight(false);
+            history.replaceState({ viewId: 'landing' }, "", "");
+            window.scrollTo(0,0);
+            
+            // Show a friendly completion message
+            showCustomModal(
+                "You're all set!", 
+                "Thank you for registering for the conference! Since you do not require accommodation, no further action is needed on this page. We look forward to seeing you there.", 
+                "fas fa-check-circle text-emerald-500"
+            );
+        };
+
         window.toggleProceedButton = function() {
             const checkbox = document.getElementById('registration-confirm-checkbox');
-            const btn = document.getElementById('btn-proceed-step-2');
+            const btnProceed = document.getElementById('btn-proceed-step-2');
+            const btnNoHotel = document.getElementById('btn-no-hotel');
+            
             if (checkbox && checkbox.checked) {
-                btn.disabled = false;
-                btn.className = "w-full md:w-auto bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5 whitespace-nowrap cursor-pointer";
-            } else if (btn) {
-                btn.disabled = true;
-                btn.className = "w-full md:w-auto bg-slate-300 text-slate-500 font-bold py-3 px-10 rounded-xl cursor-not-allowed transition-all whitespace-nowrap";
+                if (btnProceed) {
+                    btnProceed.disabled = false;
+                    btnProceed.className = "w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg transform transition hover:-translate-y-0.5 whitespace-nowrap cursor-pointer text-center";
+                }
+                if (btnNoHotel) {
+                    btnNoHotel.disabled = false;
+                    btnNoHotel.className = "w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3.5 px-6 rounded-2xl transition-all whitespace-nowrap cursor-pointer text-center";
+                }
+            } else {
+                if (btnProceed) {
+                    btnProceed.disabled = true;
+                    btnProceed.className = "w-full sm:w-auto bg-slate-100 text-slate-400 font-bold py-3.5 px-8 rounded-2xl cursor-not-allowed transition-all whitespace-nowrap text-center";
+                }
+                if (btnNoHotel) {
+                    btnNoHotel.disabled = true;
+                    btnNoHotel.className = "w-full sm:w-auto bg-slate-100 text-slate-400 font-bold py-3.5 px-6 rounded-2xl cursor-not-allowed transition-all whitespace-nowrap text-center";
+                }
             }
         };
 
         window.startRegistration = function() {
             window.setThemeLight(true);
             
-            // Reset the safety checkbox
             const checkbox = document.getElementById('registration-confirm-checkbox');
             if (checkbox) {
                 checkbox.checked = false;
@@ -917,7 +971,7 @@
             window.setThemeLight(true);
             if (!isRestore) {
                 document.getElementById('registrationForm').reset();
-                window.toggleProceedButton(); // Reset button state since form reset unchecks the checkbox
+                window.toggleProceedButton(); 
                 window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
                 const adultsInput = document.getElementById('pax-adults'); if(adultsInput) adultsInput.value = 1;
                 const kidsInput = document.getElementById('pax-kids'); if(kidsInput) kidsInput.value = 0;
@@ -944,7 +998,6 @@
             });
             const activeEl = document.getElementById(viewId); if (activeEl) activeEl.classList.remove('hidden');
             
-            // Strictly enforce the button safety sync when showing the registration page
             if (viewId === 'view-registration') {
                 window.toggleProceedButton();
             }
@@ -989,15 +1042,15 @@
                 const coverImg = (h.hotelImages && h.hotelImages.length > 0) ? h.hotelImages[0] : h.roomTypes[0].images[0];
                 
                 container.innerHTML += `
-                <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
-                    <div class="h-48 relative overflow-hidden bg-slate-100">
-                        <img src="${coverImg}" alt="${h.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="h-56 relative overflow-hidden bg-slate-100">
+                        <img src="${coverImg}" alt="${h.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-slate-800 mb-3">${h.name}</h3>
-                        <p class="text-sm text-slate-500 mb-6 flex-grow">${h.desc}</p>
-                        <button type="button" class="w-full bg-slate-50 group-hover:bg-slate-800 text-slate-700 group-hover:text-white font-bold py-3 rounded-xl transition-colors">
-                            View Rooms <i class="fas fa-arrow-right ml-1 text-sm"></i>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3 font-serif">${h.name}</h3>
+                        <p class="text-sm text-slate-500 mb-8 flex-grow leading-relaxed">${h.desc}</p>
+                        <button type="button" class="w-full bg-slate-50 border border-slate-200 group-hover:bg-slate-900 text-slate-700 group-hover:text-white group-hover:border-slate-900 font-bold py-3.5 rounded-xl transition-all shadow-sm">
+                            View Rooms <i class="fas fa-arrow-right ml-1 text-sm opacity-70"></i>
                         </button>
                     </div>
                 </div>`;
@@ -1020,18 +1073,18 @@
             if (images.length > 1) {
                 images.forEach((imgUrl, index) => {
                     const thumb = document.createElement('div');
-                    thumb.className = `w-20 h-16 sm:w-24 sm:h-20 shrink-0 rounded-lg bg-cover bg-center cursor-pointer border-2 transition-all ${index === 0 ? 'border-blue-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`;
+                    thumb.className = `w-20 h-16 sm:w-24 sm:h-20 shrink-0 rounded-xl bg-cover bg-center cursor-pointer border-2 transition-all shadow-sm ${index === 0 ? 'border-slate-800 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`;
                     thumb.style.backgroundImage = `url('${imgUrl}')`;
                     
                     thumb.onclick = () => {
                         currentMainIndex = index;
                         mainImg.style.backgroundImage = `url('${imgUrl}')`;
                         Array.from(thumbsContainer.children).forEach(c => {
-                            c.classList.remove('border-blue-500', 'opacity-100');
+                            c.classList.remove('border-slate-800', 'opacity-100');
                             c.classList.add('border-transparent', 'opacity-60');
                         });
                         thumb.classList.remove('border-transparent', 'opacity-60');
-                        thumb.classList.add('border-blue-500', 'opacity-100');
+                        thumb.classList.add('border-slate-800', 'opacity-100');
                     };
                     thumbsContainer.appendChild(thumb);
                 });
@@ -1066,7 +1119,7 @@
             const list = document.getElementById('detail-amenities'); list.innerHTML = '';
             
             data.amenities.forEach(am => { 
-                list.innerHTML += `<li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5 shrink-0"></i> <span>${am}</span></li>`; 
+                list.innerHTML += `<li class="flex items-start gap-2"><i class="fas fa-check text-orange-500 mt-0.5 shrink-0"></i> <span>${am}</span></li>`; 
             });
             
             const initialImages = data.hotelImages && data.hotelImages.length > 0 ? data.hotelImages : data.roomTypes[0].images;
@@ -1116,17 +1169,17 @@
                 let roomImagesHtml = '';
                 if (rt.images && rt.images.length > 0) {
                     roomImagesHtml = `
-                    <div class="mb-5">
-                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 block">Room Photos</label>
-                        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-                            ${rt.images.map((img, idx) => `<img src="${img}" alt="Room thumbnail" class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-lg object-cover border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})">`).join('')}
+                    <div class="mb-6">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">Room Photos</label>
+                        <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+                            ${rt.images.map((img, idx) => `<img src="${img}" alt="Room thumbnail" class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})">`).join('')}
                         </div>
                     </div>`;
                 }
 
                 if (rt.category && rt.category !== currentCategory) {
                     container.innerHTML += `
-                    <div class="mt-8 mb-4 flex items-center gap-4">
+                    <div class="mt-10 mb-5 flex items-center gap-4">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">${rt.category}</h4>
                         <div class="h-px bg-slate-200 flex-grow"></div>
                     </div>`;
@@ -1134,50 +1187,50 @@
                 }
 
                 container.innerHTML += `
-                <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-4 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
-                    ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
+                <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-5 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
+                    ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-5 py-2 rounded-xl font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
                     
-                    <div class="p-4 sm:p-5 flex items-center gap-4 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
-                        <img src="${rt.images[0]}" alt="${rt.name}" class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg object-cover border border-slate-200 shadow-sm">
+                    <div class="p-5 sm:p-6 flex items-center gap-4 md:gap-6 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
+                        <img src="${rt.images[0]}" alt="${rt.name}" class="w-16 h-16 sm:w-24 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm">
                         
                         <div class="flex-grow">
-                            <h4 class="font-bold text-slate-800 text-sm sm:text-lg leading-tight">${rt.name}</h4>
-                            ${rt.desc ? `<p class="text-[10px] sm:text-xs text-slate-500 mt-1">${rt.desc}</p>` : ''}
+                            <h4 class="font-bold text-slate-900 text-base sm:text-xl leading-tight">${rt.name}</h4>
+                            ${rt.desc ? `<p class="text-xs sm:text-sm text-slate-500 mt-1.5">${rt.desc}</p>` : ''}
                         </div>
                         
                         <div class="text-right shrink-0">
-                            <span class="font-bold text-slate-800 whitespace-nowrap text-sm sm:text-base">RM ${window.formatPrice(rt.price)}</span>
-                            <span class="block text-[9px] sm:text-[10px] text-slate-400">/ night</span>
+                            <span class="font-bold text-slate-900 whitespace-nowrap text-base sm:text-xl">RM ${window.formatPrice(rt.price)}</span>
+                            <span class="block text-[10px] sm:text-xs text-slate-400 mt-0.5">/ night</span>
                         </div>
                     </div>
                     
-                    <div id="booking-panel-${rt.id}" class="hidden bg-slate-50 border-t border-slate-200 p-5">
+                    <div id="booking-panel-${rt.id}" class="hidden bg-slate-50/80 border-t border-slate-200 p-6 sm:p-8">
                         
                         ${roomImagesHtml}
 
-                        ${REQUIRE_FULL_STAY ? '<div class="text-xs text-orange-800 font-bold mb-4 bg-orange-100 border border-orange-200 p-3 rounded-lg flex items-center gap-2"><i class="fas fa-lock"></i> Full Conference Stay Required (Dec 16 to Dec 19)</div>' : ''}
+                        ${REQUIRE_FULL_STAY ? '<div class="text-sm text-amber-800 font-medium mb-6 bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-3"><i class="fas fa-lock mt-0.5"></i> Full Conference Stay Required (Dec 16 to Dec 19) based on current priority phase.</div>' : ''}
 
-                        <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-in</label>
-                                <select id="ci-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')">${ciHtml}</select>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Check-in</label>
+                                <select id="ci-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="updateDateValidation('${rt.id}')">${ciHtml}</select>
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Check-out</label>
-                                <select id="co-${rt.id}" class="w-full mt-1 p-2.5 rounded-lg border border-slate-300 bg-white font-bold text-sm text-slate-800 focus:outline-none" onchange="updateDateValidation('${rt.id}')"></select>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Check-out</label>
+                                <select id="co-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="updateDateValidation('${rt.id}')"></select>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-4 border-t border-slate-200/60">
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1 block">Rooms Needed</label>
-                                <div class="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden w-28">
-                                    <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200" onclick="adjustRoomQty('${rt.id}', -1)">-</button>
-                                    <input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-10 text-center font-bold text-slate-800 focus:outline-none" readonly>
-                                    <button type="button" class="w-8 h-10 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200" onclick="adjustRoomQty('${rt.id}', 1)">+</button>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 block">Rooms Needed</label>
+                                <div class="flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden w-32 shadow-sm">
+                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200 transition-colors" onclick="adjustRoomQty('${rt.id}', -1)">-</button>
+                                    <input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-12 text-center font-bold text-slate-800 focus:outline-none text-lg" readonly>
+                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200 transition-colors" onclick="adjustRoomQty('${rt.id}', 1)">+</button>
                                 </div>
-                                <div id="status-${rt.id}" class="text-xs mt-2 font-bold h-4"></div>
+                                <div id="status-${rt.id}" class="text-xs mt-3 font-semibold h-4"></div>
                             </div>
-                            <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold shadow-md">Reserve: RM <span id="price-${rt.id}">0</span></button>
+                            <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-transform hover:-translate-y-0.5">Reserve Room: RM <span id="price-${rt.id}">0</span></button>
                         </div>
                     </div>
                 </div>`;
@@ -1191,8 +1244,8 @@
             window.hotelData[hotelId].roomTypes.forEach(r => {
                 const panel = document.getElementById(`booking-panel-${r.id}`);
                 const card = document.getElementById(`card-${r.id}`);
-                if (r.id === roomId) { panel.classList.remove('hidden'); card.classList.add('border-blue-400', 'ring-2', 'ring-blue-100'); updateDateValidation(roomId); } 
-                else { panel.classList.add('hidden'); card.classList.remove('border-blue-400', 'ring-2', 'ring-blue-100'); }
+                if (r.id === roomId) { panel.classList.remove('hidden'); card.classList.add('border-slate-800', 'ring-1', 'ring-slate-800'); updateDateValidation(roomId); } 
+                else { panel.classList.add('hidden'); card.classList.remove('border-slate-800', 'ring-1', 'ring-slate-800'); }
             });
         }
 
@@ -1275,7 +1328,7 @@
                 statusDiv.innerHTML = `<span class="text-orange-500"><i class="fas fa-exclamation-circle"></i> Only ${maxForCurrentDates} available!</span>`;
                 bookBtn.disabled = false; bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             } else {
-                statusDiv.innerHTML = `<span class="text-green-600"><i class="fas fa-check-circle"></i> ${maxForCurrentDates} Rooms Available</span>`;
+                statusDiv.innerHTML = `<span class="text-emerald-600"><i class="fas fa-check-circle"></i> ${maxForCurrentDates} Rooms Available</span>`;
                 bookBtn.disabled = false; bookBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
 
@@ -1341,15 +1394,15 @@
             const hotel = window.hotelData[window.bookingState.hotelId];
             const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
             
-            let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Email:</span> <span class="w-2/3 font-medium">${email}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Pax:</span> <span class="w-2/3 font-medium">${adultPax} Adults, ${kidPax} Kids</span></li>
-            <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Requests:</span> <span class="w-2/3 font-medium">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-            <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
+            let html = `<li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Name:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Email:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${email}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Contact:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${phone}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Hotel:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${hotel.name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Room:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.quantity}x ${room.name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Dates:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Pax:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${adultPax} Adults, ${kidPax} Kids</span></li>
+            <li class="flex flex-col sm:flex-row py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Requests:</span> <span class="w-full sm:w-2/3 font-medium text-slate-700">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center pt-6 mt-2 border-t border-slate-200 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-bold text-slate-900 uppercase tracking-widest">Total Cost:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-2xl">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
             
             document.getElementById('confirmation-list').innerHTML = html;
             showView('view-confirmation', 4);
@@ -1444,8 +1497,6 @@
                         }
                         if (state.booking) window.bookingState = state.booking;
                         
-                        // We must await startFlow (or similar init) but skip the navigation part
-                        // so we can manually direct the user
                         await window.fetchAvailability();
 
                         document.getElementById('view-landing').classList.add('hidden');
