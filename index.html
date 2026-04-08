@@ -178,36 +178,35 @@
     <!-- MAIN APP CONTAINER (Multi-step forms) -->
     <div id="app-container" class="hidden flex-grow flex flex-col h-full min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
-            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-sm md:text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
-                    <span class="hidden sm:inline">2026 Annual Bible Conference</span>
-                    <span class="sm:hidden">Conference '26</span>
-                    <span id="flow-badge" class="text-[10px] md:text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
+            <div class="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
+                <div onclick="resetToHome()" class="flex items-center gap-1 md:gap-2 text-slate-800 font-serif font-bold cursor-pointer hover:text-blue-600 transition-colors select-none shrink pr-2">
+                    <span class="text-[11px] sm:text-sm md:text-lg leading-tight">2026 Annual Bible Conference</span>
+                    <span id="flow-badge" class="text-[9px] md:text-xs px-1.5 py-0.5 md:px-2 md:py-1 rounded ml-1 md:ml-2 uppercase font-sans tracking-wider hidden md:inline-block shrink-0"></span>
                 </div>
                 
-                <div class="flex items-center gap-1 md:gap-3 shrink-0">
+                <div class="flex items-start md:items-center gap-1 sm:gap-2 md:gap-3 shrink-0 pt-1 md:pt-0">
                     <!-- Step 1 -->
-                    <div id="nav-step-1" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
-                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
-                        <span class="hidden lg:inline">Register</span>
+                    <div id="nav-step-1" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
+                        <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">1</span>
+                        <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Register</span>
                     </div>
-                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
                     <!-- Step 2 -->
-                    <div id="nav-step-2" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
-                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
-                        <span class="hidden lg:inline">Hotel</span>
+                    <div id="nav-step-2" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
+                        <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">2</span>
+                        <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Hotel</span>
                     </div>
-                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
                     <!-- Step 3 -->
-                    <div id="nav-step-3" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
-                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
-                        <span class="hidden lg:inline">Details</span>
+                    <div id="nav-step-3" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
+                        <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">3</span>
+                        <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Details</span>
                     </div>
-                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
                     <!-- Step 4 -->
-                    <div id="nav-step-4" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
-                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">4</span>
-                        <span class="hidden lg:inline">Confirm</span>
+                    <div id="nav-step-4" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
+                        <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">4</span>
+                        <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Confirm</span>
                     </div>
                 </div>
             </div>
@@ -971,10 +970,10 @@
             if (badge) {
                 if (viewId === 'view-registration') {
                     badge.innerText = 'Registration';
-                    badge.className = 'text-[10px] md:text-xs bg-blue-100 px-2 py-1 rounded ml-2 text-blue-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block';
+                    badge.className = 'text-[10px] md:text-xs bg-blue-100 px-2 py-1 rounded ml-2 text-blue-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block shrink-0';
                 } else {
                     badge.innerText = 'Accommodation';
-                    badge.className = 'text-[10px] md:text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block';
+                    badge.className = 'text-[10px] md:text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block shrink-0';
                 }
             }
 
@@ -988,10 +987,10 @@
                 if(nav) {
                     const badge = nav.querySelector('span');
                     if(step >= num) {
-                        badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-blue-600 bg-blue-600 text-white transition-colors";
+                        badge.className = "w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-blue-600 bg-blue-600 text-white transition-colors shrink-0";
                         nav.classList.remove('text-gray-400'); nav.classList.add('text-blue-600');
                     } else {
-                        badge.className = "w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300 bg-white text-gray-400 transition-colors";
+                        badge.className = "w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 bg-white text-gray-400 transition-colors shrink-0";
                         nav.classList.remove('text-blue-600'); nav.classList.add('text-gray-400');
                     }
                 }
