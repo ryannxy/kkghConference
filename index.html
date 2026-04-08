@@ -124,12 +124,51 @@
                         <div class="ml-4 md:ml-11 space-y-3">
                             <p>All attendees are required to complete the Conference Registration form.</p>
                             <p>Conference registration includes meals for the duration of the conference:</p>
-                            <ul class="ml-5 space-y-1.5 text-sm bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Wednesday:</b> Dinner</li>
-                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Thursday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
-                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Friday:</b> Breakfast, Lunch, Dinner, Tea Break</li>
-                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div> <b class="text-white">Saturday:</b> Breakfast, Lunch, Tea Break</li>
-                            </ul>
+                            
+                            <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30">
+                                <table class="w-full text-left text-sm text-slate-300 min-w-[500px]">
+                                    <thead class="bg-slate-800/80 text-slate-200">
+                                        <tr>
+                                            <th class="py-3 px-4 font-bold border-b border-slate-700">Day</th>
+                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center">Breakfast</th>
+                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center">Lunch</th>
+                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center">Tea Break</th>
+                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center">Dinner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-700/50">
+                                        <tr class="hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-3 px-4 font-semibold text-white">Wednesday</td>
+                                            <td class="py-3 px-2 text-center text-slate-600 font-bold">-</td>
+                                            <td class="py-3 px-2 text-center text-slate-600 font-bold">-</td>
+                                            <td class="py-3 px-2 text-center text-slate-600 font-bold">-</td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/20 hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-3 px-4 font-semibold text-white">Thursday</td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-3 px-4 font-semibold text-white">Friday</td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/20 hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-3 px-4 font-semibold text-white">Saturday</td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center"><i class="fas fa-check text-emerald-400"></i></td>
+                                            <td class="py-3 px-2 text-center text-slate-600 font-bold">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <p class="mt-4 text-sm text-slate-300 bg-slate-800/50 inline-block px-3 py-1 rounded border border-slate-700"><i class="fas fa-info-circle text-blue-400 mr-1"></i> All meals will be served at the conference venue, Mi Le Garden Resort, Sekinchan.</p>
                         </div>
                     </div>
