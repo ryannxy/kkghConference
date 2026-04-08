@@ -52,7 +52,21 @@
         </div>
     </div>
 
-    <!-- NEW FULLSCREEN IMAGE VIEWER MODAL -->
+    <!-- NEW SKIP CONFIRMATION MODAL -->
+    <div id="skip-confirm-modal" class="fixed inset-0 bg-slate-900/80 hidden flex-col items-center justify-center z-[105] px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in">
+            <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-4">
+                <i class="fas fa-question-circle text-blue-500 text-3xl"></i>
+                <h3 class="text-2xl font-bold text-slate-800 font-serif">Already Registered?</h3>
+            </div>
+            <p class="text-slate-600 mb-8 text-sm sm:text-base">Are you sure you have already successfully submitted the conference registration form? You must be registered to book accommodation.</p>
+            <div class="flex justify-end gap-4">
+                <button type="button" onclick="closeSkipConfirmModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-6 rounded-xl transition-colors">Cancel</button>
+                <button type="button" onclick="confirmSkipToAccommodation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg">Yes, proceed</button>
+            </div>
+        </div>
+    </div>
+
     <div id="image-viewer-modal" class="fixed inset-0 bg-black/95 hidden flex-col items-center justify-center z-[110] px-4 backdrop-blur-md cursor-pointer" onclick="closeImageViewer()">
         <button class="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[120]">&times;</button>
         <button id="viewer-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(-1)"><i class="fas fa-chevron-left"></i></button>
@@ -67,73 +81,191 @@
         <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a minute...</p>
     </div>
 
-    <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
+    <!-- VIEW 0: WELCOME LANDING PAGE -->
+    <div id="view-landing" class="flex-grow bg-slate-900 text-white flex flex-col items-center justify-center px-4 relative overflow-hidden py-12 md:py-20">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
             <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-orange-800 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         </div>
 
-        <div class="z-10 max-w-5xl animate-fade-in-up w-full py-12">
-            <span class="inline-block py-2 px-5 rounded-full bg-slate-800 text-blue-200 text-sm font-semibold mb-8 border border-slate-700 tracking-wider uppercase shadow-sm">December 16-19, 2026</span>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">Kota Kemuning Assembly<br>Annual Bible Conference 2026</h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-12 font-light italic">"Theme: TBC"</p>
+        <div class="z-10 max-w-5xl animate-fade-in-up w-full flex flex-col items-center">
+            <div class="text-center mb-10">
+                <span class="inline-block py-2 px-5 rounded-full bg-slate-800 text-blue-200 text-sm font-semibold mb-6 border border-slate-700 tracking-wider uppercase shadow-sm">16th - 19th Dec 2026 • Wed to Sat</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight font-serif drop-shadow-2xl">Kota Kemuning Assembly<br>Annual Bible Conference</h1>
+                <p class="text-xl md:text-2xl text-slate-300 font-light italic">"Theme: TBC"</p>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSey0d0h4KdOOrA-ZRfrbzWGH1QdT_rwuyL9IzxyHlxkcCG-Iw/viewform', '_blank')">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fas fa-calendar-check text-2xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-6">Register for Conference</h3>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">Start Registration</button>
-                </div>
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 md:p-10 mb-10 text-left shadow-2xl w-full relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                <p class="text-lg md:text-xl text-blue-100 mb-8 font-medium border-b border-white/10 pb-6">Welcome to the Kota Kemuning 2026 Bible Conference Registration Page. The annual conference for 2026 will be held in <b>Mi Le Garden Resort in Sekinchan</b>. Please take a little time to read the instructions below.</p>
+                
+                <div class="space-y-8 text-slate-200 text-sm md:text-base leading-relaxed">
+                    
+                    <!-- Point 1 -->
+                    <div>
+                        <p class="font-bold text-white mb-3 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">1</span> Two Types of Registration</p>
+                        <p class="mb-4 text-slate-300 ml-11">The registration format of this conference is slightly different from the conventional ones in the past. There are two parts:</p>
+                        
+                        <div class="ml-4 md:ml-11 space-y-4">
+                            <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 hover:border-blue-500/50 transition-colors">
+                                <h4 class="font-bold text-blue-300 mb-2 text-lg">A. Conference Registration</h4>
+                                <p>All who attend the conference will need to register using this form. Registration for conference will also include meals for breakfast, lunch and dinner, plus a tea break each day:</p>
+                                <ul class="list-disc ml-5 mt-3 text-slate-300 text-sm space-y-1">
+                                    <li><b>Wed:</b> Dinner</li>
+                                    <li><b>Thu & Fri:</b> Breakfast, Lunch, Dinner, Tea</li>
+                                    <li><b>Sat:</b> Breakfast, Lunch, Tea</li>
+                                </ul>
+                                <p class="mt-3 text-sm italic text-slate-400">Meals will be served at the conference site, which is Mi Le Garden Resort, Sekinchan.</p>
+                            </div>
 
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all cursor-pointer group flex flex-col items-center" onclick="startFlow()">
-                    <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fas fa-bed text-2xl text-white"></i>
+                            <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 hover:border-orange-500/50 transition-colors">
+                                <h4 class="font-bold text-orange-300 mb-2 text-lg">B. Hotel Registration</h4>
+                                <p class="mb-4">We have negotiated with 3 hotel properties for a good rate, so that attendees can register for lodging throughout the conference:</p>
+                                <ul class="list-disc ml-5 space-y-4 text-slate-300">
+                                    <li>
+                                        <strong class="text-white"><a href="https://milegarden.com.my/" target="_blank" class="hover:text-blue-400 hover:underline transition-colors">Mi Le Garden</a>:</strong> This will be the most convenient because it is where the conference hall is, however, double room options are limited. Room layouts cater for large groups in bungalow houses, capable of housing 10 and above. Hence if a group of 10 or above decides to share this option, cost per person can be quite low.
+                                    </li>
+                                    <li>
+                                        <strong class="text-white"><a href="https://padisentral.com/" target="_blank" class="hover:text-blue-400 hover:underline transition-colors">Padi Sentral</a>:</strong> This property is about 10 mins walk from Mi Le Garden, and a mere 2 mins drive. The plus point is that it has many double rooms. But rooms are limited to 39 rooms. Room layout includes a huge window panel overlooking the rice field.
+                                    </li>
+                                    <li>
+                                        <strong class="text-white"><a href="https://www.villachee.com.my/" target="_blank" class="hover:text-blue-400 hover:underline transition-colors">Villa Chee</a>:</strong> This property has mainly double rooms, however requires driving a car (~ 15 mins) to reach the conference site.
+                                    </li>
+                                </ul>
+                                <div class="mt-5 bg-orange-900/30 border border-orange-500/30 p-4 rounded-lg text-orange-100 text-sm flex gap-3 items-start">
+                                    <i class="fas fa-exclamation-triangle text-orange-400 text-xl mt-0.5 shrink-0"></i>
+                                    <div>
+                                        <strong class="block mb-1 text-orange-300">IMPORTANT DEADLINE</strong>
+                                        For hotel registration of any of the above 3 properties, we will open for <strong>full conference attendance (4 days 3 nights) only before 30th June</strong>. After 30th June, we will open up hotel registration for partial conference attendance also. Priority is given to those who will occupy the room throughout the whole conference.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Book Accommodation</h3>
-                    <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg w-full">Browse Hotels</button>
+
+                    <!-- Point 2 -->
+                    <div>
+                        <p class="font-bold text-white mb-2 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">2</span> Hotel Registration is Optional</p>
+                        <p class="text-slate-300 ml-11">Do note that hotel registration is optional, and attendees can choose to look for their own accommodation outside of the above 3 hotel properties. However, <strong>all who attend the conference are required to register for the conference.</strong></p>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div>
+                        <p class="font-bold text-white mb-3 text-xl flex items-center gap-3"><span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-lg">3</span> Payment Details</p>
+                        <div class="ml-11 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-blue-900/20 border border-blue-500/20 p-4 rounded-xl">
+                                <h4 class="font-bold text-blue-300 mb-2 border-b border-blue-500/20 pb-2"><i class="fas fa-users mr-2"></i>Conference Fee</h4>
+                                <p class="text-sm text-slate-300 mb-2"><strong>RMxxx / night</strong> (Children’s Rate _____), inclusive of meals. There is no option for non-meal registration.</p>
+                                <p class="text-xs text-slate-400">Payment for the conference is made directly to the KK assembly. All international attendees can pay when they arrive at the conference.</p>
+                            </div>
+                            <div class="bg-orange-900/20 border border-orange-500/20 p-4 rounded-xl">
+                                <h4 class="font-bold text-orange-300 mb-2 border-b border-orange-500/20 pb-2"><i class="fas fa-bed mr-2"></i>Hotel Payment</h4>
+                                <p class="text-sm text-slate-300 mb-2">Payment for the hotel is made directly to the hotel.</p>
+                                <p class="text-xs text-slate-400">Once you have selected and registered for the hotel room here, the hotel will contact you directly to arrange for payment to be made.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <button onclick="startRegistration()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 px-8 md:px-12 rounded-full shadow-[0_0_40px_rgba(37,99,235,0.4)] text-lg transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] w-full sm:w-auto flex justify-center items-center gap-3">
+                I Understand, Begin Step 1: Registration <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
-    <div id="app-container" class="hidden flex-grow flex flex-col">
+    <!-- MAIN APP CONTAINER (Multi-step forms) -->
+    <div id="app-container" class="hidden flex-grow flex flex-col h-full min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div onclick="resetToHome()" class="flex items-center gap-2 text-slate-800 font-serif font-bold text-sm md:text-lg cursor-pointer hover:text-blue-600 transition-colors select-none">
-                    2026 Annual Bible Conference <span id="flow-badge" class="text-[10px] md:text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
+                    <span class="hidden sm:inline">2026 Annual Bible Conference</span>
+                    <span class="sm:hidden">Conference '26</span>
+                    <span id="flow-badge" class="text-[10px] md:text-xs px-2 py-1 rounded ml-2 uppercase font-sans tracking-wider hidden md:inline-block"></span>
                 </div>
                 
-                <div class="flex items-center gap-2 md:gap-4 shrink-0">
-                    <div id="nav-step-1" class="flex items-center gap-2 text-sm font-medium text-gray-400">
+                <div class="flex items-center gap-1 md:gap-3 shrink-0">
+                    <!-- Step 1 -->
+                    <div id="nav-step-1" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
                         <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">1</span>
-                        <span class="hidden md:inline" id="nav-step-1-text">Selection</span>
+                        <span class="hidden lg:inline">Register</span>
                     </div>
-                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-2"></div>
-                    <div id="nav-step-2" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
+                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <!-- Step 2 -->
+                    <div id="nav-step-2" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
                         <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">2</span>
-                        <span class="hidden md:inline">Details</span>
+                        <span class="hidden lg:inline">Hotel</span>
                     </div>
-                    <div class="w-4 md:w-8 h-0.5 bg-gray-200 accom-only-nav" id="nav-line-3"></div>
-                    <div id="nav-step-3" class="flex items-center gap-2 text-sm font-medium text-gray-400 accom-only-nav">
+                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <!-- Step 3 -->
+                    <div id="nav-step-3" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
                         <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">3</span>
-                        <span class="hidden md:inline">Confirm</span>
+                        <span class="hidden lg:inline">Details</span>
+                    </div>
+                    <div class="w-2 md:w-6 h-0.5 bg-gray-200"></div>
+                    <!-- Step 4 -->
+                    <div id="nav-step-4" class="flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-400">
+                        <span class="w-6 h-6 md:w-8 md:h-8 text-xs md:text-sm rounded-full flex items-center justify-center border-2 border-gray-300">4</span>
+                        <span class="hidden lg:inline">Confirm</span>
                     </div>
                 </div>
             </div>
         </header>
 
-        <form id="registrationForm" onsubmit="return false;" class="flex-grow flex flex-col">
+        <form id="registrationForm" onsubmit="return false;" class="flex-grow flex flex-col h-full">
+            
+            <!-- VIEW 1: CONFERENCE REGISTRATION -->
+            <div id="view-registration" class="hidden container mx-auto px-4 py-8 max-w-5xl flex-grow animate-slide-in flex-col h-full">
+                <div class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif">Step 1: Registration</h2>
+                        <p class="text-slate-600 mt-2">Fill out the conference registration form below. Once successfully submitted, scroll down to proceed to hotel booking.</p>
+                    </div>
+                    <button type="button" onclick="promptSkipRegistration()" class="text-slate-400 hover:text-blue-600 font-medium text-sm underline transition-colors">
+                        Already registered? Skip to accommodation
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden relative flex-grow min-h-[600px] mb-6">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSey0d0h4KdOOrA-ZRfrbzWGH1QdT_rwuyL9IzxyHlxkcCG-Iw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" class="absolute inset-0">Loading Google Form...</iframe>
+                </div>
+
+                <div id="step-2-proceed" class="flex flex-col bg-orange-50 border border-orange-200 p-6 rounded-2xl gap-4 shadow-sm mt-2">
+                    <div class="w-full">
+                        <h4 class="font-bold text-orange-900 text-lg">Ready to book your accommodation?</h4>
+                        <p class="text-orange-800 text-sm">You must complete and submit the conference registration form above first.</p>
+                    </div>
+                    <div class="w-full bg-white p-4 sm:p-5 rounded-xl border border-orange-100 flex flex-col md:flex-row items-center justify-between gap-6 mt-2 shadow-sm">
+                        <label class="flex items-center gap-3 cursor-pointer group w-full md:w-auto">
+                            <input type="checkbox" id="registration-confirm-checkbox" class="w-6 h-6 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer shrink-0" onchange="toggleProceedButton()">
+                            <span class="text-slate-700 font-medium group-hover:text-orange-700 transition-colors text-sm sm:text-base">I confirm that I have successfully submitted the registration form.</span>
+                        </label>
+                        <button type="button" id="btn-proceed-step-2" onclick="startHotelFlow()" disabled class="w-full md:w-auto bg-slate-300 text-slate-500 font-bold py-3 px-10 rounded-xl cursor-not-allowed transition-all whitespace-nowrap">
+                            Proceed to Step 2 <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: HOTEL SELECTION -->
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
+                <div class="mb-6 flex justify-between items-center">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
+                        <i class="fas fa-arrow-left"></i> Back to Registration
+                    </button>
+                </div>
+
                 <div class="mb-8 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Select a Hotel</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 font-serif mb-2">Step 2: Select a Hotel</h2>
+                    <p class="text-slate-500">Choose from our partnered accommodations.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
                     <div id="hotel-grid-container" class="contents"></div>
                 </div>
             </div>
 
+            <!-- VIEW 2.5: ROOM SELECTION -->
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
@@ -143,17 +275,17 @@
 
                 <div class="flex flex-col lg:flex-row gap-8 h-full">
                     <div class="w-full lg:w-1/2 flex flex-col">
-                        
-                        <!-- NEW GALLERY CONTAINER -->
                         <div id="detail-gallery-container" class="mb-6">
                             <div id="gallery-main" class="w-full h-64 md:h-80 rounded-2xl relative shadow-md mb-3 transition-all duration-300 bg-slate-100 bg-cover bg-center"></div>
-                            <!-- Thumbnails will be injected here automatically -->
                             <div id="gallery-thumbs" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1"></div>
                         </div>
 
                         <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
                             <div class="mb-4">
                                 <h2 id="detail-title" class="text-3xl font-bold font-serif text-slate-800">Hotel Name</h2>
+                                <a id="detail-website" href="#" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:underline text-sm font-medium mt-1">
+                                    <i class="fas fa-external-link-alt text-xs"></i> Visit Official Website
+                                </a>
                             </div>
                             <p id="detail-desc" class="text-slate-600 leading-relaxed mb-6">Description</p>
                             <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
@@ -171,17 +303,18 @@
                 </div>
             </div>
 
+            <!-- VIEW 3: GUEST DETAILS -->
             <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center" id="details-back-btn">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
-                        <i class="fas fa-arrow-left"></i> Back
+                        <i class="fas fa-arrow-left"></i> Back to Rooms
                     </button>
                 </div>
 
-                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Your Details</h2>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Step 3: Your Details</h2>
                 <p class="text-slate-500 mb-8">Who is making this booking?</p>
                 
-                <div id="accom-booking-summary" class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+                <div id="accom-booking-summary" class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8 shadow-sm">
                     <h4 class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">Room Booking Summary</h4>
                     <div class="flex items-center gap-4">
                         <div>
@@ -211,7 +344,7 @@
                             </div>
                             <div>
                                 <label class="flex items-baseline text-sm font-medium text-slate-700 mb-2">
-                                    Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Please indicate your country code)</span>
+                                    Contact No. <span class="text-xs font-normal text-slate-500 ml-2">(Include country code)</span>
                                 </label>
                                 <input type="tel" required id="phone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="i.e. +60 12 3456789">
                             </div>
@@ -264,6 +397,7 @@
                 </div>
             </div>
 
+            <!-- VIEW 4: CONFIRMATION -->
             <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors">
@@ -271,14 +405,13 @@
                     </button>
                 </div>
 
-                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Review Your Booking</h2>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 font-serif">Step 4: Review Your Booking</h2>
                 <p class="text-slate-500 mb-8">Please confirm your details before submitting.</p>
                 
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
                     <ul id="confirmation-list" class="space-y-1 text-slate-700"></ul>
                 </div>
 
-                <!-- NEW: Clear Payment Process Box -->
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm">
                     <div class="bg-amber-100 rounded-full w-10 h-10 flex items-center justify-center shrink-0 mt-0.5">
                         <i class="fas fa-wallet text-amber-600"></i>
@@ -306,6 +439,7 @@
         </footer>
     </div>
 
+    <!-- SUCCESS MODAL -->
     <div id="successModal" class="fixed inset-0 bg-slate-900 bg-opacity-75 hidden flex items-center justify-center z-50 px-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl animate-fade-in-up">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -325,12 +459,8 @@
         const PADI_URL = "https://script.google.com/macros/s/AKfycbypjEvQNFVo93buDwyWZ6-8_nKJUKSXTp05dKASDMZEki_5zkPkkiV2DSMern3FKUwj3g/exec";      
         const VILLA_URL = "https://script.google.com/macros/s/AKfycbxzUP4tLSF06sCobU-Jdoo28rkk5mIkI-kZ8_VdDSWqsmzl_WcSKJZJuTh6BdSEyjFwtQ/exec";    
 
-        // =====================================================================
-        // ⚠️ BOOKING RULES
-        // =====================================================================
-        const REQUIRE_FULL_STAY = true; // Change to false to allow 1 or 2 night stays
+        const REQUIRE_FULL_STAY = true;
 
-        // SMART PRICE FORMATTER: Keeps whole numbers clean, adds .00 only for decimals
         window.formatPrice = function(price) {
             const num = Number(price);
             return Number.isInteger(num) 
@@ -351,6 +481,21 @@
             }
         };
 
+        window.promptSkipRegistration = function() {
+            document.getElementById('skip-confirm-modal').classList.remove('hidden');
+            document.getElementById('skip-confirm-modal').classList.add('flex');
+        };
+
+        window.closeSkipConfirmModal = function() {
+            document.getElementById('skip-confirm-modal').classList.add('hidden');
+            document.getElementById('skip-confirm-modal').classList.remove('flex');
+        };
+
+        window.confirmSkipToAccommodation = function() {
+            window.closeSkipConfirmModal();
+            window.startHotelFlow();
+        };
+
         window.showCustomModal = function(title, msg, iconClass = "fas fa-exclamation-circle text-red-500") {
             const mTitle = document.getElementById('modal-title');
             const mMsg = document.getElementById('modal-message');
@@ -366,7 +511,6 @@
             document.getElementById('custom-modal').classList.remove('flex');
         }
 
-        // IMAGE VIEWER LOGIC (WITH NATIVE BACK BUTTON INTEGRATION & PREMIUM SMOOTH GESTURES)
         window.currentGalleryImages = [];
         window.currentGalleryIndex = 0;
 
@@ -420,22 +564,15 @@
                 return;
             }
 
-            // Animate current image out smoothly
             img.style.transition = 'all 0.2s ease-out';
             img.style.opacity = '0';
             img.style.transform = `translateX(${direction * -40}px) scale(0.98)`;
             
             setTimeout(() => {
                 img.src = window.currentGalleryImages[window.currentGalleryIndex];
-                
-                // Pre-position the new image for entry
                 img.style.transition = 'none';
                 img.style.transform = `translateX(${direction * 40}px) scale(0.98)`;
-                
-                // Force browser to register the new position immediately
                 void img.offsetWidth;
-                
-                // Smoothly animate the new image in
                 img.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
                 img.style.transform = 'translateX(0) scale(1)';
                 img.style.opacity = '1';
@@ -445,11 +582,8 @@
         window.changeViewerImage = function(step) {
             if (window.currentGalleryImages.length <= 1) return;
             window.currentGalleryIndex += step;
-            
-            // Loop array flawlessly
             if (window.currentGalleryIndex >= window.currentGalleryImages.length) window.currentGalleryIndex = 0;
             if (window.currentGalleryIndex < 0) window.currentGalleryIndex = window.currentGalleryImages.length - 1;
-            
             window.updateViewerUI(step);
         }
 
@@ -461,7 +595,7 @@
             const img = document.getElementById('viewer-image');
             img.style.transition = 'all 0.3s ease-out';
             img.style.opacity = '0';
-            img.style.transform = 'scale(0.8)'; // Shrink away effect
+            img.style.transform = 'scale(0.8)';
 
             setTimeout(() => {
                 modal.classList.add('hidden');
@@ -482,21 +616,19 @@
             if (e.key === 'Escape') window.closeImageViewer();
         }
 
-        // SMOOTH SWIPE DETECTION WITH REAL-TIME FINGER TRACKING
         const viewerModal = document.getElementById('image-viewer-modal');
         let touchStartX = 0;
         let touchMoveX = 0;
         let isSwiping = false;
 
         viewerModal.addEventListener('touchstart', e => { 
-            if (e.touches.length > 1) return; // ignore multi-touch zooming for swiping
+            if (e.touches.length > 1) return;
             touchStartX = e.touches[0].clientX; 
             touchMoveX = touchStartX;
             isSwiping = true;
-            
             if (window.currentGalleryImages.length > 1) {
                 const img = document.getElementById('viewer-image');
-                img.style.transition = 'none'; // Lock image to finger instantly
+                img.style.transition = 'none';
             }
         }, {passive: true});
 
@@ -504,9 +636,7 @@
             if (!isSwiping || window.currentGalleryImages.length <= 1) return;
             touchMoveX = e.touches[0].clientX;
             const diff = touchMoveX - touchStartX;
-            
             const img = document.getElementById('viewer-image');
-            // Move image with finger, add slight resistance and push-back scale
             img.style.transform = `translateX(${diff * 0.7}px) scale(0.98)`;
             img.style.opacity = 1 - (Math.abs(diff) / (window.innerWidth * 1.5));
         }, {passive: true});
@@ -514,18 +644,15 @@
         viewerModal.addEventListener('touchend', e => {
             if (!isSwiping) return;
             isSwiping = false;
-            
             if (window.currentGalleryImages.length <= 1) return;
 
             const diff = touchMoveX - touchStartX;
-            const threshold = 50; // Minimum pixels to count as an intentional swipe
-            
+            const threshold = 50; 
             if (diff < -threshold) {
-                window.changeViewerImage(1); // Swiped Left -> Next Image
+                window.changeViewerImage(1); 
             } else if (diff > threshold) {
-                window.changeViewerImage(-1); // Swiped Right -> Prev Image
+                window.changeViewerImage(-1); 
             } else {
-                // User didn't swipe far enough, snap back to center elastically
                 const img = document.getElementById('viewer-image');
                 img.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
                 img.style.transform = 'translateX(0) scale(1)';
@@ -550,19 +677,10 @@
 
         window.hotelData = {
             'mile': {
-                name: 'Mi Le Garden', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
+                name: 'Mi Le Garden', website: 'https://milegarden.com.my/', mainIcon: 'fas fa-tree', iconColor: 'text-green-500', bgColor: 'bg-green-100',
                 desc: 'The conference hall is right here, so no transportation is required. The resort features bungalow-style accommodations for large groups as well as smaller room options.', 
-                amenities: [
-                    'On-site — zero commute', 
-                    'Accommodation for large groups', 
-                    'Smaller room options available', 
-                    'Perfect for families & big groups'
-                ],
-                hotelImages: [
-                    'images/mile_cover_pic.webp', 
-                    'images/mile_pic_2.webp',
-                    'images/mile_map.webp'
-                ],
+                amenities: ['On-site — zero commute', 'Accommodation for large groups', 'Smaller room options available', 'Perfect for families & big groups'],
+                hotelImages: ['images/mile_cover_pic.webp', 'images/mile_pic_2.webp', 'images/mile_map.webp'],
                 roomTypes: [
                     { category: 'Resort Bungalows', id: 'resort-18pax', name: 'Resort (18pax)', price: 1620, desc: '9 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
                     { category: 'Resort Bungalows', id: 'resort-16pax', name: 'Resort (16pax)', price: 1440, desc: '8 Queen beds, 2 bathrooms', images: ['images/mile_resort_1.webp', 'images/mile_resort_2.webp', 'images/mile_resort_3.webp', 'images/mile_resort_4.webp', 'images/mile_resort_5.webp'] },
@@ -576,18 +694,10 @@
                 ]
             },
             'padi': {
-                name: 'Padi Sentral', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
+                name: 'Padi Sentral', website: 'https://padisentral.com/', mainIcon: 'fas fa-seedling', iconColor: 'text-yellow-500', bgColor: 'bg-yellow-100',
                 desc: 'Just a 3-minute drive or a 15-minute walk from the conference hall. Rooms feature large windows overlooking the beautiful paddy fields, offering a peaceful and private stay.', 
-                amenities: [
-                    '3-min drive / 15-min walk to venue', 
-                    'Rooms with paddy field views', 
-                    'Quiet & private setting',
-                    'Perfect for individuals, couples, or small families with own transport'
-                ],
-                hotelImages: [
-                    'images/padi_sentral_cover.webp',
-                    'images/padi_sentral_cover2.webp'
-                ],
+                amenities: ['3-min drive / 15-min walk to venue', 'Rooms with paddy field views', 'Quiet & private setting', 'Perfect for individuals, couples, or small families with own transport'],
+                hotelImages: ['images/padi_sentral_cover.webp', 'images/padi_sentral_cover2.webp'],
                 roomTypes: [
                     { id: 'deluxe-triple', name: 'Deluxe Triple Room (3pax)', price: 198, desc: '', images: ['images/padi_dtr.webp'] },
                     { id: 'deluxe-family', name: 'Deluxe Family (4pax)', price: 278, desc: '', images: ['images/padi_dfr.webp'] },
@@ -597,18 +707,10 @@
                 ]
             },
             'villa': {
-                name: 'Villa Chee', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
+                name: 'Villa Chee', website: 'https://www.villachee.com.my/', mainIcon: 'fas fa-home', iconColor: 'text-purple-500', bgColor: 'bg-purple-100',
                 desc: 'Just 7 minutes from the conference hall, surrounded by serene paddy fields. Enjoy a swimming pool with slides and a lovely outdoor park.', 
-                amenities: [
-                    '7-min drive to venue — own transport required', 
-                    'Scenic paddy field surroundings', 
-                    'Swimming pool with slides & outdoor park',
-                    'Perfect for individuals and small families'
-                ],
-                hotelImages: [
-                    'images/villa_chee_cover.webp',
-                    'images/villa_chee_cover2.webp'
-                ],
+                amenities: ['7-min drive to venue — own transport required', 'Scenic paddy field surroundings', 'Swimming pool with slides & outdoor park', 'Perfect for individuals and small families'],
+                hotelImages: ['images/villa_chee_cover.webp', 'images/villa_chee_cover2.webp'],
                 roomTypes: [
                     { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 291.60, desc: '', images: ['images/villa_chee_dkr.webp'] },
                     { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 291.60, desc: '', images: ['images/villa_chee_sq.webp'] },
@@ -693,15 +795,21 @@
                 document.getElementById('app-container').classList.remove('hidden');
                 window.setThemeLight(true); 
                 
-                if (state.viewId === 'view-accom-hotels') {
+                if (state.viewId === 'view-registration') {
+                    window.showView('view-registration', 1, false);
+                }
+                else if (state.viewId === 'view-accom-hotels') {
                     await window.fetchAvailability(); 
                     renderHotelCards();
+                    window.showView('view-accom-hotels', 2, false);
                 }
                 else if (state.viewId === 'view-accom-room' && window.bookingState && window.bookingState.hotelId) {
                     await window.openHotelDetail(window.bookingState.hotelId, true);
+                    window.showView('view-accom-room', 2, false);
                 }
-                
-                window.showView(state.viewId, state.stepNum, false); 
+                else {
+                    window.showView(state.viewId, state.stepNum, false); 
+                }
             } else {
                 document.getElementById('app-container').classList.add('hidden');
                 document.getElementById('view-landing').classList.remove('hidden');
@@ -795,10 +903,39 @@
             return null;
         }
 
-        window.startFlow = async function(isRestore = false) {
+        window.toggleProceedButton = function() {
+            const checkbox = document.getElementById('registration-confirm-checkbox');
+            const btn = document.getElementById('btn-proceed-step-2');
+            if (checkbox && checkbox.checked) {
+                btn.disabled = false;
+                btn.className = "w-full md:w-auto bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-0.5 whitespace-nowrap cursor-pointer";
+            } else if (btn) {
+                btn.disabled = true;
+                btn.className = "w-full md:w-auto bg-slate-300 text-slate-500 font-bold py-3 px-10 rounded-xl cursor-not-allowed transition-all whitespace-nowrap";
+            }
+        };
+
+        window.startRegistration = function() {
+            window.setThemeLight(true);
+            
+            // Reset the safety checkbox
+            const checkbox = document.getElementById('registration-confirm-checkbox');
+            if (checkbox) {
+                checkbox.checked = false;
+                window.toggleProceedButton();
+            }
+            
+            document.getElementById('view-landing').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            
+            showView('view-registration', 1);
+        };
+
+        window.startHotelFlow = async function(isRestore = false) {
             window.setThemeLight(true);
             if (!isRestore) {
                 document.getElementById('registrationForm').reset();
+                window.toggleProceedButton(); // Reset button state since form reset unchecks the checkbox
                 window.bookingState = { hotelId: null, roomId: null, checkIn: 'Dec 16', checkOut: 'Dec 19', quantity: 1, cost: 0 };
                 const adultsInput = document.getElementById('pax-adults'); if(adultsInput) adultsInput.value = 1;
                 const kidsInput = document.getElementById('pax-kids'); if(kidsInput) kidsInput.value = 0;
@@ -814,28 +951,39 @@
             document.getElementById('view-landing').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
 
-            document.getElementById('flow-badge').innerText = 'Accommodation';
-            document.getElementById('flow-badge').className = 'text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider';
-            document.getElementById('nav-step-1-text').innerText = 'Selection';
-            document.querySelectorAll('.accom-only-nav').forEach(el => el.classList.remove('hidden'));
-            document.getElementById('btn-details-next').innerHTML = 'Review Details <i class="fas fa-arrow-right ml-2"></i>';
-
             renderHotelCards();
-            if (!isRestore) showView('view-accom-hotels', 1);
+            if (!isRestore) showView('view-accom-hotels', 2);
         };
 
         window.showView = function(viewId, stepNumber, pushHistory = true) {
             window.currentViewId = viewId; window.currentStepNum = stepNumber;
-            ['view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-confirmation'].forEach(id => {
+            ['view-registration', 'view-accom-hotels', 'view-accom-room', 'view-shared-details', 'view-confirmation'].forEach(id => {
                 const el = document.getElementById(id); if (el) el.classList.add('hidden');
             });
             const activeEl = document.getElementById(viewId); if (activeEl) activeEl.classList.remove('hidden');
+            
+            // Strictly enforce the button safety sync when showing the registration page
+            if (viewId === 'view-registration') {
+                window.toggleProceedButton();
+            }
+            
+            const badge = document.getElementById('flow-badge');
+            if (badge) {
+                if (viewId === 'view-registration') {
+                    badge.innerText = 'Registration';
+                    badge.className = 'text-[10px] md:text-xs bg-blue-100 px-2 py-1 rounded ml-2 text-blue-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block';
+                } else {
+                    badge.innerText = 'Accommodation';
+                    badge.className = 'text-[10px] md:text-xs bg-orange-100 px-2 py-1 rounded ml-2 text-orange-700 uppercase font-sans font-bold tracking-wider hidden md:inline-block';
+                }
+            }
+
             updateNav(stepNumber); window.scrollTo(0, 0); window.saveState();
             if (pushHistory) history.pushState({ viewId: viewId, stepNum: stepNumber }, "", "");
         };
 
         function updateNav(step) {
-            [1, 2, 3].forEach(num => {
+            [1, 2, 3, 4].forEach(num => {
                 const nav = document.getElementById(`nav-step-${num}`);
                 if(nav) {
                     const badge = nav.querySelector('span');
@@ -921,6 +1069,17 @@
             window.bookingState.hotelId = hotelId;
             const data = window.hotelData[hotelId];
             document.getElementById('detail-title').innerText = data.name;
+            
+            const websiteLink = document.getElementById('detail-website');
+            if (data.website) {
+                websiteLink.href = data.website;
+                websiteLink.classList.remove('hidden');
+                websiteLink.classList.add('inline-flex');
+            } else {
+                websiteLink.classList.add('hidden');
+                websiteLink.classList.remove('inline-flex');
+            }
+            
             document.getElementById('detail-desc').innerText = data.desc;
             const list = document.getElementById('detail-amenities'); list.innerHTML = '';
             
@@ -942,7 +1101,7 @@
                 const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`); if (qtyInput) qtyInput.value = window.bookingState.quantity;
                 updateDateValidation(window.bookingState.roomId);
             }
-            if (!isRestore) showView('view-accom-room', 1);
+            if (!isRestore) showView('view-accom-room', 2);
         }
 
         function renderRoomAccordions(hotelId) {
@@ -1168,7 +1327,7 @@
             document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
             
             document.getElementById('summary-price').innerText = `RM ${window.formatPrice(window.bookingState.cost)}`;
-            showView('view-shared-details', 2);
+            showView('view-shared-details', 3);
         }
 
         window.adjustPax = function(type, delta) {
@@ -1211,7 +1370,7 @@
             <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
             
             document.getElementById('confirmation-list').innerHTML = html;
-            showView('view-confirmation', 3);
+            showView('view-confirmation', 4);
         }
 
         window.finalizeAccommodation = async function() {
@@ -1303,23 +1462,45 @@
                         }
                         if (state.booking) window.bookingState = state.booking;
                         
-                        await window.startFlow(true);
+                        // We must await startFlow (or similar init) but skip the navigation part
+                        // so we can manually direct the user
+                        await window.fetchAvailability();
+
+                        document.getElementById('view-landing').classList.add('hidden');
+                        document.getElementById('app-container').classList.remove('hidden');
                         
                         history.replaceState({ viewId: 'landing' }, "", "");
                         
-                        if (state.view === 'view-accom-hotels') {
-                            window.showView('view-accom-hotels', 1, false);
-                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
+                        if (state.view === 'view-registration') {
+                            window.showView('view-registration', 1, false);
+                            history.pushState({ viewId: 'view-registration', stepNum: 1 }, "", "");
+                        } 
+                        else if (state.view === 'view-accom-hotels') {
+                            window.showView('view-registration', 1, false);
+                            history.pushState({ viewId: 'view-registration', stepNum: 1 }, "", "");
+                            renderHotelCards();
+                            window.showView('view-accom-hotels', 2, false);
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 2 }, "", "");
                         
                         } else if (state.view === 'view-accom-room') {
-                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
+                            window.showView('view-registration', 1, false);
+                            history.pushState({ viewId: 'view-registration', stepNum: 1 }, "", "");
+                            renderHotelCards();
+                            window.showView('view-accom-hotels', 2, false);
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 2 }, "", "");
+                            
                             if (window.bookingState.hotelId) await window.openHotelDetail(window.bookingState.hotelId, true);
-                            window.showView('view-accom-room', 1, false);
-                            history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
+                            window.showView('view-accom-room', 2, false);
+                            history.pushState({ viewId: 'view-accom-room', stepNum: 2 }, "", "");
                         
                         } else if (state.view === 'view-shared-details' || state.view === 'view-confirmation') {
-                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 1 }, "", "");
-                            history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
+                            window.showView('view-registration', 1, false);
+                            history.pushState({ viewId: 'view-registration', stepNum: 1 }, "", "");
+                            renderHotelCards();
+                            window.showView('view-accom-hotels', 2, false);
+                            history.pushState({ viewId: 'view-accom-hotels', stepNum: 2 }, "", "");
+                            window.showView('view-accom-room', 2, false);
+                            history.pushState({ viewId: 'view-accom-room', stepNum: 2 }, "", "");
                             
                             if (window.bookingState.hotelId) {
                                 await window.openHotelDetail(window.bookingState.hotelId, true);
@@ -1329,8 +1510,8 @@
                                 
                                 if (window.bookingState.quantity > currentMax) {
                                     showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
-                                    window.showView('view-accom-room', 1, false);
-                                    history.pushState({ viewId: 'view-accom-room', stepNum: 1 }, "", "");
+                                    window.showView('view-accom-room', 2, false);
+                                    history.pushState({ viewId: 'view-accom-room', stepNum: 2 }, "", "");
                                     return; 
                                 }
                             }
@@ -1345,11 +1526,12 @@
                                         document.getElementById('summary-price').innerText = `RM ${window.formatPrice(window.bookingState.cost)}`;
                                     }
                                 }
-                                window.showView('view-shared-details', 2, false);
-                                history.pushState({ viewId: 'view-shared-details', stepNum: 2 }, "", "");
+                                window.showView('view-shared-details', 3, false);
+                                history.pushState({ viewId: 'view-shared-details', stepNum: 3 }, "", "");
                             
                             } else if (state.view === 'view-confirmation') {
-                                history.pushState({ viewId: 'view-shared-details', stepNum: 2 }, "", "");
+                                window.showView('view-shared-details', 3, false);
+                                history.pushState({ viewId: 'view-shared-details', stepNum: 3 }, "", "");
                                 
                                 const hotel = window.hotelData[window.bookingState.hotelId];
                                 const room = hotel ? hotel.roomTypes.find(r => r.id === window.bookingState.roomId) : null;
@@ -1370,8 +1552,8 @@
                                     <li class="flex pt-4 text-lg"><span class="w-1/3 font-bold text-slate-800">Total Cost:</span> <span class="w-2/3 font-bold text-blue-600">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
                                     document.getElementById('confirmation-list').innerHTML = html;
                                 }
-                                window.showView('view-confirmation', 3, false);
-                                history.pushState({ viewId: 'view-confirmation', stepNum: 3 }, "", "");
+                                window.showView('view-confirmation', 4, false);
+                                history.pushState({ viewId: 'view-confirmation', stepNum: 4 }, "", "");
                             }
                         }
                     }
