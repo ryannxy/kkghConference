@@ -114,7 +114,7 @@
                 <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500/80"></div>
                 <p class="text-lg md:text-xl text-blue-50 mb-8 font-medium border-b border-white/10 pb-6 leading-relaxed">
                     Welcome to the Kota Kemuning 2026 Bible Conference Registration Page. The annual conference will be held at <a href="https://milegarden.com.my/" target="_blank" class="text-amber-400 hover:text-amber-300 font-bold underline decoration-amber-400/50 hover:decoration-amber-300 transition-colors">Mi Le Garden Resort, Sekinchan</a>, from <b class="text-white">16th – 19th December 2026</b> (Wednesday to Saturday).<br><br>
-                    <i class="text-slate-300 text-base">Please take a moment to read the instructions below.</i>
+                    <i class="text-slate-300 text-base">The registration for this conference is unique because <b class="text-white">Conference Registration</b> and <b class="text-white">Hotel Registration</b> are two different registrations. Please take time to read the instructions.</i>
                 </p>
                 
                 <div class="space-y-10 text-slate-200 text-sm md:text-base leading-relaxed">
@@ -196,18 +196,18 @@
                     <div>
                         <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">3</span> Payment</p>
                         <div class="ml-4 md:ml-11 space-y-3">
-                            <p>The conference fee is <strong class="text-white bg-slate-700 px-2 py-0.5 rounded">RM xxx per night</strong> (Children’s rate: ___), inclusive of meals. There is no option for non-meal registration.</p>
+                            <p>The conference fee is <strong class="text-white bg-slate-700 px-2 py-0.5 rounded border border-slate-600">RM xxx per night</strong> (Children’s rate: ___), inclusive of meals. There is no option for non-meal registration.</p>
                             <ul class="space-y-3 text-sm mt-4">
                                 <li class="flex items-start gap-3">
-                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>Payment for the conference is to be made directly to the KK Assembly.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
-                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>International attendees may make payment upon arrival at the conference.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
-                                    <i class="fas fa-check text-emerald-400 mt-1"></i>
+                                    <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>Payment for hotel accommodation is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</span>
                                 </li>
                             </ul>
@@ -764,9 +764,18 @@
                 amenities: ['7-min drive to venue — own transport required', 'Scenic paddy field surroundings', 'Swimming pool with slides & outdoor park', 'Perfect for individuals and small families'],
                 hotelImages: ['images/villa_chee_cover.webp', 'images/villa_chee_cover2.webp'],
                 roomTypes: [
-                    { id: 'deluxe-king', name: 'Deluxe King Room (2pax)', price: 291.60, desc: '', images: ['images/villa_chee_dkr.webp'] },
-                    { id: 'superior-queen-gf', name: 'Superior Queen Ground Floor (2pax)', price: 291.60, desc: '', images: ['images/villa_chee_sq.webp'] },
-                    { id: 'superior-queen-uf', name: 'Superior Queen Upper Floor (2pax)', price: 291.60, desc: '', images: ['images/villa_chee_sq.webp'] }
+                    { category: 'Hotel / Villa', id: 'superior-king', name: 'Superior King Room (2pax)', price: 291.60, desc: '1 King bed', images: ['images/villa_chee_dkr.webp'] },
+                    { category: 'Hotel / Villa', id: 'premium-family-suite', name: 'Premium Family Suite (12pax)', price: 1185.84, desc: '1 King & 10 Single beds, 3 Rooms, 3 Bathrooms', images: ['images/villa_chee_dkr.webp'] },
+                    { category: 'Hotel / Villa', id: 'executive-family-suite', name: 'Executive Family Suite (12pax)', price: 1185.84, desc: '1 Queen & 10 Single beds, 3 Rooms, 3 Bathrooms', images: ['images/villa_chee_dkr.webp'] },
+                    { category: 'Cabin / Container', id: 'superior-queen', name: 'Superior Queen Room (2pax)', price: 291.60, desc: '1 Queen bed', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'superior-queen-double', name: 'Superior Queen Double Room (4pax)', price: 359.64, desc: '2 Queen beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'superior-twin-square', name: 'Superior Twin Square Room (4pax)', price: 417.96, desc: '4 Single beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'deluxe-twin-rectangle', name: 'Deluxe Twin Rectangle Room (4pax)', price: 417.96, desc: '4 Single beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior-no-balcony', name: 'Family Superior Room - No Balcony (6pax)', price: 622.08, desc: '1 King & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior', name: 'Family Superior Room (6pax)', price: 680.40, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-deluxe-balcony', name: 'Family Deluxe Room - Big Balcony (6pax)', price: 729.00, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior-upper', name: 'Family Superior Room - Upper Floor View (6pax)', price: 738.72, desc: '1 King & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Homestay', id: 'private-cluster-homestay', name: 'Private Cluster Homestay (18pax)', price: 1458.00, desc: '6 King & 6 Single beds, 6 Rooms, 7 Bathrooms (Outside 950m Villa Chee)', images: ['images/villa_chee_cover.webp'] }
                 ]
             }
         };
