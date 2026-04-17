@@ -107,7 +107,9 @@
             <div class="text-center mb-10">
                 <span class="inline-block py-1.5 px-5 rounded-full bg-slate-800 text-blue-200 text-xs font-bold mb-6 border border-slate-700 tracking-widest uppercase shadow-sm">16th - 19th Dec 2026 • Wed to Sat</span>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight font-serif text-white tracking-tight">Kota Kemuning Assembly<br>Annual Bible Conference</h1>
-                <p class="text-xl md:text-2xl text-slate-300 font-light italic font-serif">"Theme: TBC"</p>
+                <p class="text-xl md:text-2xl font-light italic font-serif">
+                    <a href="topics.html" class="text-slate-300 hover:text-blue-300 transition-colors cursor-pointer">"Theme: TBC"</a>
+                </p>
             </div>
             
             <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] p-6 md:p-10 mb-10 text-left shadow-2xl w-full relative overflow-hidden text-white">
@@ -197,18 +199,18 @@
                         <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">3</span> Payment</p>
                         <div class="ml-4 md:ml-11 space-y-3">
                             <p>The conference fee is <strong class="text-white bg-slate-700 px-2 py-0.5 rounded border border-slate-600">RM xxx per night</strong> (Children’s rate: ___), inclusive of meals. There is no option for non-meal registration.</p>
-                            <ul class="space-y-3 text-sm mt-4">
+                            <ul class="space-y-3 text-sm mt-4 md:text-base">
                                 <li class="flex items-start gap-3">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
-                                    <span>Payment for the conference is to be made directly to the KK Assembly.</span>
+                                    <span>Payment for the <b>conference</b> is to be made directly to the KK Assembly.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
-                                    <span>International attendees may make payment upon arrival at the conference.</span>
+                                    <span>International attendees may make their payment upon arrival at the conference.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
-                                    <span>Payment for hotel accommodation is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</span>
+                                    <span>Payment for <b>hotel accommodation</b> is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</span>
                                 </li>
                             </ul>
                         </div>
@@ -217,9 +219,15 @@
                 </div>
             </div>
 
-            <button onclick="startRegistration()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 md:px-12 rounded-2xl shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] text-lg transition-all hover:-translate-y-1 w-full sm:w-auto flex justify-center items-center gap-3">
-                I Understand, Begin Registration <i class="fas fa-arrow-right"></i>
-            </button>
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
+                <a href="topics.html" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-4 px-8 rounded-2xl backdrop-blur-md transition-all hover:-translate-y-1 w-full sm:w-auto flex justify-center items-center gap-3">
+                    View Conference Topics
+                </a>
+                <button onclick="startRegistration()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 md:px-12 rounded-2xl shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] text-lg transition-all hover:-translate-y-1 w-full sm:w-auto flex justify-center items-center gap-3">
+                    Begin Registration <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
         </div>
     </div>
 
@@ -399,6 +407,10 @@
                                 </label>
                                 <input type="tel" required id="phone" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="i.e. +60 12 3456789">
                             </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Assembly with which in fellowship/associated</label>
+                            <input type="text" id="assembly" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="e.g., Kota Kemuning Gospel Hall">
                         </div>
                     </div>
 
@@ -765,17 +777,17 @@
                 hotelImages: ['images/villa_chee_cover.webp', 'images/villa_chee_cover2.webp'],
                 roomTypes: [
                     { category: 'Hotel / Villa', id: 'superior-king', name: 'Superior King Room (2pax)', price: 291.60, desc: '1 King bed', images: ['images/villa_chee_dkr.webp'] },
-                    { category: 'Hotel / Villa', id: 'premium-family-suite', name: 'Premium Family Suite (12pax)', price: 1185.84, desc: '1 King & 10 Single beds, 3 Rooms, 3 Bathrooms', images: [''] },
-                    { category: 'Hotel / Villa', id: 'executive-family-suite', name: 'Executive Family Suite (12pax)', price: 1185.84, desc: '1 Queen & 10 Single beds, 3 Rooms, 3 Bathrooms', images: [''] },
+                    { category: 'Hotel / Villa', id: 'premium-family-suite', name: 'Premium Family Suite (12pax)', price: 1185.84, desc: '1 King & 10 Single beds, 3 Rooms, 3 Bathrooms', images: ['images/villa_chee_dkr.webp'] },
+                    { category: 'Hotel / Villa', id: 'executive-family-suite', name: 'Executive Family Suite (12pax)', price: 1185.84, desc: '1 Queen & 10 Single beds, 3 Rooms, 3 Bathrooms', images: ['images/villa_chee_dkr.webp'] },
                     { category: 'Cabin / Container', id: 'superior-queen', name: 'Superior Queen Room (2pax)', price: 291.60, desc: '1 Queen bed', images: ['images/villa_chee_sq.webp'] },
-                    { category: 'Cabin / Container', id: 'superior-queen-double', name: 'Superior Queen Double Room (4pax)', price: 359.64, desc: '2 Queen beds', images: [''] },
-                    { category: 'Cabin / Container', id: 'superior-twin-square', name: 'Superior Twin Square Room (4pax)', price: 417.96, desc: '4 Single beds', images: [''] },
-                    { category: 'Cabin / Container', id: 'deluxe-twin-rectangle', name: 'Deluxe Twin Rectangle Room (4pax)', price: 417.96, desc: '4 Single beds', images: [''] },
-                    { category: 'Cabin / Container', id: 'family-superior-no-balcony', name: 'Family Superior Room - No Balcony (6pax)', price: 622.08, desc: '1 King & 4 Single beds, 2 Bathrooms', images: [''] },
-                    { category: 'Cabin / Container', id: 'family-superior', name: 'Family Superior Room (6pax)', price: 680.40, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: [''] },
-                    { category: 'Cabin / Container', id: 'family-deluxe-balcony', name: 'Family Deluxe Room - Big Balcony (6pax)', price: 729.00, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: [''] },
-                    { category: 'Cabin / Container', id: 'family-superior-upper', name: 'Family Superior Room - Upper Floor View (6pax)', price: 738.72, desc: '1 King & 4 Single beds, 2 Bathrooms', images: [''] },
-                    { category: 'Homestay', id: 'private-cluster-homestay', name: 'Private Cluster Homestay (18pax)', price: 1458.00, desc: '6 King & 6 Single beds, 6 Rooms, 7 Bathrooms (Outside 950m Villa Chee)', images: [''] }
+                    { category: 'Cabin / Container', id: 'superior-queen-double', name: 'Superior Queen Double Room (4pax)', price: 359.64, desc: '2 Queen beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'superior-twin-square', name: 'Superior Twin Square Room (4pax)', price: 417.96, desc: '4 Single beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'deluxe-twin-rectangle', name: 'Deluxe Twin Rectangle Room (4pax)', price: 417.96, desc: '4 Single beds', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior-no-balcony', name: 'Family Superior Room - No Balcony (6pax)', price: 622.08, desc: '1 King & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior', name: 'Family Superior Room (6pax)', price: 680.40, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-deluxe-balcony', name: 'Family Deluxe Room - Big Balcony (6pax)', price: 729.00, desc: '1 Queen & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Cabin / Container', id: 'family-superior-upper', name: 'Family Superior Room - Upper Floor View (6pax)', price: 738.72, desc: '1 King & 4 Single beds, 2 Bathrooms', images: ['images/villa_chee_sq.webp'] },
+                    { category: 'Homestay', id: 'private-cluster-homestay', name: 'Private Cluster Homestay (18pax)', price: 1458.00, desc: '6 King & 6 Single beds, 6 Rooms, 7 Bathrooms (Outside 950m Villa Chee)', images: ['images/villa_chee_cover.webp'] }
                 ]
             }
         };
@@ -788,6 +800,7 @@
                     name: document.getElementById('fullName') ? document.getElementById('fullName').value : '',
                     email: document.getElementById('email') ? document.getElementById('email').value : '',
                     phone: document.getElementById('phone') ? document.getElementById('phone').value : '',
+                    assembly: document.getElementById('assembly') ? document.getElementById('assembly').value : '',
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
                     specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : ''
@@ -815,7 +828,7 @@
         }
 
         document.addEventListener('input', (e) => {
-            if (['fullName', 'email', 'phone', 'specialRequests'].includes(e.target.id)) {
+            if (['fullName', 'email', 'phone', 'assembly', 'specialRequests'].includes(e.target.id)) {
                 if (window.currentViewId) window.saveState();
             }
         });
@@ -977,7 +990,7 @@
             // Show a friendly completion message
             showCustomModal(
                 "You're all set!", 
-                "Thank you for registering for the conference! Since you do not require accommodation, no further action is needed on this page. We look forward to seeing you there.", 
+                "Thank you for registering for the conference! Since you do not require accommodation, no further action is needed on this page. If you need more information, kindly email us at:\n\nkotakemuning.gh@gmail.com", 
                 "fas fa-check-circle text-emerald-500"
             );
         };
@@ -1433,9 +1446,10 @@
             const name = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
+            const assembly = document.getElementById('assembly').value.trim();
             
-            if (!name || !email || !phone) { 
-                showCustomModal("Missing Information", "Please enter your name, email, and phone number."); 
+            if (!name || !email || !phone || !assembly) { 
+                showCustomModal("Missing Information", "Please enter your name, email, phone number, and assembly."); 
                 return; 
             }
 
@@ -1453,6 +1467,7 @@
             let html = `<li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Name:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${name}</span></li>
             <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Email:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${email}</span></li>
             <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Contact:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${phone}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Assembly:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${assembly}</span></li>
             <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Hotel:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${hotel.name}</span></li>
             <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Room:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.quantity}x ${room.name}</span></li>
             <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Dates:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
@@ -1478,7 +1493,7 @@
 
                 const payload = { 
                     fullName: document.getElementById('fullName').value, email: document.getElementById('email').value.trim(), phone: document.getElementById('phone').value, 
-                    assembly: "N/A", pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, booking_type: 'accommodation', 
+                    assembly: document.getElementById('assembly').value.trim(), pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, booking_type: 'accommodation', 
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
                     rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
@@ -1547,6 +1562,7 @@
                             document.getElementById('fullName').value = state.form.name || '';
                             if(document.getElementById('email')) document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
+                            if(document.getElementById('assembly')) document.getElementById('assembly').value = state.form.assembly || '';
                             if(document.getElementById('pax-adults')) document.getElementById('pax-adults').value = state.form.adults || 1;
                             if(document.getElementById('pax-kids')) document.getElementById('pax-kids').value = state.form.kids || 0;
                             if(document.getElementById('specialRequests')) document.getElementById('specialRequests').value = state.form.specialRequests || '';
@@ -1628,11 +1644,13 @@
                                     const name = document.getElementById('fullName').value.trim();
                                     const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
                                     const phone = document.getElementById('phone').value.trim();
+                                    const assembly = document.getElementById('assembly') ? document.getElementById('assembly').value.trim() : '';
                                     const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
                                     const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
                                     let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Email:</span> <span class="w-2/3 font-medium">${email}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Assembly:</span> <span class="w-2/3 font-medium">${assembly}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
