@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Topics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<!-- REPLACE THE URL BELOW WITH YOUR DESIRED BACKGROUND IMAGE -->
+<body class="bg-cover bg-center bg-fixed font-sans antialiased" style="background-image: url('padi.jpg');">
+
+    <!-- Dark Overlay to ensure text readability against the picture -->
+    <div class="min-h-screen bg-black/60 py-6 px-4 md:py-12 flex flex-col">
+        
+        <!-- Main Content Container -->
+        <div class="max-w-4xl mx-auto w-full flex-grow">
+
+            <!-- Return Button -->
+            <div class="mb-8">
+                <a href="index.html" title="Return" class="w-10 h-10 inline-flex items-center justify-center bg-white/20 border border-white/30 rounded-full text-white hover:bg-orange-500 hover:border-orange-500 hover:-translate-x-1 shadow-sm transition-all duration-300 backdrop-blur-sm">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-bold mb-8 text-white drop-shadow-md">Conference Topics</h1>
+
+            <!-- Solid Table Container -->
+            <div class="overflow-x-auto mb-12 shadow-2xl rounded-xl">
+                <table class="w-full border-collapse text-sm md:text-base bg-white text-slate-800">
+                    <thead class="bg-orange-500 text-white">
+                        <tr>
+                            <th class="border border-orange-600 px-4 py-3 font-bold text-center w-1/4 uppercase tracking-wider">Session</th>
+                            <th class="border border-orange-600 px-4 py-3 font-bold text-center w-1/2 uppercase tracking-wider">Subject</th>
+                            <th class="border border-orange-600 px-4 py-3 font-bold text-center w-1/4 uppercase tracking-wider">Passage</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        
+                        <!-- Bible Readings Section -->
+                        <tr class="bg-slate-100">
+                            <td class="border border-slate-300 px-4 py-3 font-bold text-slate-900 text-center" colspan="3">
+                                Bible Readings
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 1</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Seized in the Garden</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 18:1-24</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-orange-50/50">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 2</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Standing before the Governor</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 18:25-40</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 3</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Sentenced at Gabbatha</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 19:1-22</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-orange-50/50">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 4</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Suffering on Golgotha</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 19:23-42</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 5</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Supreme over the Grave</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 20:1-31</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-orange-50/50">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Bible Reading 6</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Shewing Himself in Galilee</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">John 21:1-25</td>
+                        </tr>
+
+                        <!-- Ministry One Section -->
+                        <tr class="bg-slate-100">
+                            <td class="border border-slate-300 px-4 py-3 font-bold text-slate-900 text-center" colspan="3">
+                                Ministry One &ndash; The Sufficiency of the Scriptures
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry 1</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Its Authority and Inspiration</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">-</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-orange-50/50">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry 2</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Its Arrangement &ndash; the OT Library</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">-</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry 3</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">Its Arrangement &ndash; the NT Library</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">-</td>
+                        </tr>
+
+                        <!-- Ministry Two Section -->
+                        <tr class="bg-slate-100">
+                            <td class="border border-slate-300 px-4 py-3 font-bold text-slate-900 text-center" colspan="3">
+                                Ministry Two &ndash; Three Songs Concerning the Scriptures
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry A</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">The Secret of the Separated Life</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">Psalm 1</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-orange-50/50">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry B</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">The Secret of the Spiritual Life</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">Psalm 19</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-center bg-white">
+                            <td class="border border-slate-300 px-4 py-3 whitespace-nowrap">Ministry C</td>
+                            <td class="border border-slate-300 px-4 py-3 font-medium">The Secret of the Satisfied Life</td>
+                            <td class="border border-slate-300 px-4 py-3 text-slate-600">Psalm 119</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
