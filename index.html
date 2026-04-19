@@ -29,7 +29,7 @@
         .loader-large { width: 48px; height: 48px; border-width: 4px; border-top-width: 4px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
@@ -200,31 +200,31 @@
                         <div class="ml-4 md:ml-11 space-y-3">
                             <p class="mb-4">The conference fee structure is as follows (inclusive of meals). There is no option for non-meal registration.</p>
                             
-                            <div class="overflow-hidden rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30 mb-6">
-                                <table class="w-full text-left text-[11px] sm:text-sm text-slate-300">
+                            <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30 mb-6 custom-scrollbar">
+                                <table class="w-full text-left text-xs sm:text-sm text-slate-300 min-w-[500px]">
                                     <thead class="bg-slate-800/80 text-slate-200">
                                         <tr>
-                                            <th class="py-3 px-4 font-bold border-b border-slate-700 w-[32%]">Category</th>
-                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center w-[17%]">4D3N</th>
-                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center w-[17%]">3D2N</th>
-                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center w-[17%]">2D1N</th>
-                                            <th class="py-3 px-2 font-bold border-b border-slate-700 text-center w-[17%]">1D</th>
+                                            <th class="py-3 px-4 font-bold border-b border-slate-700 whitespace-nowrap">Category</th>
+                                            <th class="py-3 px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">4D3N</th>
+                                            <th class="py-3 px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">3D2N</th>
+                                            <th class="py-3 px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">2D1N</th>
+                                            <th class="py-3 px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">1D</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-700/50">
                                         <tr class="hover:bg-slate-700/30 transition-colors">
-                                            <td class="py-3 px-4 font-semibold text-white">Adult</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 330</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 220</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 110</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 60</td>
+                                            <td class="py-3 px-4 font-semibold text-white whitespace-nowrap">Adult</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 330</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 220</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 110</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 60</td>
                                         </tr>
                                         <tr class="bg-slate-800/20 hover:bg-slate-700/30 transition-colors">
-                                            <td class="py-3 px-4 font-semibold text-white">Children (7-12)</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 225</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 150</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 75</td>
-                                            <td class="py-3 px-2 text-center text-emerald-300 font-medium">RM 25</td>
+                                            <td class="py-3 px-4 font-semibold text-white whitespace-nowrap">Children (7-12)</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 225</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 150</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 75</td>
+                                            <td class="py-3 px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 25</td>
                                         </tr>
                                     </tbody>
                                 </table>
