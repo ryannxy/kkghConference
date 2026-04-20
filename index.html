@@ -200,27 +200,38 @@
                         <div class="ml-4 md:ml-11 space-y-3">
                             <p class="mb-4">The conference fee structure is as follows (inclusive of meals). There is no option for non-meal registration.</p>
                             
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 mb-6">
-                                <!-- Adult Pricing -->
-                                <div class="bg-slate-800/50 border border-slate-700/80 rounded-xl p-5 shadow-inner">
-                                    <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-user text-blue-400"></i> Adult</h4>
-                                    <ul class="space-y-3 text-sm md:text-base">
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">4 Days 3 Nights</span><span class="text-emerald-400 font-bold tracking-wide">RM 330</span></li>
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">3 Days 2 Nights</span><span class="text-emerald-400 font-bold tracking-wide">RM 220</span></li>
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">2 Days 1 Night</span><span class="text-emerald-400 font-bold tracking-wide">RM 110</span></li>
-                                        <li class="flex justify-between items-center"><span class="text-slate-300">1 Day</span><span class="text-emerald-400 font-bold tracking-wide">RM 60</span></li>
-                                    </ul>
-                                </div>
-                                <!-- Children Pricing -->
-                                <div class="bg-slate-800/50 border border-slate-700/80 rounded-xl p-5 shadow-inner">
-                                    <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-child text-orange-400"></i> Children <span class="text-xs font-normal text-slate-400 ml-1 mt-1">(Ages 7-12)</span></h4>
-                                    <ul class="space-y-3 text-sm md:text-base">
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">4 Days 3 Nights</span><span class="text-emerald-400 font-bold tracking-wide">RM 225</span></li>
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">3 Days 2 Nights</span><span class="text-emerald-400 font-bold tracking-wide">RM 150</span></li>
-                                        <li class="flex justify-between items-center pb-2 border-b border-slate-700/50"><span class="text-slate-300">2 Days 1 Night</span><span class="text-emerald-400 font-bold tracking-wide">RM 75</span></li>
-                                        <li class="flex justify-between items-center"><span class="text-slate-300">1 Day</span><span class="text-emerald-400 font-bold tracking-wide">RM 25</span></li>
-                                    </ul>
-                                </div>
+                            <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30 mb-6 custom-scrollbar">
+                                <table class="w-full text-left text-[10px] sm:text-sm text-slate-300">
+                                    <thead class="bg-slate-800/80 text-slate-200">
+                                        <tr>
+                                            <th class="py-2.5 px-2 sm:py-3 sm:px-4 font-bold border-b border-slate-700 whitespace-nowrap">Category</th>
+                                            <th class="py-2.5 px-1.5 sm:py-3 sm:px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">4D3N</th>
+                                            <th class="py-2.5 px-1.5 sm:py-3 sm:px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">3D2N</th>
+                                            <th class="py-2.5 px-1.5 sm:py-3 sm:px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">2D1N</th>
+                                            <th class="py-2.5 px-1.5 sm:py-3 sm:px-3 font-bold border-b border-slate-700 text-center whitespace-nowrap">1D</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-700/50">
+                                        <tr class="hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-2.5 px-2 sm:py-3 sm:px-4 font-semibold text-white whitespace-nowrap">Adult</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 330</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 220</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 110</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 60</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/20 hover:bg-slate-700/30 transition-colors">
+                                            <td class="py-2.5 px-2 sm:py-3 sm:px-4 font-semibold text-white whitespace-nowrap">
+                                                Children 
+                                                <span class="hidden sm:inline font-normal text-slate-400 ml-1">(7-12)</span>
+                                                <span class="sm:hidden block text-[9px] font-normal text-slate-400">(7-12 yrs)</span>
+                                            </td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 225</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 150</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 75</td>
+                                            <td class="py-2.5 px-1.5 sm:py-3 sm:px-3 text-center text-emerald-300 font-medium whitespace-nowrap">RM 25</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
                             <ul class="space-y-3 text-sm mt-4 md:text-base">
