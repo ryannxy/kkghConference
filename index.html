@@ -49,14 +49,13 @@
 </head>
 <body class="text-slate-800 antialiased flex flex-col min-h-screen selection:bg-blue-100 selection:text-blue-900">
 
-    <!-- GLOBAL MODALS -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/40 hidden flex-col items-center justify-center z-[100] px-4 backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-fade-in border border-slate-100">
             <div class="flex items-center gap-3 mb-4 border-b border-slate-50 pb-4">
                 <i id="modal-icon" class="fas fa-exclamation-triangle text-orange-500 text-3xl"></i>
                 <h3 id="modal-title" class="text-2xl font-bold text-slate-800 font-serif">Notice</h3>
             </div>
-            <div id="modal-message" class="text-slate-600 mb-8 whitespace-pre-wrap max-h-64 overflow-y-auto font-mono text-sm bg-slate-50 p-4 rounded border border-slate-200 shadow-inner"></div>
+            <div id="modal-message" class="text-slate-600 mb-8 whitespace-pre-wrap max-h-64 overflow-y-auto font-mono text-sm bg-slate-50 p-4 rounded border border-slate-200 shadow-inner text-justify"></div>
             <div class="flex justify-end">
                 <button type="button" onclick="closeCustomModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg">Understood</button>
             </div>
@@ -70,7 +69,7 @@
                 <i class="fas fa-question-circle text-blue-500 text-3xl"></i>
                 <h3 class="text-2xl font-bold text-slate-800 font-serif">Already Registered?</h3>
             </div>
-            <p class="text-slate-600 mb-8 text-sm sm:text-base">Are you sure you have already successfully submitted the conference registration form? You must be registered to book accommodation.</p>
+            <p class="text-slate-600 mb-8 text-sm sm:text-base text-justify">Are you sure you have already successfully submitted the conference registration form? You must be registered to book accommodation.</p>
             <div class="flex justify-end gap-4">
                 <button type="button" onclick="closeSkipConfirmModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-6 rounded-xl transition-colors">Cancel</button>
                 <button type="button" onclick="confirmSkipToAccommodation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg">Yes, proceed</button>
@@ -78,7 +77,6 @@
         </div>
     </div>
 
-    <!-- IMAGE VIEWER MODAL -->
     <div id="image-viewer-modal" class="fixed inset-0 bg-black/95 hidden flex-col items-center justify-center z-[110] px-4 backdrop-blur-md cursor-pointer" onclick="closeImageViewer()">
         <button class="absolute top-6 right-6 text-white/70 hover:text-white text-5xl transition-colors z-[120]">&times;</button>
         <button id="viewer-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl md:text-5xl p-4 z-[120] hidden" onclick="event.stopPropagation(); changeViewerImage(-1)"><i class="fas fa-chevron-left"></i></button>
@@ -87,16 +85,13 @@
         <div id="viewer-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm tracking-widest font-mono z-[120]"></div>
     </div>
 
-    <!-- GLOBAL LOADER -->
     <div id="global-loader" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex-col items-center justify-center z-50">
         <div class="loader loader-large mb-4 border-slate-300 border-t-blue-500"></div>
         <h3 class="text-white text-2xl font-bold font-serif mb-2">Loading Data</h3>
         <p class="text-slate-400 text-sm animate-pulse" id="loader-text">Please wait a minute...</p>
     </div>
 
-    <!-- VIEW 0: WELCOME LANDING PAGE -->
     <div id="view-landing" class="flex-grow flex flex-col items-center justify-center px-4 relative overflow-hidden py-12 md:py-20 bg-slate-900">
-        <!-- Elegant Background Elements -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-800 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-subtle-blob"></div>
             <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-amber-600 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-subtle-blob animation-delay-2000"></div>
@@ -114,7 +109,7 @@
             
             <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] p-6 md:p-10 mb-10 text-left shadow-2xl w-full relative overflow-hidden text-white">
                 <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500/80"></div>
-                <p class="text-lg md:text-xl text-blue-50 mb-8 font-medium border-b border-white/10 pb-6 leading-relaxed">
+                <p class="text-justify text-lg md:text-xl text-blue-50 mb-8 font-medium border-b border-white/10 pb-6 leading-relaxed">
                     Welcome to the Kota Kemuning 2026 Bible Conference Registration Page. The annual conference will be held at <a href="https://milegarden.com.my/" target="_blank" class="text-amber-400 hover:text-amber-300 font-bold underline decoration-amber-400/50 hover:decoration-amber-300 transition-colors">Mi Le Garden Resort, Sekinchan</a>, from <b class="text-white">16th – 19th December 2026</b> (Wednesday to Saturday).<br><br>
                     <i class="text-slate-300 text-base">The registration for this conference is unique because <b class="text-white">Conference Registration</b> and <b class="text-white">Hotel Registration</b> are two different registrations. Please take time to read the instructions.</i>
                 </p>
@@ -125,8 +120,8 @@
                     <div>
                         <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">1</span> Conference Registration</p>
                         <div class="ml-4 md:ml-11 space-y-3">
-                            <p>All attendees are required to complete the Conference Registration form.</p>
-                            <p>Conference registration includes meals for the duration of the conference:</p>
+                            <p class="text-justify">All attendees are required to complete the Conference Registration form.</p>
+                            <p class="text-justify">Conference registration includes meals for the duration of the conference:</p>
                             
                             <div class="overflow-hidden rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30">
                                 <table class="w-full table-fixed text-left text-[11px] sm:text-sm text-slate-300">
@@ -172,7 +167,7 @@
                                 </table>
                             </div>
 
-                            <p class="mt-4 text-sm text-slate-300 bg-slate-800/50 inline-block px-3 py-1 rounded border border-slate-700"><i class="fas fa-info-circle text-blue-400 mr-1"></i> All meals will be served at the conference venue, Mi Le Garden Resort, Sekinchan.</p>
+                            <p class="mt-4 text-sm text-slate-300 bg-slate-800/50 inline-block px-3 py-1 rounded border border-slate-700 text-justify"><i class="fas fa-info-circle text-blue-400 mr-1"></i> All meals will be served at the conference venue, Mi Le Garden Resort, Sekinchan.</p>
                         </div>
                     </div>
 
@@ -180,14 +175,14 @@
                     <div>
                         <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">2</span> Hotel Registration</p>
                         <div class="ml-4 md:ml-11 space-y-3">
-                            <p>We have negotiated with three hotel properties at preferential rates for conference attendees who require lodging throughout the event. Please refer to the Hotel Registration page for full details.</p>
-                            <p>Do note that hotel registration is optional. Attendees may choose to arrange their own accommodation outside of the 3 hotel properties. <em class="text-white font-medium border-b border-slate-600 pb-0.5">However, all who attend the conference are required to register for the conference.</em></p>
-                            <div class="mt-6 bg-orange-900/30 border border-orange-500/30 p-5 rounded-xl text-orange-100 text-sm flex gap-4 items-start shadow-sm">
+                            <p class="text-justify">We have negotiated with three hotel properties at preferential rates for conference attendees who require lodging throughout the event. Please refer to the Hotel Registration page for full details.</p>
+                            <p class="text-justify">Do note that hotel registration is optional. Attendees may choose to arrange their own accommodation outside of the 3 hotel properties. <em class="text-white font-medium border-b border-slate-600 pb-0.5">However, all who attend the conference are required to register for the conference.</em></p>
+                            <div class="mt-6 bg-orange-900/30 border border-orange-500/30 p-5 rounded-xl text-orange-100 text-sm flex gap-4 items-start shadow-sm text-justify">
                                 <div class="bg-orange-800/50 p-2 rounded-full shrink-0">
                                     <i class="fas fa-exclamation-triangle text-orange-400 text-base"></i>
                                 </div>
                                 <div>
-                                    <strong class="block mb-1.5 text-orange-300 uppercase tracking-wider text-xs">Important Priority Rule</strong>
+                                    <strong class="block mb-1.5 text-orange-300 uppercase tracking-wider text-xs text-left">Important Priority Rule</strong>
                                     Hotel bookings will be prioritised for attendees who register for the full conference duration (4 days, 3 nights). Partial conference attendance will only be opened after 30th June. This is to prevent the situation where rooms are taken up only partially, hence the priority is given to those who will occupy the room throughout the whole conference.
                                 </div>
                             </div>
@@ -198,7 +193,7 @@
                     <div>
                         <p class="font-bold text-white mb-4 text-xl font-sans flex items-center gap-3"><span class="bg-blue-600 text-white border border-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-sm">3</span> Payment</p>
                         <div class="ml-4 md:ml-11 space-y-3">
-                            <p class="mb-4">The conference fee structure is as follows (inclusive of meals). There is no option for non-meal registration.</p>
+                            <p class="mb-4 text-justify">The conference fee structure is as follows (inclusive of meals). There is no option for non-meal registration.</p>
                             
                             <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-sm mt-4 bg-slate-800/30 mb-6 custom-scrollbar">
                                 <table class="w-full text-left text-[10px] sm:text-sm text-slate-300">
@@ -235,15 +230,15 @@
                             </div>
 
                             <ul class="space-y-3 text-sm mt-4 md:text-base">
-                                <li class="flex items-start gap-3">
+                                <li class="flex items-start gap-3 text-justify">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>Payment for the <b>conference</b> is to be made directly to the KK Assembly.</span>
                                 </li>
-                                <li class="flex items-start gap-3">
+                                <li class="flex items-start gap-3 text-justify">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>International attendees may make their payment upon arrival at the conference.</span>
                                 </li>
-                                <li class="flex items-start gap-3">
+                                <li class="flex items-start gap-3 text-justify">
                                     <i class="fas fa-check text-emerald-400 mt-1 shrink-0"></i>
                                     <span>Payment for <b>hotel accommodation</b> is to be made directly to the respective hotel. The hotel will contact you after your booking to arrange payment.</span>
                                 </li>
@@ -266,7 +261,6 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER (Multi-step forms) -->
     <div id="app-container" class="hidden flex-grow flex flex-col h-full min-h-screen bg-slate-50/50">
         <header class="bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-30">
             <div class="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
@@ -276,25 +270,21 @@
                 </div>
                 
                 <div class="flex items-start md:items-center gap-1 sm:gap-2 md:gap-3 shrink-0 pt-1 md:pt-0">
-                    <!-- Step 1 -->
                     <div id="nav-step-1" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
                         <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">1</span>
                         <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Register</span>
                     </div>
                     <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
-                    <!-- Step 2 -->
                     <div id="nav-step-2" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
                         <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">2</span>
                         <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Hotel</span>
                     </div>
                     <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
-                    <!-- Step 3 -->
                     <div id="nav-step-3" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
                         <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">3</span>
                         <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Details</span>
                     </div>
                     <div class="w-2 sm:w-3 md:w-6 h-px md:h-0.5 bg-gray-200 mt-2 sm:mt-2.5 md:mt-0 shrink-0"></div>
-                    <!-- Step 4 -->
                     <div id="nav-step-4" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-2 font-medium text-gray-400">
                         <span class="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8 text-[9px] sm:text-xs md:text-sm rounded-full flex items-center justify-center border md:border-2 border-gray-300 shrink-0 transition-colors">4</span>
                         <span class="text-[7px] sm:text-[9px] md:text-sm tracking-wider md:tracking-normal uppercase md:capitalize text-center">Confirm</span>
@@ -305,12 +295,11 @@
 
         <form id="registrationForm" onsubmit="return false;" class="flex-grow flex flex-col h-full">
             
-            <!-- VIEW 1: CONFERENCE REGISTRATION -->
             <div id="view-registration" class="hidden container mx-auto px-4 py-8 max-w-5xl flex-grow animate-slide-in flex-col h-full">
                 <div class="mb-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
                     <div>
                         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 font-serif">Step 1: Registration</h2>
-                        <p class="text-slate-500 mt-2 text-sm md:text-base">Fill out the conference registration form below. Once successfully submitted, scroll down to proceed to hotel booking.</p>
+                        <p class="text-slate-500 mt-2 text-sm md:text-base text-justify">Fill out the conference registration form below. Once successfully submitted, scroll down to proceed to hotel booking.</p>
                     </div>
                     <button type="button" onclick="promptSkipRegistration()" class="bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 font-bold py-2.5 px-5 rounded-full transition-all shadow-sm flex items-center gap-2 text-sm group shrink-0">
                         Already registered? <span class="text-slate-900">Skip to accommodation <i class="fas fa-arrow-right ml-1 opacity-50 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all"></i></span>
@@ -324,7 +313,7 @@
                 <div id="step-2-proceed" class="flex flex-col bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-2">
                     <div class="w-full border-b border-slate-100 pb-4 mb-2">
                         <h4 class="font-bold text-slate-900 text-xl font-serif">Accommodation Booking (Optional)</h4>
-                        <p class="text-slate-500 mt-1">If you require a hotel, please confirm you have successfully submitted the registration form above first.</p>
+                        <p class="text-slate-500 mt-1 text-justify">If you require a hotel, please confirm you have successfully submitted the registration form above first.</p>
                     </div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-between gap-6">
                         <label class="flex items-center gap-3 cursor-pointer group w-full md:w-auto">
@@ -343,7 +332,6 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: HOTEL SELECTION -->
             <div id="view-accom-hotels" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
@@ -359,7 +347,6 @@
                 </div>
             </div>
 
-            <!-- VIEW 2.5: ROOM SELECTION -->
             <div id="view-accom-room" class="hidden container mx-auto px-4 py-8 max-w-6xl flex-grow animate-slide-in">
                 <div class="mb-6 flex justify-between items-center">
                     <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
@@ -381,7 +368,7 @@
                                     <i class="fas fa-external-link-alt text-xs opacity-70"></i> Visit Official Website
                                 </a>
                             </div>
-                            <p id="detail-desc" class="text-slate-600 leading-relaxed mb-8">Description</p>
+                            <p id="detail-desc" class="text-slate-600 leading-relaxed mb-8 text-justify">Description</p>
                             <h3 class="font-bold text-slate-900 mb-5 flex items-center gap-2 border-b border-slate-100 pb-3">
                                 <i class="fas fa-concierge-bell text-slate-400"></i> Property Amenities
                             </h3>
@@ -398,130 +385,145 @@
             </div>
 
             <!-- VIEW 3: GUEST DETAILS -->
-            <div id="view-shared-details" class="hidden container mx-auto px-4 py-8 max-w-3xl flex-grow animate-slide-in">
-                <div class="mb-6 flex justify-between items-center" id="details-back-btn">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
+            <div id="view-shared-details" class="hidden container mx-auto px-4 py-6 md:py-8 max-w-3xl flex-grow animate-slide-in">
+                <div class="mb-4 flex justify-between items-center" id="details-back-btn">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs md:text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Rooms
                     </button>
                 </div>
 
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3 font-serif">Step 3: Your Details</h2>
-                <p class="text-slate-500 mb-8 text-lg">Who is making this booking?</p>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2 font-serif">Step 3: Your Details</h2>
+                <p class="text-slate-500 mb-6 text-sm md:text-base">Who is making this booking?</p>
                 
-                <div id="accom-booking-summary" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 mb-8 shadow-xl text-white">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Room Booking Summary</h4>
+                <div id="accom-booking-summary" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 md:p-6 mb-6 shadow-lg text-white">
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Room Booking Summary</h4>
                     <div class="flex items-center gap-4">
                         <div>
-                            <h3 class="font-bold text-white text-xl md:text-2xl font-sans" id="summary-room-name"></h3>
-                            <p class="text-sm text-slate-300 mt-1 flex items-center gap-2" id="summary-hotel-dates"></p>
+                            <h3 class="font-bold text-white text-lg md:text-xl font-sans" id="summary-room-name"></h3>
+                            <p class="text-xs text-slate-300 mt-1 flex items-center gap-2" id="summary-hotel-dates"></p>
                         </div>
                         <div class="ml-auto text-right shrink-0">
-                            <span class="block text-xs text-slate-400 uppercase tracking-widest mb-1">Total</span>
-                            <span class="font-bold text-xl md:text-2xl text-white" id="summary-price"></span>
+                            <span class="block text-[10px] text-slate-400 uppercase tracking-widest mb-1">Total</span>
+                            <span class="font-bold text-lg md:text-xl text-white" id="summary-price"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
-                    <h3 class="text-xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b border-slate-100 pb-4">
-                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-id-card text-blue-600"></i></div> Contact Information
+                <div class="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 p-5 md:p-8 mb-6">
+                    <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-id-card text-blue-600 text-sm"></i></div> Contact Information
                     </h3>
-                    <div class="grid grid-cols-1 gap-6">
+                    <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
-                            <input type="text" id="fullName" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none">
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Full Name</label>
+                            <input type="text" id="fullName" required class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none">
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-                                <input type="email" id="email" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="your@email.com">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Email Address</label>
+                                <input type="email" id="email" required class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="your@email.com">
                             </div>
                             <div>
-                                <label class="flex items-baseline text-sm font-semibold text-slate-700 mb-2">
-                                    Contact No. <span class="text-xs font-normal text-slate-400 ml-2">(Include country code)</span>
+                                <label class="flex items-baseline text-xs font-semibold text-slate-700 mb-1.5">
+                                    Contact No. <span class="text-[10px] font-normal text-slate-400 ml-1.5">(Include country code)</span>
                                 </label>
-                                <input type="tel" required id="phone" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="i.e. +60 12 3456789">
+                                <input type="tel" required id="phone" class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="i.e. +60 12 3456789">
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">Assembly with which in fellowship/associated</label>
-                            <input type="text" id="assembly" required class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="e.g., Kota Kemuning Gospel Hall">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Assembly with which in fellowship/associated</label>
+                                <input type="text" id="assembly" required class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none" placeholder="e.g., Kota Kemuning Gospel Hall">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nationality</label>
+                                <div class="relative w-full" id="nationality-container">
+                                    <input type="text" id="nationality" required class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none pr-8 cursor-text" placeholder="Search or select..." value="Malaysian" autocomplete="off">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
+                                    </div>
+                                    <!-- Custom Dropdown Menu -->
+                                    <div id="nationality-dropdown" class="absolute z-[200] w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-48 overflow-y-auto hidden overscroll-contain">
+                                        <ul id="nationality-list" class="py-1 text-sm text-slate-700"></ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="mt-10 pt-8 border-t border-slate-100" id="pax-section">
-                        <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                            <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-users text-blue-600"></i></div> Pax
+                    <div class="mt-8 pt-6 border-t border-slate-100" id="pax-section">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-3">
+                            <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-users text-blue-600 text-sm"></i></div> Pax
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="flex items-center justify-between bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                                 <div>
-                                    <span class="block text-sm font-bold text-slate-800">Adults</span>
-                                    <span class="text-xs text-slate-500">Age 10 and above</span>
+                                    <span class="block text-xs font-bold text-slate-800">Adults</span>
+                                    <span class="text-[10px] text-slate-500">Age 10 and above</span>
                                 </div>
-                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden p-1">
-                                    <button type="button" onclick="adjustPax('adults', -1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">-</button>
-                                    <input type="text" id="pax-adults" value="1" class="w-10 h-8 text-center font-bold bg-transparent focus:outline-none" readonly>
-                                    <button type="button" onclick="adjustPax('adults', 1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">+</button>
+                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg overflow-hidden p-1 h-9">
+                                    <button type="button" onclick="adjustPax('adults', -1)" class="w-8 h-full bg-white shadow-sm rounded hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors text-sm">-</button>
+                                    <input type="text" id="pax-adults" value="1" class="w-8 h-full text-center text-sm font-bold bg-transparent focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('adults', 1)" class="w-8 h-full bg-white shadow-sm rounded hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors text-sm">+</button>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                                 <div>
-                                    <span class="block text-sm font-bold text-slate-800">Kids</span>
-                                    <span class="text-xs text-slate-500">Ages 3-9</span>
+                                    <span class="block text-xs font-bold text-slate-800">Kids</span>
+                                    <span class="text-[10px] text-slate-500">Ages 3-9</span>
                                 </div>
-                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden p-1">
-                                    <button type="button" onclick="adjustPax('kids', -1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">-</button>
-                                    <input type="text" id="pax-kids" value="0" class="w-10 h-8 text-center font-bold bg-transparent focus:outline-none" readonly>
-                                    <button type="button" onclick="adjustPax('kids', 1)" class="w-8 h-8 bg-white shadow-sm rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors">+</button>
+                                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg overflow-hidden p-1 h-9">
+                                    <button type="button" onclick="adjustPax('kids', -1)" class="w-8 h-full bg-white shadow-sm rounded hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors text-sm">-</button>
+                                    <input type="text" id="pax-kids" value="0" class="w-8 h-full text-center text-sm font-bold bg-transparent focus:outline-none" readonly>
+                                    <button type="button" onclick="adjustPax('kids', 1)" class="w-8 h-full bg-white shadow-sm rounded hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors text-sm">+</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="accom-special-requests" class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-3 border-b border-slate-100 pb-4">
-                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-comment-dots text-blue-600"></i></div> Other Requests
+                <div id="accom-special-requests" class="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 p-5 md:p-8 mb-6">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center"><i class="far fa-comment-dots text-blue-600 text-sm"></i></div> Other Requests
                     </h3>
-                    <p class="text-slate-500 text-sm mb-5 mt-4">Any further requests for the hotel? (Subject to availability)</p>
-                    <textarea id="specialRequests" rows="3" class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none resize-none" placeholder="e.g., Extra bed, ground floor requested..."></textarea>
+                    <p class="text-slate-500 text-xs mb-4 mt-3 text-justify">Any further requests for the hotel? (Subject to availability)</p>
+                    <textarea id="specialRequests" rows="2" class="w-full px-3 py-2.5 text-sm rounded-lg border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-slate-50 transition-all outline-none resize-none" placeholder="e.g., Extra bed, ground floor requested..."></textarea>
                 </div>
 
-                <div class="flex justify-end mb-12">
-                    <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-12 rounded-2xl shadow-xl transform transition hover:-translate-y-1 text-lg">
+                <div class="flex justify-end mb-10">
+                    <button type="button" id="btn-details-next" onclick="submitDetails()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-10 rounded-2xl shadow-lg transform transition hover:-translate-y-1 text-base">
                         Review Details <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </div>
             </div>
 
             <!-- VIEW 4: CONFIRMATION -->
-            <div id="view-confirmation" class="hidden container mx-auto px-4 py-8 max-w-2xl flex-grow animate-slide-in">
-                <div class="mb-6 flex justify-between items-center">
-                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm">
+            <div id="view-confirmation" class="hidden container mx-auto px-4 py-6 md:py-8 max-w-2xl flex-grow animate-slide-in">
+                <div class="mb-4 flex justify-between items-center">
+                    <button type="button" onclick="handleUIBack()" class="text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-2 transition-colors bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm text-xs md:text-sm">
                         <i class="fas fa-arrow-left"></i> Back to Details
                     </button>
                 </div>
 
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3 font-serif">Step 4: Review Your Booking</h2>
-                <p class="text-slate-500 mb-8 text-lg">Please confirm your details before submitting.</p>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2 font-serif">Step 4: Review Your Booking</h2>
+                <p class="text-slate-500 mb-6 text-sm md:text-base">Please confirm your details before submitting.</p>
                 
-                <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 md:p-10 mb-8">
-                    <ul id="confirmation-list" class="space-y-4 text-slate-700 divide-y divide-slate-50"></ul>
+                <div class="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-100 p-5 md:p-8 mb-6">
+                    <ul id="confirmation-list" class="space-y-1 text-sm text-slate-700 divide-y divide-slate-50"></ul>
                 </div>
 
-                <div class="bg-amber-50 border border-amber-200 rounded-3xl p-6 md:p-8 mb-10 flex flex-col sm:flex-row items-start gap-5 shadow-sm">
-                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-amber-100 shrink-0">
-                        <i class="fas fa-wallet text-amber-600 text-2xl"></i>
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 md:p-6 mb-8 flex flex-col sm:flex-row items-start gap-4 shadow-sm">
+                    <div class="bg-white p-2.5 rounded-xl shadow-sm border border-amber-100 shrink-0">
+                        <i class="fas fa-wallet text-amber-600 text-xl"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-amber-900 text-lg mb-2">Payment Process</h4>
-                        <p class="text-sm text-amber-800 leading-relaxed">No payment is collected on this website. By clicking submit, your reservation details will be safely forwarded. <br><br><b>The hotel management will contact you directly</b> via email or phone to arrange your payment.</p>
+                        <h4 class="font-bold text-amber-900 text-base mb-1.5">Payment Process</h4>
+                        <p class="text-xs text-amber-800 leading-relaxed text-justify">No payment is collected on this website. By clicking submit, your reservation details will be safely forwarded. <br><br><b>The hotel management will contact you directly</b> via email or phone to arrange your payment.</p>
                     </div>
                 </div>
 
-                <div class="flex justify-end mb-12">
-                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-12 rounded-2xl shadow-xl transform transition hover:-translate-y-1 text-lg">
+                <div class="flex justify-end mb-10">
+                    <button type="button" id="btn-final-submit" onclick="finalizeAccommodation()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-10 rounded-2xl shadow-lg transform transition hover:-translate-y-1 text-base">
                         Confirm & Submit Booking <i class="fas fa-paper-plane ml-2"></i>
                     </button>
                 </div>
@@ -537,14 +539,13 @@
         </footer>
     </div>
 
-    <!-- SUCCESS MODAL -->
     <div id="successModal" class="fixed inset-0 bg-slate-900 bg-opacity-75 hidden flex items-center justify-center z-50 px-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl animate-fade-in-up">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="fas fa-check text-green-600 text-4xl"></i>
             </div>
             <h3 class="text-2xl font-bold text-slate-800 mb-2 font-serif">Booking Successful!</h3>
-            <p class="text-slate-500 mb-8">An email has been sent to the hotel regarding your booking. The hotel will contact you for the payment.</p>
+            <p class="text-slate-500 mb-8 text-justify">An email has been sent to the hotel regarding your booking. The hotel will contact you for the payment.</p>
             <button onclick="resetToHome()" class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition-colors">
                 Back to Home
             </button>
@@ -558,6 +559,65 @@
         const VILLA_URL = "https://script.google.com/macros/s/AKfycbxzUP4tLSF06sCobU-Jdoo28rkk5mIkI-kZ8_VdDSWqsmzl_WcSKJZJuTh6BdSEyjFwtQ/exec";    
 
         const REQUIRE_FULL_STAY = true;
+        
+        // Custom Nationality Dropdown Logic
+        const nationalitiesList = [
+            "Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguan", "Argentine", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Botswanan", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djiboutian", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirati", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinean", "Guinea-Bissauan", "Guyanese", "Haitian", "Honduran", "Hungarian", "Icelandic", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kiribati", "Kuwaiti", "Kyrgyz", "Lao", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Montenegrin", "Moroccan", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Nicaraguan", "Nigerien", "Nigerian", "North Korean", "Norwegian", "Omani", "Pakistani", "Palauan", "Palestinian", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovak", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "South Sudanese", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Vanuatuan", "Venezuelan", "Vietnamese", "Yemeni", "Zambian", "Zimbabwean"
+        ];
+
+        window.setupNationalityDropdown = function() {
+            const input = document.getElementById('nationality');
+            const dropdown = document.getElementById('nationality-dropdown');
+            const list = document.getElementById('nationality-list');
+
+            if (!input || !dropdown || !list) return;
+
+            function renderList(filterText = '') {
+                const lowerFilter = filterText.toLowerCase();
+                const filtered = nationalitiesList.filter(n => n.toLowerCase().includes(lowerFilter));
+                
+                list.innerHTML = '';
+                
+                if (filtered.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'px-4 py-2.5 text-slate-400 italic text-xs';
+                    li.textContent = 'No matches found';
+                    list.appendChild(li);
+                    return;
+                }
+
+                filtered.forEach(nat => {
+                    const li = document.createElement('li');
+                    li.className = 'px-4 py-2.5 hover:bg-blue-50 cursor-pointer transition-colors border-b border-slate-50 last:border-0 font-medium text-slate-700';
+                    li.textContent = nat;
+                    // Use mousedown instead of click so it fires before input loses focus
+                    li.onmousedown = (e) => {
+                        e.preventDefault(); 
+                        input.value = nat;
+                        dropdown.classList.add('hidden');
+                        window.saveState();
+                    };
+                    list.appendChild(li);
+                });
+            }
+
+            input.addEventListener('focus', () => {
+                // Show entire list upon clicking, regardless of what's already typed inside
+                renderList('');
+                dropdown.classList.remove('hidden');
+                // Optional: Highlights current text so typing instantly overrides it
+                input.select(); 
+            });
+
+            input.addEventListener('input', (e) => {
+                renderList(e.target.value);
+                dropdown.classList.remove('hidden');
+            });
+
+            input.addEventListener('blur', () => {
+                dropdown.classList.add('hidden');
+            });
+        };
 
         window.formatPrice = function(price) {
             const num = Number(price);
@@ -836,6 +896,7 @@
                     email: document.getElementById('email') ? document.getElementById('email').value : '',
                     phone: document.getElementById('phone') ? document.getElementById('phone').value : '',
                     assembly: document.getElementById('assembly') ? document.getElementById('assembly').value : '',
+                    nationality: document.getElementById('nationality') ? document.getElementById('nationality').value : '',
                     adults: document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1,
                     kids: document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0,
                     specialRequests: document.getElementById('specialRequests') ? document.getElementById('specialRequests').value : ''
@@ -863,7 +924,7 @@
         }
 
         document.addEventListener('input', (e) => {
-            if (['fullName', 'email', 'phone', 'assembly', 'specialRequests'].includes(e.target.id)) {
+            if (['fullName', 'email', 'phone', 'assembly', 'nationality', 'specialRequests'].includes(e.target.id)) {
                 if (window.currentViewId) window.saveState();
             }
         });
@@ -1013,7 +1074,6 @@
         }
 
         window.finishWithoutAccommodation = function() {
-            // Reset to home page UI
             sessionStorage.removeItem('kkgh_app_state');
             document.getElementById('app-container').classList.add('hidden');
             document.getElementById('view-landing').classList.remove('hidden');
@@ -1022,7 +1082,6 @@
             history.replaceState({ viewId: 'landing' }, "", "");
             window.scrollTo(0,0);
             
-            // Show a friendly completion message
             showCustomModal(
                 "You're all set!", 
                 "Thank you for registering for the conference! Since you do not require accommodation, no further action is needed on this page. If you need more information, kindly email us at:\n\nkotakemuning.gh@gmail.com", 
@@ -1068,7 +1127,7 @@
             document.getElementById('view-landing').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
             
-            showView('view-registration', 1);
+            window.showView('view-registration', 1);
         };
 
         window.startHotelFlow = async function(isRestore = false) {
@@ -1083,7 +1142,7 @@
             }
 
             if (MAIN_SUBMIT_URL.includes("PASTE_")) {
-                showCustomModal("Code Update Required", "Please update your Web App URL!"); return; 
+                window.showCustomModal("Code Update Required", "Please update your Web App URL!"); return; 
             }
 
             await window.fetchAvailability();
@@ -1092,7 +1151,7 @@
             document.getElementById('app-container').classList.remove('hidden');
 
             renderHotelCards();
-            if (!isRestore) showView('view-accom-hotels', 2);
+            if (!isRestore) window.showView('view-accom-hotels', 2);
         };
 
         window.showView = function(viewId, stepNumber, pushHistory = true) {
@@ -1146,13 +1205,13 @@
                 const coverImg = (h.hotelImages && h.hotelImages.length > 0) ? h.hotelImages[0] : h.roomTypes[0].images[0];
                 
                 container.innerHTML += `
-                <div onclick="openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+                <div onclick="window.openHotelDetail('${id}')" class="group cursor-pointer flex flex-col bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
                     <div class="h-56 relative overflow-hidden bg-slate-100">
                         <img src="${coverImg}" alt="${h.name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     </div>
                     <div class="p-6 md:p-8 flex flex-col flex-grow">
                         <h3 class="text-2xl font-bold text-slate-900 mb-3 font-serif">${h.name}</h3>
-                        <p class="text-sm text-slate-500 mb-8 flex-grow leading-relaxed">${h.desc}</p>
+                        <p class="text-sm text-slate-500 mb-8 flex-grow leading-relaxed text-justify">${h.desc}</p>
                         <button type="button" class="w-full bg-slate-50 border border-slate-200 group-hover:bg-slate-900 text-slate-700 group-hover:text-white group-hover:border-slate-900 font-bold py-3.5 rounded-xl transition-all shadow-sm">
                             View Rooms <i class="fas fa-arrow-right ml-1 text-sm opacity-70"></i>
                         </button>
@@ -1201,7 +1260,7 @@
             }
 
             if (!window.fullAvailability[hotelId] || Object.keys(window.fullAvailability[hotelId]).length === 0) {
-                showCustomModal('Hotel Unavailable', `Cannot load room availability for ${window.hotelData[hotelId].name}. Please try again.`);
+                window.showCustomModal('Hotel Unavailable', `Cannot load room availability for ${window.hotelData[hotelId].name}. Please try again.`);
                 return;
             }
 
@@ -1232,15 +1291,15 @@
             renderRoomAccordions(hotelId);
             
             if (isRestore && window.bookingState.roomId) {
-                toggleRoomBooking(window.bookingState.roomId);
+                window.toggleRoomBooking(window.bookingState.roomId);
                 const ciSelect = document.getElementById(`ci-${window.bookingState.roomId}`); if (ciSelect) ciSelect.value = window.bookingState.checkIn;
-                updateDateValidation(window.bookingState.roomId);
+                window.updateDateValidation(window.bookingState.roomId);
                 const coSelect = document.getElementById(`co-${window.bookingState.roomId}`); if (coSelect) coSelect.value = window.bookingState.checkOut;
-                updateDateValidation(window.bookingState.roomId);
+                window.updateDateValidation(window.bookingState.roomId);
                 const qtyInput = document.getElementById(`qty-${window.bookingState.roomId}`); if (qtyInput) qtyInput.value = window.bookingState.quantity;
-                updateDateValidation(window.bookingState.roomId);
+                window.updateDateValidation(window.bookingState.roomId);
             }
-            if (!isRestore) showView('view-accom-room', 2);
+            if (!isRestore) window.showView('view-accom-room', 2);
         }
 
         function renderRoomAccordions(hotelId) {
@@ -1271,12 +1330,12 @@
                 });
                 
                 let roomImagesHtml = '';
-                if (rt.images && rt.images.length > 0) {
+                if (rt.images && rt.images.length > 0 && rt.images[0] !== "") {
                     roomImagesHtml = `
                     <div class="mb-6">
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">Room Photos</label>
                         <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
-                            ${rt.images.map((img, idx) => `<img src="${img}" alt="Room thumbnail" class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" onclick="openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})">`).join('')}
+                            ${rt.images.filter(img => img !== "").map((img, idx) => `<img src="${img}" alt="Room thumbnail" class="w-28 h-20 sm:w-36 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity" onclick="window.openImageViewer(window.hotelData['${hotelId}'].roomTypes.find(r=>r.id==='${rt.id}').images, ${idx})">`).join('')}
                         </div>
                     </div>`;
                 }
@@ -1290,16 +1349,20 @@
                     currentCategory = rt.category;
                 }
 
+                const imageHtml = rt.images[0] 
+                    ? `<img src="${rt.images[0]}" alt="${rt.name}" class="w-16 h-16 sm:w-24 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm">` 
+                    : `<div class="w-16 h-16 sm:w-24 sm:h-24 shrink-0 rounded-xl bg-slate-200 flex items-center justify-center border border-slate-300"><i class="fas fa-bed text-slate-400 text-2xl"></i></div>`;
+
                 container.innerHTML += `
                 <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-5 transition-all relative ${isFullyBooked ? 'opacity-70 grayscale' : ''}" id="card-${rt.id}">
-                    ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600 text-white px-5 py-2 rounded-xl font-bold shadow-md text-sm flex items-center gap-2"><i class="fas fa-ban"></i> Fully Booked</div></div>` : ''}
+                    ${isFullyBooked ? `<div class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100/50 backdrop-blur-[1px] cursor-not-allowed"><div class="bg-red-600/90 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg text-2xl"><i class="fas fa-ban"></i></div></div>` : ''}
                     
-                    <div class="p-5 sm:p-6 flex items-center gap-4 md:gap-6 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="toggleRoomBooking('${rt.id}')"`}>
-                        <img src="${rt.images[0]}" alt="${rt.name}" class="w-16 h-16 sm:w-24 sm:h-24 shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm">
+                    <div class="p-5 sm:p-6 flex items-center gap-4 md:gap-6 ${isFullyBooked ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}" ${isFullyBooked ? '' : `onclick="window.toggleRoomBooking('${rt.id}')"`}>
+                        ${imageHtml}
                         
                         <div class="flex-grow">
                             <h4 class="font-bold text-slate-900 text-base sm:text-xl leading-tight">${rt.name}</h4>
-                            ${rt.desc ? `<p class="text-xs sm:text-sm text-slate-500 mt-1.5">${rt.desc}</p>` : ''}
+                            ${rt.desc ? `<p class="text-xs sm:text-sm text-slate-500 mt-1.5 text-justify">${rt.desc}</p>` : ''}
                         </div>
                         
                         <div class="text-right shrink-0">
@@ -1317,24 +1380,24 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Check-in</label>
-                                <select id="ci-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="updateDateValidation('${rt.id}')">${ciHtml}</select>
+                                <select id="ci-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="window.updateDateValidation('${rt.id}')">${ciHtml}</select>
                             </div>
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Check-out</label>
-                                <select id="co-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="updateDateValidation('${rt.id}')"></select>
+                                <select id="co-${rt.id}" class="w-full mt-2 p-3.5 rounded-xl border border-slate-300 bg-white font-semibold text-sm text-slate-800 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-colors" onchange="window.updateDateValidation('${rt.id}')"></select>
                             </div>
                         </div>
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-4 border-t border-slate-200/60">
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 block">Rooms Needed</label>
                                 <div class="flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden w-32 shadow-sm">
-                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200 transition-colors" onclick="adjustRoomQty('${rt.id}', -1)">-</button>
+                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-r border-slate-200 transition-colors" onclick="window.adjustRoomQty('${rt.id}', -1)">-</button>
                                     <input id="qty-${rt.id}" value="1" data-max="0" class="w-12 h-12 text-center font-bold text-slate-800 focus:outline-none text-lg" readonly>
-                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200 transition-colors" onclick="adjustRoomQty('${rt.id}', 1)">+</button>
+                                    <button type="button" class="w-10 h-12 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 border-l border-slate-200 transition-colors" onclick="window.adjustRoomQty('${rt.id}', 1)">+</button>
                                 </div>
                                 <div id="status-${rt.id}" class="text-xs mt-3 font-semibold h-4"></div>
                             </div>
-                            <button type="button" id="btn-book-${rt.id}" onclick="confirmRoomBooking('${rt.id}')" class="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-transform hover:-translate-y-0.5">Reserve Room: RM <span id="price-${rt.id}">0</span></button>
+                            <button type="button" id="btn-book-${rt.id}" onclick="window.confirmRoomBooking('${rt.id}')" class="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-transform hover:-translate-y-0.5">Reserve Room: RM <span id="price-${rt.id}">0</span></button>
                         </div>
                     </div>
                 </div>`;
@@ -1348,7 +1411,7 @@
             window.hotelData[hotelId].roomTypes.forEach(r => {
                 const panel = document.getElementById(`booking-panel-${r.id}`);
                 const card = document.getElementById(`card-${r.id}`);
-                if (r.id === roomId) { panel.classList.remove('hidden'); card.classList.add('border-slate-800', 'ring-1', 'ring-slate-800'); updateDateValidation(roomId); } 
+                if (r.id === roomId) { panel.classList.remove('hidden'); card.classList.add('border-slate-800', 'ring-1', 'ring-slate-800'); window.updateDateValidation(roomId); } 
                 else { panel.classList.add('hidden'); card.classList.remove('border-slate-800', 'ring-1', 'ring-slate-800'); }
             });
         }
@@ -1447,7 +1510,7 @@
             const max = parseInt(input.dataset.max) || 0;
             let val = Math.min(Math.max((parseInt(input.value) || 0) + delta, 1), max);
             input.value = val;
-            updateDateValidation(roomId); 
+            window.updateDateValidation(roomId); 
         }
 
         window.confirmRoomBooking = function(roomId) {
@@ -1466,7 +1529,7 @@
             document.getElementById('summary-hotel-dates').innerText = `${hotel.name} • ${window.bookingState.checkIn} to ${window.bookingState.checkOut}`;
             
             document.getElementById('summary-price').innerText = `RM ${window.formatPrice(window.bookingState.cost)}`;
-            showView('view-shared-details', 3);
+            window.showView('view-shared-details', 3);
         }
 
         window.adjustPax = function(type, delta) {
@@ -1482,9 +1545,10 @@
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const assembly = document.getElementById('assembly').value.trim();
+            const nationality = document.getElementById('nationality').value.trim();
             
-            if (!name || !email || !phone || !assembly) { 
-                showCustomModal("Missing Information", "Please enter your name, email, phone number, and assembly."); 
+            if (!name || !email || !phone || !assembly || !nationality) { 
+                showCustomModal("Missing Information", "Please enter your name, email, phone number, assembly, and nationality."); 
                 return; 
             }
 
@@ -1499,19 +1563,20 @@
             const hotel = window.hotelData[window.bookingState.hotelId];
             const room = hotel.roomTypes.find(r => r.id === window.bookingState.roomId);
             
-            let html = `<li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Name:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${name}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Email:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${email}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Contact:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${phone}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Assembly:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${assembly}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Hotel:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${hotel.name}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Room:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.quantity}x ${room.name}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Dates:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Pax:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900">${adultPax} Adults, ${kidPax} Kids</span></li>
-            <li class="flex flex-col sm:flex-row py-4 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-xs tracking-widest">Requests:</span> <span class="w-full sm:w-2/3 font-medium text-slate-700">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
-            <li class="flex flex-col sm:flex-row sm:items-center pt-6 mt-2 border-t border-slate-200 gap-1 sm:gap-4"><span class="w-full sm:w-1/3 font-bold text-slate-900 uppercase tracking-widest">Total Cost:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-2xl">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
+            let html = `<li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Name:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Email:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${email}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Contact:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${phone}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Assembly:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${assembly}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Nationality:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${nationality}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Hotel:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${hotel.name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Room:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${window.bookingState.quantity}x ${room.name}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Dates:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Pax:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-sm">${adultPax} Adults, ${kidPax} Kids</span></li>
+            <li class="flex flex-col sm:flex-row py-2.5 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-semibold text-slate-500 uppercase text-[10px] tracking-widest">Requests:</span> <span class="w-full sm:w-2/3 font-medium text-slate-700 text-sm">${document.getElementById('specialRequests').value.trim() || 'None'}</span></li>
+            <li class="flex flex-col sm:flex-row sm:items-center pt-5 mt-2 border-t border-slate-200 gap-1 sm:gap-2"><span class="w-full sm:w-1/3 font-bold text-slate-900 uppercase text-xs tracking-widest">Total Cost:</span> <span class="w-full sm:w-2/3 font-bold text-slate-900 text-xl">RM ${window.formatPrice(window.bookingState.cost)}</span></li>`;
             
             document.getElementById('confirmation-list').innerHTML = html;
-            showView('view-confirmation', 4);
+            window.showView('view-confirmation', 4);
         }
 
         window.finalizeAccommodation = async function() {
@@ -1525,10 +1590,16 @@
                 
                 const bookingStr = `${window.bookingState.quantity}x ${roomName} (${window.bookingState.checkIn} to ${window.bookingState.checkOut})`;
                 const requests = document.getElementById('specialRequests').value.trim();
+                const nationality = document.getElementById('nationality').value.trim();
 
                 const payload = { 
-                    fullName: document.getElementById('fullName').value, email: document.getElementById('email').value.trim(), phone: document.getElementById('phone').value, 
-                    assembly: document.getElementById('assembly').value.trim(), pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, booking_type: 'accommodation', 
+                    fullName: document.getElementById('fullName').value, 
+                    email: document.getElementById('email').value.trim(), 
+                    phone: document.getElementById('phone').value, 
+                    assembly: document.getElementById('assembly').value.trim(), 
+                    nationality: nationality,
+                    pax: `${adultPax} Adult(s), ${kidPax} Kid(s)`, 
+                    booking_type: 'accommodation', 
                     days: [`${window.bookingState.checkIn} to ${window.bookingState.checkOut}`],
                     rooms_mile: window.bookingState.hotelId === 'mile' ? bookingStr : "",
                     rooms_padi: window.bookingState.hotelId === 'padi' ? bookingStr : "",
@@ -1536,7 +1607,7 @@
                     totalCost: `RM ${window.formatPrice(window.bookingState.cost)}`, status: 'Registered', checkIn: window.bookingState.checkIn, checkOut: window.bookingState.checkOut, roomType: roomName, quantity: window.bookingState.quantity, adultPax: adultPax, kidPax: kidPax, specialRequests: requests !== "" ? requests : "N/A"
                 };
                 await sendToGoogle(payload);
-            } catch(e) { showCustomModal("Error", "Submission failed."); }
+            } catch(e) { window.showCustomModal("Error", "Submission failed."); }
             btn.innerHTML = orig; btn.disabled = false;
         }
 
@@ -1584,6 +1655,9 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             setTimeout(window.preloadAllImages, 1500);
+            
+            // Initialize the custom dropdown component
+            window.setupNationalityDropdown();
 
             if (!history.state) history.replaceState({ viewId: 'landing' }, "", "");
             const saved = sessionStorage.getItem('kkgh_app_state');
@@ -1598,6 +1672,7 @@
                             if(document.getElementById('email')) document.getElementById('email').value = state.form.email || '';
                             document.getElementById('phone').value = state.form.phone || '';
                             if(document.getElementById('assembly')) document.getElementById('assembly').value = state.form.assembly || '';
+                            if(document.getElementById('nationality')) document.getElementById('nationality').value = state.form.nationality || 'Malaysian';
                             if(document.getElementById('pax-adults')) document.getElementById('pax-adults').value = state.form.adults || 1;
                             if(document.getElementById('pax-kids')) document.getElementById('pax-kids').value = state.form.kids || 0;
                             if(document.getElementById('specialRequests')) document.getElementById('specialRequests').value = state.form.specialRequests || '';
@@ -1649,7 +1724,7 @@
                                 const currentMax = parseInt(qtyInput ? qtyInput.dataset.max : 0) || 0;
                                 
                                 if (window.bookingState.quantity > currentMax) {
-                                    showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
+                                    window.showCustomModal("Availability Changed", "Sorry! The rooms you selected just became unavailable or the quantity decreased while you were away. Please re-select your dates.");
                                     window.showView('view-accom-room', 2, false);
                                     history.pushState({ viewId: 'view-accom-room', stepNum: 2 }, "", "");
                                     return; 
@@ -1680,12 +1755,14 @@
                                     const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
                                     const phone = document.getElementById('phone').value.trim();
                                     const assembly = document.getElementById('assembly') ? document.getElementById('assembly').value.trim() : '';
+                                    const nationality = document.getElementById('nationality') ? document.getElementById('nationality').value.trim() : '';
                                     const adultPax = document.getElementById('pax-adults') ? document.getElementById('pax-adults').value : 1;
                                     const kidPax = document.getElementById('pax-kids') ? document.getElementById('pax-kids').value : 0;
                                     let html = `<li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Name:</span> <span class="w-2/3 font-medium">${name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Email:</span> <span class="w-2/3 font-medium">${email}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Contact:</span> <span class="w-2/3 font-medium">${phone}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Assembly:</span> <span class="w-2/3 font-medium">${assembly}</span></li>
+                                    <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Nationality:</span> <span class="w-2/3 font-medium">${nationality}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Hotel:</span> <span class="w-2/3 font-medium">${hotel.name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Room:</span> <span class="w-2/3 font-medium">${window.bookingState.quantity}x ${room.name}</span></li>
                                     <li class="flex border-b border-slate-100 py-3"><span class="w-1/3 font-bold text-slate-500">Dates:</span> <span class="w-2/3 font-medium">${window.bookingState.checkIn} to ${window.bookingState.checkOut}</span></li>
@@ -1700,6 +1777,11 @@
                         }
                     }
                 } catch(e) { console.error("Restore Error: ", e); sessionStorage.removeItem('kkgh_app_state'); }
+            } else {
+                if (!history.state) history.replaceState({ viewId: 'view-accom-hotels', stepNum: 2 }, "", "");
+                await window.fetchAvailability();
+                renderHotelCards();
+                window.showView('view-accom-hotels', 2, false);
             }
         });
     </script>
