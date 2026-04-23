@@ -1777,12 +1777,7 @@
                         }
                     }
                 } catch(e) { console.error("Restore Error: ", e); sessionStorage.removeItem('kkgh_app_state'); }
-            } else {
-                if (!history.state) history.replaceState({ viewId: 'view-accom-hotels', stepNum: 2 }, "", "");
-                await window.fetchAvailability();
-                renderHotelCards();
-                window.showView('view-accom-hotels', 2, false);
-            }
+            } 
         });
     </script>
 </body>
